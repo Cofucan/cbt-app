@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Poppins", sans-serif, "inter";
+  /* transition: 0.5s ease; */
+  margin: 0;
+  padding: 0;
+}
+
+/* Overall table styling */
+.custom-table .ant-table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  width: 100%; 
+}
+
+/* Style the header cells */
+.custom-table .ant-table-thead > tr > th {
+  background-color: #eaeaea;
+  color: #333;
+  padding: 18px; 
+  border-bottom: none;
+}
+
+.custom-table .ant-table-tbody > tr {
+  box-shadow: 20px 15px 8px rgba(245, 247, 250, 1); 
+}
+
+/* Adjust spacing inside each cell */
+.custom-table .ant-table-tbody > tr > td {
+  padding: 25px; 
+  border-bottom: none; 
+}
+
+/* Optional: Add a hover effect */
+.custom-table .ant-table-tbody > tr:hover {
+  background-color: #f5f5f5; /* Light gray on hover */
+}
+
+/* Pagination Button Styles */
+.pagination-btn {
+  background-color: transparent;
+  outline: none;
+  padding: 0px 13px;
+  color: #333;
+  cursor: pointer;
+}
+
+.active-btn {
+  background-color: #ff5a1f; /* Orange background */
+  color: white; /* White text */
+  outline: none;
+}
+
+.prev-btn,
+.next-btn {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 3px 14px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* index.css or index.css */
+/* index.css or index.css */
+/* .custom-modal .ant-modal-header {
+  border-bottom: 2px solid #e9eaf0; 
+  padding: 7px 0px;
+} */
+
+
+
+
