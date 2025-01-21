@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import { baseUrl } from "../../lib/utils.ts";
 
 // Initial state
 const initialState = {
@@ -14,9 +15,6 @@ const initialState = {
   responseMessage: "",
   allExams: [],
 };
-
-// Base URL for API
-const baseUrl = "https://schooledgecbtapi-e4804672405c.herokuapp.com";
 
 // Check if the user is logged in
 function checkLoggedIn() {
