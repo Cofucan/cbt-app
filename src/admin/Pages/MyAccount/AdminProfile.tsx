@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ImportImgs from "../../components/ImportImgs";
-import LoadingAnimation from "../../components/loadingAnimation";
+import LoadingAnimation from "../../components/LoadingAnimation.tsx";
 import useGetProfile from "../../hooks/getData/useGetProfile";
 
 const ProfileCard = ({ data, loading }) => {

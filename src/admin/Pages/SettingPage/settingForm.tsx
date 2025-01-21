@@ -1,11 +1,11 @@
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import useSettings from "../../hooks/postData/useSettings";
 import { BASEURL } from "../../utils/url";
 
-export default function SettingForm({ data, loading }) {
+export default function SettingForm({ data, loading }: {loading: boolean, data: Record<string, string>}) {
   const { formik, isLoading, setFile } = useSettings();
-  const [logoPreview, setLogoPreview] = useState(null);
+  const [logoPreview, setLogoPreview] = useState<string | null | ArrayBuffer>(null);
 
   const url = BASEURL;
 
@@ -25,18 +25,18 @@ export default function SettingForm({ data, loading }) {
   console.log(formik?.values);
 
   // Handle logo upload
-  const handleLogoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFile(file);
+  const handleLogoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setFile(file);
 
-      // Create a preview of the uploaded image
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogoPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    // Create a preview of the uploaded image
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setLogoPreview(reader.result?.toString() ?? null);
+    };
+    reader.readAsDataURL(file);
+
   };
 
   // Handle form submission
@@ -56,7 +56,7 @@ export default function SettingForm({ data, loading }) {
       <div className="mb-6 flex items-center">
         {logoPreview ? (
           <img
-            src={logoPreview}
+            src={logoPreview.toString()}
             alt="Logo Preview"
             className="h-20 w-20 rounded-full border border-dashed object-cover"
           />

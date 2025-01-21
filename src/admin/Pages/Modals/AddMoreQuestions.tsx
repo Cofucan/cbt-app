@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import BulkQuestionUpload from "./BulkQuestionUpload";
 import useAddTest from "../../hooks/postData/useAddTest";
 import CustomButton from "../../components/CustomButton";
 import { MdInsertPhoto } from "react-icons/md";
 
-const AddMoreQuestions = ({
-  data,
-  addMoreQuestions,
-  setAddMoreQuestions,
-  closeAddMoreQuestion,
-}) => {
+interface AddMoreQuestionsProps {
+  data:  { id: string } | null
+  addMoreQuestions: boolean
+  closeAddMoreQuestion: () => void
+}
+
+const AddMoreQuestions: FC<AddMoreQuestionsProps> = (props) => {
+  const {
+    data,
+    addMoreQuestions,
+    closeAddMoreQuestion
+  } = props
   const [bulkUpload, setBulkUpload] = useState(false);
 
   const {
@@ -20,7 +26,7 @@ const AddMoreQuestions = ({
     numberOfQuestion,
     setNumberOfQuestion,
     image,
-    setImage,
+    setImage
   } = useAddTest(data?.id);
 
   const ToggleBulkUploadOpen = () => {
@@ -32,11 +38,6 @@ const AddMoreQuestions = ({
   };
 
   const images = ImportImgs();
-  const handleAddMoreQuestions = () => {
-    // Handle the exam activation logic here
-    console.log("Exam Added");
-    setAddMoreQuestions(false);
-  };
 
   useEffect(() => {
     if (successSingleQusetion) {
@@ -49,6 +50,11 @@ const AddMoreQuestions = ({
     console.log(selected);
     setImage(selected);
   };
+
+  function handleInputFocus() {
+    const fileElem = document.querySelector("input[type=\"file\"]") as HTMLInputElement;
+    fileElem.click();
+  }
 
   return (
     <div>
@@ -82,7 +88,6 @@ const AddMoreQuestions = ({
               // <div className="bg-red-600 h-60 w-96 absolute"></div>
               <BulkQuestionUpload
                 data={data}
-                setBulkUpload={setBulkUpload}
                 bulkUpload={bulkUpload}
                 closeAddMoreQuestion={closeAddMoreQuestion}
                 ToggleBulkUploadClose={ToggleBulkUploadClose}
@@ -97,7 +102,7 @@ const AddMoreQuestions = ({
                   name="text"
                   onChange={addBulkFormik.handleChange}
                   className="mt-2 w-full rounded border p-2 placeholder:text-sm"
-                  rows="4"
+                  rows={4}
                   placeholder="Write your question here..."
                 />
               </div>
@@ -120,16 +125,12 @@ const AddMoreQuestions = ({
                         src={images.DownloadUp}
                         alt="Upload"
                         className="mr-2 cursor-pointer rounded-full bg-[#FFEEE8] p-1"
-                        onClick={() =>
-                          document.querySelector('input[type="file"]').click()
-                        }
+                        onClick={handleInputFocus}
                       />
                       <span className="text-sm text-[#BFBFBF]">
                         Drag and drop or{" "}
                         <span
-                          onClick={() =>
-                            document.querySelector('input[type="file"]').click()
-                          }
+                          onClick={handleInputFocus}
                           className="cursor-pointer font-bold text-[#ff6636]"
                         >
                           Browse
@@ -143,9 +144,7 @@ const AddMoreQuestions = ({
                     <div className="flex w-full items-center justify-center gap-3">
                       <img
                         src={images.DownloadUp}
-                        onClick={() =>
-                          document.querySelector('input[type="file"]').click()
-                        }
+                        onClick={handleInputFocus}
                         alt="uploadIcon"
                         className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
                       />{" "}

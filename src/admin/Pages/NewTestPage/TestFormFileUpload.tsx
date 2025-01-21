@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import ImportImgs from "../../components/ImportImgs";
-import useImageStore from "../../globalstate/useImageStore";
 import { FaFileExcel } from "react-icons/fa";
 
 const FileUpload = (props) => {
@@ -9,9 +8,9 @@ const FileUpload = (props) => {
   const images = ImportImgs();
   // const [files, setFiles] = useState([]);
   const [dragging, setDragging] = useState(false);
-  const [downloadFile, setDownloadFile] = useState(null); // State to store the file to download
+  const [downloadFile, setDownloadFile] = useState<File | null>(null); // State to store the file to download
 
-  const handleDragOverQuestion = (e) => {
+  const handleDragOverQuestion = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragging(true);
   };
@@ -20,24 +19,15 @@ const FileUpload = (props) => {
     setDragging(false);
   };
 
-  const handleDropQuestion = (e) => {
+  const handleDropQuestion = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragging(false);
     const droppedFiles = Array.from(e.dataTransfer.files);
     handleFileChange(droppedFiles);
   };
 
-  const handleFileChangeQuestion = (selectedFiles) => {
-    console.log(selectedFiles);
-    // const validFiles = selectedFiles.filter((file) => {
-    //   const fileType = file.type;
-    //   return fileType === "text/csv" || fileType === "application/zip";
-    // });
-    setQuestion(selectedFiles);
-    // }
-  };
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     setDragging(true);
   };
@@ -46,16 +36,16 @@ const FileUpload = (props) => {
     setDragging(false);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e:  React.DragEvent<HTMLLabelElement> ) => {
     e.preventDefault();
     setDragging(false);
     const droppedFiles = Array.from(e.dataTransfer.files);
     handleFileChange(droppedFiles);
   };
 
-  const handleFileChange = (selectedFiles) => {
+  const handleFileChange = (selectedFiles: File[]) => {
     console.log(selectedFiles);
-    const validFiles = selectedFiles.filter((file) => {
+    const validFiles = selectedFiles.filter((file: File) => {
       const fileType = file.type;
       return fileType === "text/csv" || fileType === "application/zip";
     });
@@ -66,20 +56,17 @@ const FileUpload = (props) => {
     }
   };
 
-  const handleBrowseQuest = (e) => {
-    const selected = e.target.files[0];
+  const handleBrowseQuest = (e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
     setQuestion(selected);
   };
 
-  const handleBrowse = (e) => {
-    const selected = e.target.files[0];
+  const handleBrowse = (e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
     setFile(selected);
   };
 
-  const handleRemoveFile = (index) => {
-    // setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    setDownloadFile(null); // Reset download file if all files are removed
-  };
+
 
   const handleDownload = () => {
     if (downloadFile) {
@@ -96,21 +83,6 @@ const FileUpload = (props) => {
     }
   };
 
-  console.log(question);
-
-  const handleImageChange = (e) => {
-    const selected = e.target.files[0];
-    // const TYPES = ["image/png", "image/jpg", "image/jpeg"];
-    // if (selected && TYPES.includes(selected.type)) {
-    //     const reader: any = new FileReader();
-    //     reader.onloadend = () => {
-    //         setImage(reader.result)
-    //     }
-    //     reader.readAsDataURL(selected)
-    // }
-
-    setQuestion(selected);
-  };
 
   return (
     <div className="">

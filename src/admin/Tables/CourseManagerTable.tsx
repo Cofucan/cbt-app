@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ImportImgs from "../components/ImportImgs";
-import { Table, Button, Select, Input, Menu, Dropdown } from "antd";
+import { Dropdown, Menu, Table } from "antd";
 import EditCourseModal from "../Pages/Modals/NewCoursesModal/EditCourseModal";
 import DeleteCourseModal from "../Pages/Modals/NewCoursesModal/DeleteCourseModal";
 import useGetCourse from "../hooks/getData/useGetCourse";
-import LoadingAnimation from "../components/loadingAnimation";
+import LoadingAnimation from "../components/LoadingAnimation.tsx";
 import useGetFaculty from "../hooks/getData/useGetFaculty";
 import useGetDepartment from "../hooks/getData/useGetDepartment";
 
-const { Option } = Select;
 
 const CourseManagerTable = () => {
   const images = ImportImgs();
-  const [searchText, setSearchText] = useState("");
-  const [singleData, setSingleData] = useState(null);
-  const [selectedFaculty, setSelectedFaculty] = useState("Engineering");
-  const [selectedDepartment, setSelectedDepartment] = useState("Chemical");
-  const [selectedLevel, setSelectedLevel] = useState("200");
-  const [visibleDropdown, setVisibleDropdown] = useState(null); // Track visible dropdown by course key
+  // const [searchText, setSearchText] = useState("");
+  const [singleData, setSingleData] = useState<{ id: string } | null>();
+  // const [selectedFaculty, setSelectedFaculty] = useState("Engineering");
+  // const [selectedDepartment, setSelectedDepartment] = useState("Chemical");
+  // const [selectedLevel, setSelectedLevel] = useState("200");
+  const [visibleDropdown, setVisibleDropdown] = useState<string | null>(); // Track visible dropdown by course key
   const [EditModalOpen, setEditModalOpen] = useState(false);
   const [DeleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -29,13 +28,13 @@ const CourseManagerTable = () => {
   const handleCancel = () => setEditModalOpen(false);
 
   //OPEN DELETE MODAL LOGIC
-  const handleDeleteShow = () => {
-    setVisibleDropdown(null);
-    setDeleteModalOpen(true);
-  };
+  // const handleDeleteShow = () => {
+  //   setVisibleDropdown(null);
+  //   setDeleteModalOpen(true);
+  // };
   const handleDeleteCancel = () => setDeleteModalOpen(false);
   //Table Dropdwon Action
-  const toggleDropdown = (key) => {
+  const toggleDropdown = (key?: { id: string }) => {
     if (visibleDropdown === key?.id) {
       setVisibleDropdown(null); // Close if the same dropdown is clicked
     } else {
@@ -54,26 +53,26 @@ const CourseManagerTable = () => {
   const { data, isLoading, isRefetching } = useGetCourse(
     facultyId,
     departmentId,
-    level,
+    level
   );
 
-  const courses = [
-    {
-      key: 1,
-      faculty: "Management Science",
-      department: "Mass Comm",
-      title: "Communication Principles",
-    },
-    {
-      key: 2,
-      faculty: "Management Sciences",
-      department: "Mass Comm",
-      title: "Communication Principles",
-    },
-    { key: 3, faculty: "Arts", department: "History", title: "Mansa Musa" },
-    { key: 4, faculty: "Science", department: "Computer", title: "Algorithms" },
-    { key: 5, faculty: "Language", department: "English", title: "Concord" },
-  ];
+  // const courses = [
+  //   {
+  //     key: 1,
+  //     faculty: "Management Science",
+  //     department: "Mass Comm",
+  //     title: "Communication Principles"
+  //   },
+  //   {
+  //     key: 2,
+  //     faculty: "Management Sciences",
+  //     department: "Mass Comm",
+  //     title: "Communication Principles"
+  //   },
+  //   { key: 3, faculty: "Arts", department: "History", title: "Mansa Musa" },
+  //   { key: 4, faculty: "Science", department: "Computer", title: "Algorithms" },
+  //   { key: 5, faculty: "Language", department: "English", title: "Concord" }
+  // ];
 
   const menu = (
     <div className="">
@@ -90,22 +89,22 @@ const CourseManagerTable = () => {
     {
       title: "Faculty",
       key: "faculty",
-      render: (item) => <p>{item?.faculty?.name}</p>,
+      render: (item: { faculty: { name: string}; }) => <p>{item?.faculty?.name}</p>
     },
     {
       title: "Department",
       key: "department",
-      render: (item) => <p>{item?.department?.name}</p>,
+      render: (item: { department: { name: string}; }) => <p>{item?.department?.name}</p>
     },
     {
       title: "Course Title",
       dataIndex: "title",
-      key: "title",
+      key: "title"
     },
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
+      render: (text: { id: string; }) => (
         <Dropdown
           overlay={menu}
           visible={visibleDropdown === text.id}
@@ -117,8 +116,8 @@ const CourseManagerTable = () => {
             <img src={images.DotsThree} alt="Action" />
           </button>
         </Dropdown>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -144,7 +143,6 @@ const CourseManagerTable = () => {
           <label className="text-xs font-medium text-[#6e7485]">Faculty</label>
           <select
             onChange={(e) => setFacultyId(e.target.value)}
-            placeholder={"Select Faculty"}
             className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
           >
             <option value={""}>Select Faculty</option>
@@ -184,7 +182,7 @@ const CourseManagerTable = () => {
       </div>
 
       {/* Course Table */}
-      <LoadingAnimation loading={isLoading} refetching={isRefetching}>
+      <LoadingAnimation loading={isLoading} isRefetching={isRefetching}>
         <Table
           className="custom-table"
           columns={columns}

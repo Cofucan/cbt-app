@@ -1,26 +1,21 @@
-import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import Navbar from "../../admin/components/Navbar.tsx";
 import SideBar from "../../admin/components/SideBar.tsx";
 import Footer from "../../admin/components/Footer.tsx";
-import { useMediaQuery } from "react-responsive";
 
 export const Route = createFileRoute("/admin/_auth")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const [isOpen, setOpenDrawer] = useState(false);
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 970px)" });
+  // const [isOpen, setOpenDrawer] = useState(false);
+  // const isTabletOrMobile = useMediaQuery({ query: "(max-width: 970px)" });
 
   // Handle drawer state based on screen size
-  useEffect(() => {
-    setOpenDrawer(!isTabletOrMobile);
-  }, [isTabletOrMobile]);
+  // useEffect(() => {
+  //   setOpenDrawer(!isTabletOrMobile);
+  // }, [isTabletOrMobile]);
 
   // Show toast notifications for error or success
 

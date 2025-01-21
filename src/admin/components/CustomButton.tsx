@@ -1,7 +1,12 @@
-import React from "react";
 import { BeatLoader } from "react-spinners";
+import { ComponentPropsWithoutRef } from "react";
 
-export default function CustomButton(props) {
+export interface CustomButtonProps extends ComponentPropsWithoutRef<"button"> {
+  isLoading?: boolean;
+  red?: boolean;
+}
+
+export default function CustomButton(props: CustomButtonProps) {
   const { onClick, title, isLoading, type, red, disabled } = props;
 
   return (

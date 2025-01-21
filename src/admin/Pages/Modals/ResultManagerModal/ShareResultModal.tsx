@@ -1,6 +1,12 @@
 import ImportImgs from "../../../components/ImportImgs";
+import { FC } from "react";
 
-const ShareResultModal = ({ closeShareResultModal }) => {
+interface ShareResultModalProps {
+  closeShareResultModal: () => void;
+}
+
+const ShareResultModal: FC<ShareResultModalProps> = (props) => {
+  const { closeShareResultModal } = props;
   const images = ImportImgs();
 
   return (

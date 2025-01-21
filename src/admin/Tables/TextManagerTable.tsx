@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Table, Input, Select, Menu, Dropdown } from "antd";
+import { useState } from "react";
+import { Dropdown, Input, Menu, Table } from "antd";
 import { useMediaQuery } from "react-responsive";
 import ImportImgs from "../components/ImportImgs";
 import ActivateExamModal from "../Pages/Modals/ActivateExamModal";
@@ -8,19 +8,18 @@ import DelateExamModal from "../Pages/Modals/DelateExamModal";
 import AddMoreQuestions from "../Pages/Modals/AddMoreQuestions";
 import { useNavigate } from "@tanstack/react-router";
 import useGetExam from "../hooks/getData/useGetExam";
-import LoadingAnimation from "../components/loadingAnimation";
+import LoadingAnimation from "../components/LoadingAnimation.tsx";
 import useGetFaculty from "../hooks/getData/useGetFaculty";
 import useGetDepartment from "../hooks/getData/useGetDepartment";
 
-const { Option } = Select;
 
-const faculties = ["Science", "Language", "Engineering"];
-const departments = {
-  Science: ["Biology", "Computer science"],
-  Engineering: ["Chemistry", "Physics", "Computer"],
-  Language: ["English", "French", "Yoruba", "Igbo"],
-};
-const levels = ["100", "200", "300", "400"];
+// const faculties = ["Science", "Language", "Engineering"];
+// const departments = {
+//   Science: ["Biology", "Computer science"],
+//   Engineering: ["Chemistry", "Physics", "Computer"],
+//   Language: ["English", "French", "Yoruba", "Igbo"],
+// };
+// const levels = ["100", "200", "300", "400"];
 
 const TestManager = () => {
   const [facultyId, setFacultyId] = useState("");
@@ -34,10 +33,10 @@ const TestManager = () => {
   const navigate = useNavigate();
   const images = ImportImgs();
   // const [filteredData, setFilteredData] = useState(coursesData);
-  const [faculty, setFaculty] = useState(null);
-  const [singleData, setSingleData] = useState(null);
-  const [searchText, setSearchText] = useState("");
-  const [visibleDropdown, setVisibleDropdown] = useState(null);
+  // const [faculty, setFaculty] = useState<string | null>(null);
+  const [singleData, setSingleData] = useState<{ id: string } | null>(null);
+  // const [searchText, setSearchText] = useState("");
+  const [visibleDropdown, setVisibleDropdown] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDeactivateExam, setIsOpenDeactivateExam] = useState(false);
   const [isOpenDeleteExam, setIsOpenDeleteExam] = useState(false);
@@ -46,7 +45,7 @@ const TestManager = () => {
   const {
     isLoading,
     data: filteredData,
-    isRefetching,
+    isRefetching
   } = useGetExam(facultyId, department, keyword, level);
 
   //Activate Exam Modal IsOpen
@@ -65,7 +64,7 @@ const TestManager = () => {
   };
 
   const closeDeactivateExamModal = () => {
-    setIsOpenDeactivateExam(close);
+    setIsOpenDeactivateExam(false);
   };
 
   const closeDeleteExamModal = () => {
@@ -87,33 +86,33 @@ const TestManager = () => {
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 970px)" });
 
-  const handleSearch = (value) => {
-    setSearchText(value);
-  };
+  // const handleSearch = (value) => {
+  //   setSearchText(value);
+  // };
+  //
+  // const handleFacultyChange = (value) => {
+  //   setFaculty(value);
+  //   setDepartment(null); // Reset department when faculty changes
+  // };
+  //
+  // const handleDepartmentChange = (value) => {
+  //   setDepartment(value);
+  // };
+  //
+  // const handleLevelChange = (value) => {
+  //   setLevel(value);
+  // };
 
-  const handleFacultyChange = (value) => {
-    setFaculty(value);
-    setDepartment(null); // Reset department when faculty changes
-  };
-
-  const handleDepartmentChange = (value) => {
-    setDepartment(value);
-  };
-
-  const handleLevelChange = (value) => {
-    setLevel(value);
-  };
-
-  const handlePageChange = (page, pageSize) => {
+  const handlePageChange = (page: number, pageSize: number) => {
     setCurrentPage(page);
     setPageSize(pageSize);
   };
 
-  const toggleDropdown = (key) => {
+  const toggleDropdown = (key: { id: string } | null) => {
     if (visibleDropdown === key?.id) {
       setVisibleDropdown(null); // Close if the same dropdown is clicked
     } else {
-      setVisibleDropdown(key?.id); // Open the clicked dropdown
+      setVisibleDropdown(key?.id ?? null); // Open the clicked dropdown
     }
     console.log(key);
     setSingleData(key);
@@ -131,11 +130,13 @@ const TestManager = () => {
         {/* <Menu.Item key="3" onClick={() => navigate("/admin/test-student-analysis/" + singleData?.id)}>Student Analysis</Menu.Item> */}
         <Menu.Item
           key="3"
-          onClick={() =>
-            navigate({
+          onClick={async () => {
+            if (!singleData?.id) return;
+            await navigate({
               to: "/admin/test/student-analysis/$id",
-              params: { id: singleData?.id },
-            })
+              params: { id: singleData.id }
+            });
+          }
           }
         >
           Student Analysis
@@ -159,35 +160,35 @@ const TestManager = () => {
       title: "Course Title",
       dataIndex: "title",
 
-      key: "title",
+      key: "title"
     },
     {
       title: "Course Code",
       width: isTabletOrMobile ? 260 : 180,
       dataIndex: "code",
-      key: "code",
+      key: "code"
     },
     {
       title: "Faculty",
       dataIndex: "faculty_name",
-      key: "faculty_name",
+      key: "faculty_name"
     },
     {
       title: "Department",
       dataIndex: "department_name",
-      key: "department_name",
+      key: "department_name"
     },
     {
       title: "Examiner",
       dataIndex: "instructor_name",
-      key: "instructor_name",
+      key: "instructor_name"
     },
     {
       title: "Status",
       dataIndex: "status",
       width: isTabletOrMobile ? 260 : 180,
       key: "status",
-      render: (status) => {
+      render: (status: string) => {
         let img = <img src={images.StatusGreen} alt="Green" />;
         if (status === "Postponed") {
           img = <img src={images.StatusOrange} alt="Green" />;
@@ -199,12 +200,12 @@ const TestManager = () => {
             <span>{img}</span> {status ? status : "Postponed"}
           </div>
         );
-      },
+      }
     },
     {
       title: "Action",
       key: "action",
-      render: (text) => {
+      render: (text: {id: string}) => {
         return (
           <Dropdown
             overlay={menu}
@@ -218,8 +219,8 @@ const TestManager = () => {
             </button>
           </Dropdown>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
@@ -227,7 +228,6 @@ const TestManager = () => {
       {isOpen && (
         <ActivateExamModal
           data={singleData}
-          openModal={openModal}
           isOpen={isOpen}
           closeModal={closeModal}
           setIsOpen={setIsOpen}
@@ -245,7 +245,6 @@ const TestManager = () => {
 
       {isOpenDeleteExam && (
         <DelateExamModal
-          data={singleData}
           isOpenDeleteExam={isOpenDeleteExam}
           setIsOpenDeleteExam={setIsOpenDeleteExam}
           closeDeleteExamModal={closeDeleteExamModal}
@@ -256,7 +255,6 @@ const TestManager = () => {
         <AddMoreQuestions
           data={singleData}
           addMoreQuestions={addMoreQuestions}
-          setaddMoreQuestions={setAddMoreQuestions}
           closeAddMoreQuestion={closeAddMoreQuestion}
         />
       )}
@@ -273,7 +271,7 @@ const TestManager = () => {
               width: "100%",
               marginBottom: 16,
               fontSize: "14px",
-              fontWeight: "400",
+              fontWeight: "400"
             }}
           />
         </div>
@@ -308,7 +306,7 @@ const TestManager = () => {
               className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
               <option value={""}>Select Department</option>
-              {departmentList?.map((item, index) => {
+              {(departmentList ?? []).map((item, index) => {
                 return (
                   <option key={index} value={item?.id}>
                     {item?.name}
@@ -334,7 +332,7 @@ const TestManager = () => {
         </div>
       </div>
       {/* Table */}
-      <LoadingAnimation loading={isLoading} refeching={isRefetching}>
+      <LoadingAnimation loading={isLoading} isRefetching={isRefetching}>
         <Table
           className="custom-table"
           columns={columns}
@@ -345,34 +343,34 @@ const TestManager = () => {
             total: filteredData.length,
             onChange: handlePageChange,
             showSizeChanger: false, // Hide the page size changer
-            itemRender: (page, type, originalElement) => {
-              if (type === "prev") {
-                return (
-                  <button className="prev-btn flex items-center">
-                    <img src={images.ArrowLeft} alt="previous" /> Previous
-                  </button>
-                );
-              }
-              if (type === "next") {
-                return (
-                  <button className="next-btn flex items-center">
-                    <img src={images.ArrowRight} alt="previous" /> Next
-                  </button>
-                );
-              }
-              if (type === "page" && page === currentPage) {
-                return (
-                  <button className="pagination-btn active-btn">{page}</button>
-                );
-              }
-              return <button className="pagination-btn">{page}</button>;
-            },
+            // itemRender: (page, type, originalElement) => {
+            //   if (type === "prev") {
+            //     return (
+            //       <button className="prev-btn flex items-center">
+            //         <img src={images.ArrowLeft} alt="previous" /> Previous
+            //       </button>
+            //     );
+            //   }
+            //   if (type === "next") {
+            //     return (
+            //       <button className="next-btn flex items-center">
+            //         <img src={images.ArrowRight} alt="previous" /> Next
+            //       </button>
+            //     );
+            //   }
+            //   if (type === "page" && page === currentPage) {
+            //     return (
+            //       <button className="pagination-btn active-btn">{page}</button>
+            //     );
+            //   }
+            //   return <button className="pagination-btn">{page}</button>;
+            // },
             style: {
               display: "flex",
               justifyContent: "center",
               paddingTop: "20px",
-              gap: "20px",
-            },
+              gap: "20px"
+            }
           }}
         />
       </LoadingAnimation>

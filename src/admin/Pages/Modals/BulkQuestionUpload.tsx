@@ -1,23 +1,21 @@
-import React, { useEffect } from "react";
-import ImportImgs from "../../components/ImportImgs";
+import { FC, useEffect } from "react";
 import useAddTest from "../../hooks/postData/useAddTest";
 import FileUpload from "../NewTestPage/TestFormFileUpload";
 import CustomButton from "../../components/CustomButton";
 
-const BulkQuestionUpload = ({
-  data,
-  ToggleBulkUploadClose,
-  bulkUpload,
-  closeAddMoreQuestion,
-}) => {
-  const images = ImportImgs();
-
-  console.log(data);
-  // const handleBulkUpload = () => {
-  //   // Handle the exam activation logic here
-  //   console.log("Exam Added");
-  // };
-
+interface BulkQuestionUploadProps {
+  data:  { id: string } | null
+  ToggleBulkUploadClose: () => void
+  bulkUpload: boolean
+  closeAddMoreQuestion: () => void
+}
+const BulkQuestionUpload: FC<BulkQuestionUploadProps> = (props) => {
+  const {
+    data,
+    ToggleBulkUploadClose,
+    bulkUpload,
+    closeAddMoreQuestion,
+  } = props
   const {
     handleBulkUpload,
     file,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import SuccessAdminModal from "../Modals/AddminManager/SuccessAdminModal";
 import useAddAdmin from "../../hooks/postData/useAddAdmin";
 import CustomButton from "../../components/CustomButton";
@@ -14,7 +14,7 @@ const AddAdminForm = () => {
 
   const { formik, isLoading, isSuccess } = useAddAdmin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     formik?.handleSubmit();
   };
@@ -97,16 +97,17 @@ const AddAdminForm = () => {
             <label className="mb-1 block text-sm font-medium text-gray-700">
               Admin Role
             </label>
-
+            {/* TODO: Work Here*/}
             <Select
-              name="level"
+              // name="level"
               placeholder="Select Role"
               onChange={(value) => formik.setFieldValue("type", value)}
               className="w-full"
-            >
-              <Option value="super_admin">Super Admin</Option>
-              <Option value="admin">Admin</Option>
-            </Select>
+              options={[{ value: "super_admin", label: <span>Super Admin</span> }, {
+                value: "admin",
+                label: <span>Admin</span>
+              }]}
+            />
           </div>
 
           <div className="">
@@ -140,7 +141,6 @@ const AddAdminForm = () => {
             <CustomButton
               title="Add Admin"
               isLoading={isLoading}
-              onClick={formik?.handleSubmit}
             />
           </div>
         </form>

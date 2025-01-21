@@ -20,13 +20,9 @@ function RouteComponent() {
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   const showModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
-  const handleCancelDelete = () => {
-    setIsDeleteModalVisible(false);
-  };
 
   return (
     <section>

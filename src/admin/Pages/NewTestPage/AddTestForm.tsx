@@ -1,13 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ImportImgs from "../../components/ImportImgs";
-import dayjs from "dayjs";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
-import TestFormFileUplaod from "./TestFormFileUpload";
 import TestFormFileUpload from "./TestFormFileUpload";
 import useAddTest from "../../hooks/postData/useAddTest";
 import useGetFaculty from "../../hooks/getData/useGetFaculty";
@@ -38,7 +32,7 @@ const AddTestForm = () => {
 
   const datePickerRef = useRef(null);
 
-  const changeHandler = (item) => {
+  const changeHandler = (item: { target: { value: string; }; }) => {
     const dataInfo = JSON.parse(item?.target?.value);
     console.log(dataInfo);
     formik.setFieldValue("title", dataInfo?.title);
@@ -52,10 +46,10 @@ const AddTestForm = () => {
   }, [loading, data]);
 
   return (
-    <sectio>
+    <section>
       <div className="w-full bg-white p-6 shadow-md">
         <h2 className="mb-6 border-b pb-5 text-lg font-semibold">New Test</h2>
-        <form className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <form className="grid grid-cols-1 gap-6 md:grid-cols-2" onSubmit={formik?.handleSubmit}>
           {/* Faculty */}
           <div className="flex flex-col">
             <label className="pb-2 text-[#1d2026]">Faculty</label>
@@ -63,7 +57,6 @@ const AddTestForm = () => {
               onChange={(e) =>
                 formik?.setFieldValue("faculty_id", Number(e.target.value))
               }
-              placeholder={"Select Faculty"}
               className="rounded border px-3 py-2 text-[#8c94a3]"
             >
               <option value={""}>Select Faculty</option>
@@ -95,7 +88,7 @@ const AddTestForm = () => {
                 src={images.Calendar}
                 alt="Calendar"
                 className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 transform cursor-pointer" // Make the image clickable
-                onClick={() => datePickerRef.current.setFocus()} // Programmatically open DatePicker
+                onClick={() => datePickerRef.current?.setFocus()} // Programmatically open DatePicker
               />
             </div>
           </div>
@@ -199,7 +192,6 @@ const AddTestForm = () => {
                 formik?.setFieldValue("attempts_allowed", e.target.value)
               }
               value={formik.values.attempts_allowed}
-              placeholder="Select attempts"
               className="rounded border px-3 py-2 text-[#8c94a3]"
             >
               <option value={""}>Select attempts</option>
@@ -263,10 +255,9 @@ const AddTestForm = () => {
         <CustomButton
           title="Save Test"
           isLoading={isLoading}
-          onClick={formik?.handleSubmit}
         />
       </div>
-    </sectio>
+    </section>
   );
 };
 

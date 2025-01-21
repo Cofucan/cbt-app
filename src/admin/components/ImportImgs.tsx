@@ -1,5 +1,3 @@
-import React from "react";
-
 // IMPORT IMAGES FOR SIDEBAR
 import CapGray from "../assets/Cap-gray.svg";
 import CapWhite from "../assets/Cap-white.svg";
@@ -50,7 +48,7 @@ import Paul from "../assets/paul.svg";
 import Addicon from "../assets/addicon.svg";
 
 const ImportImgs = () => {
-  const images = {
+  return {
     CapGray,
     CapWhite,
     PlusCircleGray,
@@ -96,7 +94,6 @@ const ImportImgs = () => {
     switchOn,
     Logout,
   };
-  return images;
 };
 
 export default ImportImgs;

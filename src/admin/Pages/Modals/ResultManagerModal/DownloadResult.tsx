@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import { FC } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import ResultDownloaded from "./ResultDownloaded";
-import { SINGLEBASEURL } from "../../../utils/url";
 import { CSVLink } from "react-csv";
 import useGetExamDownload from "../../../hooks/getData/useGetExamDownload";
 
-const DownloadResult = ({ data: resultData, closeDownloadModal }) => {
+interface DownloadResultProps {
+  closeDownloadModal: () => void
+  resultData: {
+    title: string;
+    department_name: string;
+    id: string }
+}
+const DownloadResult: FC<DownloadResultProps> = (props) => {
+  const { resultData, closeDownloadModal } = props
   const images = ImportImgs();
-  const [resultSuccessDownloaded, setResultSuccessDownloaded] = useState(false);
+  const resultSuccessDownloaded = false
+  // const [resultSuccessDownloaded, setResultSuccessDownloaded] = useState(false);
 
-  const toggleResultSuccess = () => setResultSuccessDownloaded(true);
+  // const toggleResultSuccess = () => setResultSuccessDownloaded(true);
   const { data } = useGetExamDownload(resultData.id);
 
   return (
@@ -48,7 +56,7 @@ const DownloadResult = ({ data: resultData, closeDownloadModal }) => {
               }
             >
               <button
-                disabled={data ? false : true}
+                disabled={!data}
                 className="bg-[#ff6636] px-4 py-2 text-white hover:bg-[#ff6636]"
               >
                 Download Result

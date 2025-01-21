@@ -7,13 +7,13 @@ import findEmptyFields from "../../utils/findEmptyField";
 import { useState } from "react";
 import useGetSettings from "../getData/useGetSettings";
 
-const useAddTest = (id) => {
+const useAddTest = (id?: string) => {
   const navigate = useNavigate();
 
   const query = useQueryClient();
   const [question, setQuestion] = useState(null);
   const [file, setFile] = useState(null);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<{ name: string, size: number } | null>(null);
 
   const { data, isLoading: loading } = useGetSettings();
   const [numberOfQuestion, setNumberOfQuestion] = useState("");
@@ -34,7 +34,7 @@ const useAddTest = (id) => {
       level: "",
       points_per_question: "",
       no_of_questions: "",
-      session: "",
+      session: ""
     },
     onSubmit: (values) => {
       const emptyFields = findEmptyFields(values);
@@ -55,7 +55,7 @@ const useAddTest = (id) => {
             if (key === "start_at") {
               formData?.append(
                 key,
-                new Date(formik?.values[key]).toISOString(),
+                new Date(formik?.values[key]).toISOString()
               );
             } else if (key === "session") {
               formData?.append(key, data?.current_session);
@@ -68,7 +68,7 @@ const useAddTest = (id) => {
         formData?.append("file", question);
         mutate(formData);
       }
-    },
+    }
   });
 
   console.log(data);
@@ -80,7 +80,7 @@ const useAddTest = (id) => {
       option_2: "",
       option_3: "",
       option_4: "",
-      answer: "",
+      answer: ""
     },
     onSubmit: (values) => {
       const emptyFields = findEmptyFields(values);
@@ -103,33 +103,33 @@ const useAddTest = (id) => {
         }
         singleQuestionMutate(formData);
       }
-    },
+    }
   });
 
   const { mutate, isPending } = useMutation({
     mutationFn: (info) =>
       httpService.post(`app_admin/exams/upload/`, info, {
-        headers: { "Content-Type": question.type },
+        headers: { "Content-Type": question.type }
       }),
     onError: (error) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail
           ? error?.response?.data?.detail
-          : "Error occured Creating test",
+          : "Error occured Creating test"
       );
     },
     onSuccess: async () => {
       toast?.success("Exam Created Successfully");
       await navigate({ to: "/admin/test" });
       await query?.invalidateQueries({ queryKey: ["Exam"] });
-    },
+    }
   });
 
   const {
     mutate: singleQuestionMutate,
     isPending: loadingSingleQuestion,
-    isSuccess: successSingleQuestion,
+    isSuccess: successSingleQuestion
   } = useMutation({
     mutationFn: (info) =>
       httpService.post(`app_admin/exams/upload/${id}/single-question/`, info, {
@@ -140,36 +140,36 @@ const useAddTest = (id) => {
       toast?.error(
         error?.response?.data?.detail
           ? error?.response?.data?.detail
-          : "Error occured",
+          : "Error occured"
       );
     },
     onSuccess: async () => {
       toast?.success("Exam Updated Successfully");
       await query?.invalidateQueries({ queryKey: ["Exam"] });
-    },
+    }
   });
 
   const {
     mutate: BulkMutate,
     isPending: loadingBulk,
-    isSuccess: bulksuccess,
+    isSuccess: bulksuccess
   } = useMutation({
     mutationFn: (info) =>
       httpService.post(`/app_admin/exams/upload/${id}/bulk-questions/`, info, {
-        headers: { "Content-Type": question.type },
+        headers: { "Content-Type": question.type }
       }),
     onError: (error) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail
           ? error?.response?.data?.detail
-          : "Error occured Creating test",
+          : "Error occured Creating test"
       );
     },
     onSuccess: async () => {
       toast?.success("Exam Updated Successfully");
       await query?.invalidateQueries({ queryKey: ["Exam"] });
-    },
+    }
   });
 
   const handleBulkUpload = () => {
@@ -204,7 +204,7 @@ const useAddTest = (id) => {
     setNumberOfQuestion,
     numberOfQuestion,
     data,
-    loading,
+    loading
   };
 };
 

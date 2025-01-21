@@ -10,7 +10,7 @@ import useGetProfile from "../hooks/getData/useGetProfile";
 const Navbar = () => {
   const navigate = useNavigate();
   const [isModalProfileView, setIsModalProfileView] = useState(false);
-  const profileRef = useRef(null); // Ref for the profile dropdown
+  const profileRef = useRef<HTMLDivElement>(null); // Ref for the profile dropdown
   const { data } = useGetProfile();
 
   const toggleProfileDropdown = () => {
@@ -19,7 +19,8 @@ const Navbar = () => {
 
   // Memoize the function to avoid unnecessary re-creation on each render
   const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (profileRef.current && !profileRef.current.contains(event.target)) {
+    const target = event.target as Node
+    if (profileRef.current && !profileRef.current.contains(target)) {
       setIsModalProfileView(false); // Close the modal if clicked outside
     }
   }, []);

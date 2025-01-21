@@ -1,6 +1,12 @@
 import ImportImgs from "../../../components/ImportImgs";
+import { FC } from "react";
 
-const DeleteResultModal = ({ closeResultDeleteModal }) => {
+interface DeleteResultModalProps {
+  closeResultDeleteModal: () => void;
+}
+
+const DeleteResultModal: FC<DeleteResultModalProps> = (props) => {
+  const { closeResultDeleteModal } = props;
   const images = ImportImgs();
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">

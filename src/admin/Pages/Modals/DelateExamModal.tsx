@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import DeleteExam from "./SuccessModal/DeleteExam";
 
-const DelateExamModal = ({
-  isOpenDeleteExam,
-  closeDeleteExamModal,
-  setIsOpenDeleteExam,
-}) => {
+interface DelateExamModalProps {
+  isOpenDeleteExam: boolean
+  closeDeleteExamModal: () => void
+  setIsOpenDeleteExam: Dispatch<SetStateAction<boolean>>
+}
+
+const DelateExamModal: FC<DelateExamModalProps> = (props) => {
+  const {
+    isOpenDeleteExam,
+    closeDeleteExamModal,
+    setIsOpenDeleteExam
+  } = props;
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const TogglecloseSuccessModal = () => {

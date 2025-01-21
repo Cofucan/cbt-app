@@ -1,4 +1,3 @@
-import React from "react";
 import ImportImgs from "../../components/ImportImgs";
 
 const CreateNewRole = () => {

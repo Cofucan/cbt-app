@@ -1,12 +1,25 @@
-const StudentCard = ({
-  id,
-  score,
-  regNo,
-  name,
-  courseName,
-  courseCode,
-  testDate,
-}) => {
+import { FC } from "react";
+
+interface StudentCardProps {
+  id: number;
+  score: number;
+  regNo: string;
+  name: string;
+  courseName: string;
+  courseCode: string;
+  testDate: string;
+}
+
+const StudentCard: FC<StudentCardProps> = (props) => {
+   const {
+     id,
+     score,
+     regNo,
+     name,
+     courseName,
+     courseCode,
+     testDate,
+   } = props
   return (
     <div className="border-2 border-[#fffff] bg-white p-4">
       <div className="flex items-start">

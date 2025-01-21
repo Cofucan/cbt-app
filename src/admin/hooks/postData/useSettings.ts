@@ -9,15 +9,15 @@ import removeEmptyData from "../../utils/removingEmptyData";
 
 const useSettings = () => {
   const query = useQueryClient();
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const formik = useFormik({
     initialValues: {
       name: "",
       current_session: "",
       semester: "",
+      result_after_test: ""
     },
-    onSubmit: (values) => {
-      const emptyFields = findEmptyFields(values);
+    onSubmit: () => {
       const formData = new FormData();
 
       {

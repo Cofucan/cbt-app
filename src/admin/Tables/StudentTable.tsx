@@ -1,21 +1,19 @@
-import React, { useState } from "react";
-import { Table, Input, Select, Pagination, Menu, Dropdown } from "antd";
+import { useState } from "react";
+import { Dropdown, Menu, Table } from "antd";
 import ImportImgs from "../components/ImportImgs";
 import useGetStudent from "../hooks/getData/useGetStudent";
-import LoadingAnimation from "../components/loadingAnimation";
+import LoadingAnimation from "../components/LoadingAnimation.tsx";
 import EditNewStudentModal from "../Pages/Modals/StudentModal/EditNewStudentModal";
 import DeleteDepartmentModal from "../Pages/Modals/DeleteDepartmentModal";
 import useGetFaculty from "../hooks/getData/useGetFaculty";
 import useGetDepartment from "../hooks/getData/useGetDepartment";
 import { CgProfile } from "react-icons/cg";
 
-const { Option } = Select;
-const { Search } = Input;
 
 const StudentTable = () => {
   const images = ImportImgs();
 
-  const [singleData, setSingleData] = useState(null);
+  const [singleData, setSingleData] = useState<{id: string} | null>(null);
 
   const [facultyId, setFacultyId] = useState("");
   const [department, setDepartment] = useState("");
@@ -32,69 +30,16 @@ const StudentTable = () => {
     level,
   );
 
-  const [visibleDropdown, setVisibleDropdown] = useState(null);
-  // Sample data
-  const studentData = [
-    {
-      key: 1,
-      name: "Tajudeen Abass",
-      matric: "WCH-12KE",
-      faculty: "Arts",
-      department: "Mass Comm",
-      level: "200",
-    },
-    {
-      key: 2,
-      name: "Sarah Brown",
-      matric: "WCH-12KE",
-      faculty: "Arts",
-      department: "Mass Comm",
-      level: "200",
-    },
-    {
-      key: 3,
-      name: "Micheal Owen",
-      matric: "WCH-12KE",
-      faculty: "Arts",
-      department: "Mass Comm",
-      level: "200",
-    },
-    {
-      key: 4,
-      name: "Mary Jane",
-      matric: "WCH-12KE",
-      faculty: "Arts",
-      department: "Mass Comm",
-      level: "200",
-    },
-    {
-      key: 5,
-      name: "Peter Dodle",
-      matric: "WCH-12KE",
-      faculty: "Arts",
-      department: "Mass Comm",
-      level: "200",
-    },
-    {
-      key: 6,
-      name: "John Doe",
-      matric: "WCH-12KE",
-      faculty: "Engineering",
-      department: "Chemical",
-      level: "200",
-    },
-    // Add more students as needed
-  ];
-
-  const openDeleteModal = () => {
-    setVisibleDropdown(null);
-    setIsDeleteModalVisible(true);
-  };
+  const [visibleDropdown, setVisibleDropdown] = useState<string | null>(null);
+  // const openDeleteModal = () => {
+  //   setVisibleDropdown(null);
+  //   setIsDeleteModalVisible(true);
+  // };
   const handleCancelDelete = () => {
     setIsDeleteModalVisible(false);
   };
 
-  const toggleDropdown = (key) => {
+  const toggleDropdown = (key: string) => {
     if (visibleDropdown === key) {
       setVisibleDropdown(null); // Close if the same dropdown is clicked
     } else {
@@ -103,25 +48,18 @@ const StudentTable = () => {
   };
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [filteredData, setFilteredData] = useState(studentData);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedFaculty, setSelectedFaculty] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const studentsPerPage = 4;
   const closeEditModal = () => setIsEditModalVisible(false);
 
-  const clickHandler = (item) => {
+  const clickHandler = (item: {id: string}) => {
     setSingleData(item);
     toggleDropdown(item.id);
   };
 
   // Filter and search logic
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-    filterStudents(value, selectedFaculty, selectedDepartment, selectedLevel);
-  };
+  // const handleSearch = (value) => {
+  //   setSearchTerm(value);
+  //   filterStudents(value, selectedFaculty, selectedDepartment, selectedLevel);
+  // };
   //open downloadResult Modal.......
   const openEditStudentModal = () => {
     setIsEditModalVisible(true);
@@ -147,51 +85,12 @@ const StudentTable = () => {
     </div>
   );
 
-  const handleFilterChange = (field, value) => {
-    if (field === "faculty") setSelectedFaculty(value);
-    if (field === "department") setSelectedDepartment(value);
-    if (field === "level") setSelectedLevel(value);
-
-    filterStudents(
-      searchTerm,
-      field === "faculty" ? value : selectedFaculty,
-      field === "department" ? value : selectedDepartment,
-      field === "level" ? value : selectedLevel,
-    );
-  };
-
-  const filterStudents = (search, faculty, department, level) => {
-    let filtered = studentData;
-
-    if (search) {
-      filtered = filtered.filter((student) =>
-        student.name.toLowerCase().includes(search.toLowerCase()),
-      );
-    }
-
-    if (faculty) {
-      filtered = filtered.filter((student) => student.faculty === faculty);
-    }
-
-    if (department) {
-      filtered = filtered.filter(
-        (student) => student.department === department,
-      );
-    }
-
-    if (level) {
-      filtered = filtered.filter((student) => student.level === level);
-    }
-
-    setFilteredData(filtered);
-  };
-
   const columns = [
     {
       title: "Students",
       dataIndex: "first_name",
       key: "first_name",
-      render: (text, record) => (
+      render: (_: string, record: {first_name: string}) => (
         <div className="flex items-center gap-2">
           {/* Dummy avatar */}
           <div className="w-fit">
@@ -229,7 +128,7 @@ const StudentTable = () => {
     {
       title: "Action",
       key: "action",
-      render: (text) => (
+      render: (text: {id: string}) => (
         <Dropdown
           overlay={menu}
           visible={visibleDropdown === text.id}
@@ -245,33 +144,10 @@ const StudentTable = () => {
     },
   ];
 
-  // Pagination
-  const startIndex = (currentPage - 1) * studentsPerPage;
-  const paginatedData = filteredData.slice(
-    startIndex,
-    startIndex + studentsPerPage,
-  );
-
   return (
     <div className="mt-10 bg-gray-50">
       {/* Search and Filters */}
       <div className="mb-5 flex items-center gap-2">
-        {/* <div className="flex flex-col gap-2">
-          <label className="text-xs font-medium text-[#6e7485]">Search</label>
-          <Input
-            prefix={<img src={images.SearchIcon} alt="search" />}
-            placeholder="Search test..."
-            onSearch={handleSearch}
-            style={{
-              width: "100%",
-              marginBottom: 16,
-              fontSize: "14px",
-              fontWeight: "400",
-            }}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-        </div> */}
-
         <div className="flex flex-col gap-2">
           <label className="text-xs font-medium text-[#6e7485]">Search</label>
 
@@ -289,7 +165,6 @@ const StudentTable = () => {
             </label>
             <select
               onChange={(e) => setFacultyId(e.target.value)}
-              placeholder={"Select Faculty"}
               className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
               <option value={""}>Select Faculty</option>
@@ -336,7 +211,7 @@ const StudentTable = () => {
       </div>
 
       {/* Table */}
-      <LoadingAnimation loading={isLoading} refetching={isRefetching}>
+      <LoadingAnimation loading={isLoading} isRefetching={isRefetching}>
         <Table
           dataSource={data}
           columns={columns}

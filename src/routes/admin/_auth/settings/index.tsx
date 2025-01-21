@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import useGetSettings from "../../../../admin/hooks/getData/useGetSettings";
-import LoadingAnimation from "../../../../admin/components/loadingAnimation";
+import LoadingAnimation from "../../../../admin/components/LoadingAnimation.tsx";
 import SettingForm from "../../../../admin/Pages/SettingPage/settingForm";
 import SettingUpdated from "../../../../admin/Pages/Modals/SettingUpdated";
 

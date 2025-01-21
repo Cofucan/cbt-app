@@ -76,14 +76,14 @@ const SideBar = () => {
 
   const token = localStorage.getItem("token") + "";
 
-  const clickHandler = () => {
+  const clickHandler = async () => {
     localStorage.setItem("token", "");
-    navigate({ to: "/admin" });
+    await navigate({ to: "/admin" });
   };
 
   useEffect(() => {
     if (!token) {
-      navigate({ to: "/admin" });
+      navigate({ to: "/admin" }).then(_ => _);
     }
   }, [token]);
 

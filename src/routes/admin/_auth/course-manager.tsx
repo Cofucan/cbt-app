@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import React, { useState } from "react";
+import  { useState } from "react";
 import CourseManagerTable from "../../../admin/Tables/CourseManagerTable";
 import AddNewCourseModal from "../../../admin/Pages/Modals/NewCoursesModal/AddNewCourseModal";
 

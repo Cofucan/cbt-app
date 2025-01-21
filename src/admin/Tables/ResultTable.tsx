@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dropdown, Input, Menu, Select, Table } from "antd"; // Import Ant Design Table
 import ImportImgs from "../components/ImportImgs";
 import DownloadResult from "../Pages/Modals/ResultManagerModal/DownloadResult";
-import { useNavigate } from "@tanstack/react-router";
 import DeleteResultModal from "../Pages/Modals/ResultManagerModal/DeleteResultModal";
 import useGetResult from "../hooks/getData/useGetResult";
-import LoadingAnimation from "../components/loadingAnimation";
+import LoadingAnimation from "../components/LoadingAnimation.tsx";
 import { dateFormat } from "../utils/dateFormat";
 
 const { Option } = Select;
 
 const ResultTable = () => {
   const images = ImportImgs();
-  const navigate = useNavigate();
   const [faculty, setFaculty] = useState("Engineering");
   const [department, setDepartment] = useState("Chemical");
   const [level, setLevel] = useState("200");
-  const [singleData, setSingleData] = useState(null);
+  const [singleData, setSingleData] = useState<{ title: string; department_name: string; id: string; } | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [visibleDropdown, setVisibleDropdown] = useState(null); // Track visible dropdown by course key
+  const [visibleDropdown, setVisibleDropdown] = useState<string | null>(null); // Track visible dropdown by course key
   const [downloadResult, setDownloadResult] = useState(false);
   const [resultDeleted, setResultDeleted] = useState(false);
 
@@ -29,11 +27,9 @@ const ResultTable = () => {
   };
   const closeDownloadModal = () => setDownloadResult(false);
 
-  //open resultDelete Modal.......
-  const openResultDeleteModal = () => setResultDeleted(true);
   const closeResultDeleteModal = () => setResultDeleted(false);
 
-  const toggleDropdown = (key) => {
+  const toggleDropdown = (key: string) => {
     if (visibleDropdown === key) {
       setVisibleDropdown(null); // Close if the same dropdown is clicked
     } else {
@@ -43,12 +39,11 @@ const ResultTable = () => {
 
   const { data, isLoading, isRefetching } = useGetResult();
 
-  const clickHandler = (item) => {
+  const clickHandler = (item: { title: string; department_name: string; id: string; }) => {
     setSingleData(item);
     toggleDropdown(item.id);
   };
 
-  const downloadData = () => {};
 
   const menu = (
     <div className="">
@@ -66,19 +61,19 @@ const ResultTable = () => {
     {
       title: "Department",
       dataIndex: "department_name",
-      key: "department_name",
+      key: "department_name"
     },
     { title: "Course Title", dataIndex: "title", key: "title" },
     { title: "Course Code", dataIndex: "code", key: "code" },
     {
       title: "Date",
       key: "start_at",
-      render: (data) => <p>{dateFormat(data)}</p>,
+      render: (data: string) => <p>{dateFormat(data)}</p>
     },
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
+      render: (text: { title: string; department_name: string; id: string; }) => (
         <Dropdown
           overlay={menu}
           visible={visibleDropdown === text.id}
@@ -90,8 +85,8 @@ const ResultTable = () => {
             <img src={images.DotsThree} alt="Action" />
           </button>
         </Dropdown>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -108,7 +103,7 @@ const ResultTable = () => {
                 width: 400,
                 marginBottom: 16,
                 fontSize: "14px",
-                fontWeight: "400",
+                fontWeight: "400"
               }}
               onChange={(e) => setSearchTerm(e.target.value)}
               prefix={<img src={images.SearchIcon} alt="search" />}
@@ -122,7 +117,7 @@ const ResultTable = () => {
             <Select
               style={{ width: 170, marginBottom: 16 }}
               value={faculty}
-              onChange={(e) => setFaculty(e.target.value)}
+              onChange={(value) => setFaculty(value)}
               className="w-[20%]"
             >
               <Option>Engineering</Option>
@@ -139,7 +134,7 @@ const ResultTable = () => {
               style={{ width: 170, marginBottom: 16 }}
               className="w-[20%]"
               value={department}
-              onChange={(e) => setDepartment(e.target.value)}
+              onChange={(value) => setDepartment(value)}
             >
               <Option>Chemical</Option>
               <Option>Mass Comm</Option>
@@ -153,7 +148,7 @@ const ResultTable = () => {
               style={{ width: 170, marginBottom: 16 }}
               className="w-[20%]"
               value={level}
-              onChange={(e) => setLevel(e.target.value)}
+              onChange={(value) => setLevel(value)}
             >
               <Option>200</Option>
               <Option>300</Option>
@@ -163,12 +158,12 @@ const ResultTable = () => {
         </div>
 
         {/* Ant Design Table */}
-        <LoadingAnimation loading={isLoading} refetching={isRefetching}>
+        <LoadingAnimation loading={isLoading} isRefetching={isRefetching}>
           <Table
             dataSource={data}
             columns={columns}
             pagination={{
-              pageSize: 10,
+              pageSize: 10
             }}
             className="custom-table mt-4"
           />
@@ -176,9 +171,9 @@ const ResultTable = () => {
       </div>
 
       {/*Download Result Modal */}
-      {downloadResult && (
+      {downloadResult && singleData && (
         <DownloadResult
-          data={singleData}
+          resultData={singleData}
           closeDownloadModal={closeDownloadModal}
         />
       )}

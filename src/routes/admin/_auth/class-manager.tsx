@@ -3,7 +3,7 @@ import ImportImgs from "../../../admin/components/ImportImgs";
 import { useState } from "react";
 import useGetDepartment from "../../../admin/hooks/getData/useGetDepartment";
 import useGetFaculty from "../../../admin/hooks/getData/useGetFaculty";
-import LoadingAnimation from "../../../admin/components/loadingAnimation";
+import LoadingAnimation from "../../../admin/components/LoadingAnimation.tsx";
 import NewDepartmentModal from "../../../admin/Pages/Modals/ClassManagerModal/NewDepartmentModal";
 import EditDepartmentModal from "../../../admin/Pages/Modals/EditDepartmentModal";
 import DeleteDepartmentModal from "../../../admin/Pages/Modals/DeleteDepartmentModal";
@@ -249,7 +249,7 @@ function RouteComponent() {
             </Select>
           </div> */}
         </div>
-        <LoadingAnimation loading={isLoading} refetching={isRefetching}>
+        <LoadingAnimation loading={isLoading} isRefetching={isRefetching}>
           <Table
             className="custom-table"
             columns={columns}

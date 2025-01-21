@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import ExamActivated from "./SuccessModal/ExamActivated";
 import useActivateExam from "../../hooks/postData/useActivateExam";
 import CustomButton from "../../components/CustomButton";
 
-const ActivateExamModal = ({ data, isOpen, setIsOpen, closeModal }) => {
+export interface ActivateExamModalProps {
+  data: { id: string } | null;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  closeModal: () => void;
+}
+
+const ActivateExamModal = ({ data, isOpen, setIsOpen, closeModal }: ActivateExamModalProps) => {
   const images = ImportImgs();
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
-  const TogglecloseSuccessModal = () => {
+  const toggleCloseSuccessModal = () => {
     setOpenSuccessModal(false);
     setIsOpen(false);
   };
-
-  console.log(data);
-  const handleActivate = () => {
-    // Handle the exam activation logic here
-    console.log("Exam activated!");
-    setOpenSuccessModal(true);
-  };
-
   const { activateMutate, loadingActivation, activateSuccess } =
     useActivateExam();
 
@@ -76,7 +75,10 @@ const ActivateExamModal = ({ data, isOpen, setIsOpen, closeModal }) => {
               <CustomButton
                 title="Activate Exam"
                 isLoading={loadingActivation}
-                onClick={() => activateMutate(data?.id)}
+                onClick={() => {
+                  if (!data?.id) return
+                  activateMutate(data.id)
+                }}
               />
             </div>
           </div>
@@ -85,7 +87,7 @@ const ActivateExamModal = ({ data, isOpen, setIsOpen, closeModal }) => {
 
       {openSuccessModal && (
         <div>
-          <ExamActivated TogglecloseSuccessModal={TogglecloseSuccessModal} />
+          <ExamActivated TogglecloseSuccessModal={toggleCloseSuccessModal} />
         </div>
       )}
     </div>

@@ -51,7 +51,7 @@ export const userLogin = createAsyncThunk(
 );
 
 // Async thunk to get exams
-export const getExams = createAsyncThunk("getExams", async (data, thunkAPI) => {
+export const getExams = createAsyncThunk("getExams", async (data: {token: string}, thunkAPI) => {
   try {
     const response = await fetch(`${baseUrl}/app_admin/exams/`, {
       method: "GET",

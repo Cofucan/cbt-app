@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin/_auth/my-account")({
 function RouteComponent() {
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [editProfileModalVisible, setEditProfileModalVisible] = useState(false);
-  const TogglePaaswordVisible = () => {
+  const TogglePasswordVisible = () => {
     setPasswordModalVisible(!passwordModalVisible);
   };
   const ToggleEditProfileVisible = () => {
@@ -28,7 +28,7 @@ function RouteComponent() {
       </div>
       <div className="px-20 py-10">
         <button
-          onClick={TogglePaaswordVisible}
+          onClick={TogglePasswordVisible}
           className="text-lg text-[#5c6168]"
         >
           Change Password
@@ -44,7 +44,7 @@ function RouteComponent() {
         <>
           <div
             className="fixed inset-0 z-10 bg-black opacity-20"
-            onClick={TogglePaaswordVisible} // Close if the overlay is clicked
+            onClick={TogglePasswordVisible} // Close if the overlay is clicked
           ></div>
           <div className="fixed right-[20%] top-[20%] z-20 w-[40vw]">
             <PasswordSettings close={() => setPasswordModalVisible(false)} />

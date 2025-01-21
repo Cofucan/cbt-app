@@ -10,7 +10,7 @@ const useActivateExam = () => {
     isPending: loadingActivation,
     isSuccess: activateSuccess,
   } = useMutation({
-    mutationFn: (info) =>
+    mutationFn: (info: string) =>
       httpService.post(`app_admin/exams/${info}/activate/`, {}),
     onError: (error) => {
       console.log(error?.response?.data?.detail);

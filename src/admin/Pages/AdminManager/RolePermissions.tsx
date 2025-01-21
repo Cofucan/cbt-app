@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import ImportImgs from "../../components/ImportImgs";
 
 const rolesData = {
@@ -28,29 +28,29 @@ const rolesData = {
     "Can suspend users",
     "Can issue refunds",
   ],
-};
+} as const;
 
 const RolePermissions = () => {
   const images = ImportImgs();
-  const [activeRole, setActiveRole] = useState("Super Admin");
+  const [activeRole, setActiveRole] = useState<keyof typeof rolesData>("Super Admin");
   const [switchStates, setSwitchStates] = useState(
     rolesData[activeRole].reduce((acc, permission) => {
       acc[permission] = true; // All switches initially set to true
       return acc;
-    }, {}),
+    }, {} as Record<string, boolean>),
   );
 
-  const handleRoleChange = (role) => {
+  const handleRoleChange = (role: keyof typeof rolesData) => {
     setActiveRole(role);
     setSwitchStates(
       rolesData[role].reduce((acc, permission) => {
         acc[permission] = true; // Reset switch states when role changes
         return acc;
-      }, {}),
+      }, {} as Record<string, boolean>),
     );
   };
 
-  const toggleSwitch = (permission) => {
+  const toggleSwitch = (permission: string) => {
     setSwitchStates({
       ...switchStates,
       [permission]: !switchStates[permission],
@@ -63,7 +63,7 @@ const RolePermissions = () => {
       <div className="px-4">
         <div className="border-2 bg-white p-1">
           <ul>
-            {Object.keys(rolesData).map((role) => (
+            {(Object.keys(rolesData) as (keyof typeof rolesData)[]).map((role) => (
               <li
                 key={role}
                 className={`cursor-pointer border-b px-4 py-2 text-lg ${
