@@ -4,7 +4,7 @@ import ImportImgs from "../components/ImportImgs";
 import useGetStudent from "../hooks/getData/useGetStudent";
 import LoadingAnimation from "../components/loadingAnimation";
 import EditNewStudentModal from "../Pages/Modals/StudentModal/EditNewStudentModal";
-import DeleteDepartmentModal from "../Pages/Modals/deleteDepartmentModal";
+import DeleteDepartmentModal from "../Pages/Modals/DeleteDepartmentModal";
 import useGetFaculty from "../hooks/getData/useGetFaculty";
 import useGetDepartment from "../hooks/getData/useGetDepartment";
 import { CgProfile } from "react-icons/cg";
