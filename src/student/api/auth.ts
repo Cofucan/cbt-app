@@ -5,7 +5,7 @@ export const loginUser = async (credentials) => {
   try {
     const { data } = await axiosInstance.post(
       "/user/student-login/",
-      credentials
+      credentials,
     );
     return data;
   } catch (error) {
@@ -57,7 +57,7 @@ export const fetchCourseDetails = async (examId, token) => {
     const response = await axiosInstance.get(`/student/exams/${examId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-         "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
     });
 
@@ -82,7 +82,7 @@ export const submitAnswer = async (examId, requestBody, token) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     return data;
@@ -106,7 +106,7 @@ export const submitExam = async (examId, requestBody, token) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     return data;
@@ -115,7 +115,6 @@ export const submitExam = async (examId, requestBody, token) => {
     throw error;
   }
 };
-
 
 export const startExam = async (examId, requestBody, token) => {
   try {
@@ -127,7 +126,7 @@ export const startExam = async (examId, requestBody, token) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     return data; // Returns server response, which should contain start time or time remaining
@@ -137,12 +136,10 @@ export const startExam = async (examId, requestBody, token) => {
   }
 };
 
-
 // School Config ....
 export const getSchoolConfig = async () => {
   try {
-    const response = await axiosInstance.get("/school/config/", {
-    });
+    const response = await axiosInstance.get("/school/config/", {});
 
     return response.data;
   } catch (error) {

@@ -16,17 +16,17 @@ const AdminTable = () => {
   const showDeleteModal = () => setOpenDeleteModal(true);
   const handleCancel = () => setOpenDeleteModal(false);
 
-  const { data, isLoading, isRefetching } = useGetAdmin()
+  const { data, isLoading, isRefetching } = useGetAdmin();
 
   const clickHandler = (item) => {
-    setAdminId(item)
-    setOpenDeleteModal(true)
-  }
+    setAdminId(item);
+    setOpenDeleteModal(true);
+  };
 
   const closeHandler = (item) => {
-    setAdminId(item)
-    setOpenDeleteModal(true)
-  }
+    setAdminId(item);
+    setOpenDeleteModal(true);
+  };
 
   const dataSource = [
     {
@@ -91,9 +91,7 @@ const AdminTable = () => {
       title: "Phone Number",
       key: "phone",
       render: (item) => {
-        return (
-          <p>{item?.phone_number ? item?.phone_number : "----"}</p>
-        )
+        return <p>{item?.phone_number ? item?.phone_number : "----"}</p>;
       },
     },
     {
@@ -101,7 +99,7 @@ const AdminTable = () => {
       key: "action",
       render: (item) => (
         <Button
-          onClick={()=> clickHandler(item)}
+          onClick={() => clickHandler(item)}
           type="text"
           icon={<img src={images.DeleteIcon} alt="deleteIcon" />}
         />
@@ -111,14 +109,14 @@ const AdminTable = () => {
 
   return (
     <>
-    <LoadingAnimation loading={isLoading} refetching={isRefetching} >
+      <LoadingAnimation loading={isLoading} refetching={isRefetching}>
         <Table
           className="custom-table"
           dataSource={data}
           columns={columns}
           pagination={{
             pageSize: 10,
-          }}// Disable pagination if not needed
+          }} // Disable pagination if not needed
           bordered
         />
       </LoadingAnimation>

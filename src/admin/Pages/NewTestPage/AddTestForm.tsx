@@ -18,48 +18,57 @@ import CustomButton from "../../components/CustomButton";
 const AddTestForm = () => {
   const images = ImportImgs();
 
-  const { formik, isLoading, question, setQuestion, file, setFile, data, loading } = useAddTest()
+  const {
+    formik,
+    isLoading,
+    question,
+    setQuestion,
+    file,
+    setFile,
+    data,
+    loading,
+  } = useAddTest();
 
-  const { data: facultyList } = useGetFaculty()
-  const { data: departmentList } = useGetDepartment(formik?.values?.faculty_id)
-  const { data: courseList } = useGetCourse(null, formik?.values?.department_id)
-
+  const { data: facultyList } = useGetFaculty();
+  const { data: departmentList } = useGetDepartment(formik?.values?.faculty_id);
+  const { data: courseList } = useGetCourse(
+    null,
+    formik?.values?.department_id,
+  );
 
   const datePickerRef = useRef(null);
 
   const changeHandler = (item) => {
-
-    const dataInfo = JSON.parse(item?.target?.value)
+    const dataInfo = JSON.parse(item?.target?.value);
     console.log(dataInfo);
-    formik.setFieldValue("title", dataInfo?.title)
-    formik.setFieldValue("code", dataInfo?.code)
-  }
+    formik.setFieldValue("title", dataInfo?.title);
+    formik.setFieldValue("code", dataInfo?.code);
+  };
 
   console.log(formik?.values);
 
-  useEffect(()=> {
-    formik.setFieldValue("session", data?.current_session)
-  }, [loading, data])
-
+  useEffect(() => {
+    formik.setFieldValue("session", data?.current_session);
+  }, [loading, data]);
 
   return (
     <sectio>
       <div className="w-full bg-white p-6 shadow-md">
-        <h2 className="text-lg font-semibold mb-6 border-b pb-5">New Test</h2>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h2 className="mb-6 border-b pb-5 text-lg font-semibold">New Test</h2>
+        <form className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {/* Faculty */}
           <div className="flex flex-col">
             <label className="pb-2 text-[#1d2026]">Faculty</label>
             <select
-              onChange={(e) => formik?.setFieldValue("faculty_id", Number(e.target.value))}
+              onChange={(e) =>
+                formik?.setFieldValue("faculty_id", Number(e.target.value))
+              }
               placeholder={"Select Faculty"}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Faculty</option>
+              <option value={""}>Select Faculty</option>
               {facultyList?.map((item) => {
-                return (
-                  <option value={item?.id} >{item?.name}</option>
-                )
+                return <option value={item?.id}>{item?.name}</option>;
               })}
             </select>
           </div>
@@ -67,11 +76,15 @@ const AddTestForm = () => {
           {/* Exam Date */}
           <div className="flex flex-col">
             <label className="pb-2 text-[#1d2026]">Exam Date(Time)</label>
-            <div className="relative flex items-center text-[#8c94a3] border px-3 py-2 rounded w-full">
+            <div className="relative flex w-full items-center rounded border px-3 py-2 text-[#8c94a3]">
               {/* Use ref to control DatePicker */}
               <DatePicker
                 ref={datePickerRef} // Reference to DatePicker
-                selected={formik?.values?.start_at ? new Date(formik?.values?.start_at) : ""}
+                selected={
+                  formik?.values?.start_at
+                    ? new Date(formik?.values?.start_at)
+                    : ""
+                }
                 showTimeSelect
                 onChange={(date) => formik.setFieldValue("start_at", date)}
                 className="w-full outline-none" // Remove border styling from DatePicker
@@ -81,7 +94,7 @@ const AddTestForm = () => {
               <img
                 src={images.Calendar}
                 alt="Calendar"
-                className="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" // Make the image clickable
+                className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 transform cursor-pointer" // Make the image clickable
                 onClick={() => datePickerRef.current.setFocus()} // Programmatically open DatePicker
               />
             </div>
@@ -91,31 +104,32 @@ const AddTestForm = () => {
           <div className="flex flex-col">
             <label className="pb-2 text-[#1d2026]">Department</label>
             <select
-              onChange={(e) => formik?.setFieldValue("department_id", Number(e.target.value))}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              onChange={(e) =>
+                formik?.setFieldValue("department_id", Number(e.target.value))
+              }
+              className="rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Department</option>
+              <option value={""}>Select Department</option>
               {departmentList?.map((item) => {
-                return (
-                  <option value={item?.id} >{item?.name}</option>
-                )
+                return <option value={item?.id}>{item?.name}</option>;
               })}
             </select>
           </div>
-
 
           {/* Course Title */}
           <div className="flex flex-col">
             <label className="pb-2 text-[#1d2026]">Course Title</label>
             <select
               onChange={changeHandler}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Course</option>
+              <option value={""}>Select Course</option>
               {courseList?.map((item) => {
                 return (
-                  <option key={item.id} value={JSON.stringify(item)} >{item?.title}</option>
-                )
+                  <option key={item.id} value={JSON.stringify(item)}>
+                    {item?.title}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -128,21 +142,21 @@ const AddTestForm = () => {
               name="duration"
               onChange={formik.handleChange}
               value={formik.values.duration}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
             />
           </div>
 
           {/* Session */}
-          {(!data?.current_session && !loading) && (
+          {!data?.current_session && !loading && (
             <div className="flex flex-col">
               <label className="pb-2 text-[#1d2026]">Session</label>
               <select
                 onChange={formik.handleChange}
                 name="session"
                 value={formik.values.session}
-                className="border px-3 py-2 rounded text-[#8c94a3]"
+                className="rounded border px-3 py-2 text-[#8c94a3]"
               >
-                <option value={""} >Select Session</option>
+                <option value={""}>Select Session</option>
                 <option>2023/2024</option>
                 <option>2022/2023</option>
                 <option>2021/2022</option>
@@ -158,7 +172,7 @@ const AddTestForm = () => {
               onChange={formik.handleChange}
               name="no_of_questions"
               value={formik.values.no_of_questions}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
             />
           </div>
 
@@ -167,9 +181,9 @@ const AddTestForm = () => {
             <label className="pb-2 text-[#1d2026]">Level</label>
             <select
               onChange={(e) => formik?.setFieldValue("level", e.target.value)}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Level</option>
+              <option value={""}>Select Level</option>
               <option>400</option>
               <option>300</option>
               <option>200</option>
@@ -181,12 +195,14 @@ const AddTestForm = () => {
           <div className="flex flex-col">
             <label className="pb-2 text-[#1d2026]">Number of attempts</label>
             <select
-              onChange={(e) => formik?.setFieldValue("attempts_allowed", e.target.value)}
+              onChange={(e) =>
+                formik?.setFieldValue("attempts_allowed", e.target.value)
+              }
               value={formik.values.attempts_allowed}
               placeholder="Select attempts"
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select attempts</option>
+              <option value={""}>Select attempts</option>
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -201,7 +217,7 @@ const AddTestForm = () => {
               name="instructor_name"
               onChange={formik.handleChange}
               value={formik.values.instructor_name}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
               placeholder="Examiner"
             />
           </div>
@@ -214,12 +230,10 @@ const AddTestForm = () => {
               name="points_per_question"
               onChange={formik.handleChange}
               value={formik.values.overall_score}
-              className="border px-3 py-2 rounded text-[#8c94a3]"
+              className="rounded border px-3 py-2 text-[#8c94a3]"
               placeholder="0"
             />
           </div>
-
-
 
           {/* Instructions */}
           <div className="flex flex-col md:col-span-2">
@@ -228,24 +242,29 @@ const AddTestForm = () => {
               name="instructions"
               onChange={formik.handleChange}
               value={formik.values.instructions}
-              className="border px-3 py-2 rounded text-[#8c94a3] h-32"
+              className="h-32 rounded border px-3 py-2 text-[#8c94a3]"
               placeholder="Write your instructions here..."
             ></textarea>
             <TestFormFileUpload
               setQuestion={setQuestion}
-              question={question} file={file} setFile={setFile} />
+              question={question}
+              file={file}
+              setFile={setFile}
+            />
           </div>
 
           {/* Submit button */}
         </form>
       </div>
-      <div className="flex justify-between gap-4 items-center">
-        <button
-          className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
-        >
+      <div className="flex items-center justify-between gap-4">
+        <button className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200">
           Cancel
         </button>
-        <CustomButton title="Save Test" isLoading={isLoading} onClick={formik?.handleSubmit} />
+        <CustomButton
+          title="Save Test"
+          isLoading={isLoading}
+          onClick={formik?.handleSubmit}
+        />
       </div>
     </sectio>
   );

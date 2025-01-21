@@ -4,19 +4,12 @@ import useImageStore from "../../globalstate/useImageStore";
 import { FaFileExcel } from "react-icons/fa";
 
 const FileUpload = (props) => {
-
-  const {
-    setQuestion,
-    question,
-    setFile,
-    file
-  } = props
+  const { setQuestion, question, setFile, file } = props;
 
   const images = ImportImgs();
   // const [files, setFiles] = useState([]);
   const [dragging, setDragging] = useState(false);
-  const [downloadFile, setDownloadFile] = useState(null); // State to store the file to download 
-
+  const [downloadFile, setDownloadFile] = useState(null); // State to store the file to download
 
   const handleDragOverQuestion = (e) => {
     e.preventDefault();
@@ -40,7 +33,7 @@ const FileUpload = (props) => {
     //   const fileType = file.type;
     //   return fileType === "text/csv" || fileType === "application/zip";
     // });
-    setQuestion(selectedFiles)
+    setQuestion(selectedFiles);
     // }
   };
 
@@ -66,7 +59,7 @@ const FileUpload = (props) => {
       const fileType = file.type;
       return fileType === "text/csv" || fileType === "application/zip";
     });
-    setQuestion(selectedFiles)
+    setQuestion(selectedFiles);
     // setFiles((prevFiles) => [...prevFiles, ...validFiles]);
     if (validFiles.length > 0) {
       setDownloadFile(validFiles[0]); // Set the first valid file for download
@@ -75,12 +68,12 @@ const FileUpload = (props) => {
 
   const handleBrowseQuest = (e) => {
     const selected = e.target.files[0];
-    setQuestion(selected)
+    setQuestion(selected);
   };
 
   const handleBrowse = (e) => {
     const selected = e.target.files[0];
-    setFile(selected)
+    setFile(selected);
   };
 
   const handleRemoveFile = (index) => {
@@ -106,7 +99,6 @@ const FileUpload = (props) => {
   console.log(question);
 
   const handleImageChange = (e) => {
-
     const selected = e.target.files[0];
     // const TYPES = ["image/png", "image/jpg", "image/jpeg"];
     // if (selected && TYPES.includes(selected.type)) {
@@ -117,9 +109,8 @@ const FileUpload = (props) => {
     //     reader.readAsDataURL(selected)
     // }
 
-    setQuestion(selected)
-
-  }
+    setQuestion(selected);
+  };
 
   return (
     <div className="">
@@ -128,8 +119,9 @@ const FileUpload = (props) => {
         <label className="pb-4 text-[#1d2026]">Upload Questions</label>
         <label className="flex items-center gap-16">
           <div
-            className={`border rounded px-4 py-8 w-[80%] mt-2 flex items-center ${dragging ? "border-orange-500" : "border-gray-300"
-              }`}
+            className={`mt-2 flex w-[80%] items-center rounded border px-4 py-8 ${
+              dragging ? "border-orange-500" : "border-gray-300"
+            }`}
             onDragOver={handleDragOverQuestion}
             onDragLeave={handleDragLeaveQuestion}
             onDrop={handleDropQuestion}
@@ -142,40 +134,40 @@ const FileUpload = (props) => {
             />
             {!question && (
               <div className="flex items-center">
-                <span className="text-[#8c94a3] flex items-center">
+                <span className="flex items-center text-[#8c94a3]">
                   <img
                     src={images.DownloadUp}
                     // onClick={() =>
                     //   document.querySelector('input[type="file"]').click()
                     // }
                     alt="uploadIcon"
-                    className="p-1 rounded-full mr-2 cursor-pointer border bg-[#e9eaf0]"
+                    className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
                   />{" "}
                   {/* Upload icon */}
                   Drag and drop your files here or
                 </span>
                 <div
-                  className="ml-2 text-orange-500 font-semibold"
+                  className="ml-2 font-semibold text-orange-500"
                   // onClick={() =>
                   //   document.querySelector('input[type="file"]').click()
                   // }
                 >
                   Browse{" "}
-                  <span className="text-[#8c94a3] font-normal">
+                  <span className="font-normal text-[#8c94a3]">
                     to upload CSV File
                   </span>
                 </div>
               </div>
             )}
             {question && (
-              <div className=" w-full flex gap-3 justify-center items-center " >
+              <div className="flex w-full items-center justify-center gap-3">
                 <img
                   src={images.DownloadUp}
                   // onClick={() =>
                   //   document.querySelector('input[type="file"]').click()
                   // }
                   alt="uploadIcon"
-                  className="p-1 rounded-full mr-2 cursor-pointer border bg-[#e9eaf0]"
+                  className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
                 />{" "}
                 <FaFileExcel size={"40px"} />
                 <div>
@@ -189,10 +181,10 @@ const FileUpload = (props) => {
             <img
               src={images.DownloadDown}
               alt="downloadIcon"
-              className="p-1 rounded-full cursor-pointer border bg-[#e9eaf0]"
+              className="cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
               onClick={handleDownload} // Trigger download on click
             />
-            <p className="text-center w-20 text-[#8c94a3]">Download File</p>
+            <p className="w-20 text-center text-[#8c94a3]">Download File</p>
           </div>
         </label>
       </div>
@@ -200,9 +192,11 @@ const FileUpload = (props) => {
       {/* Upload Question Images Section */}
       <div className="">
         <label className="pb-4 text-[#1d2026]">Upload Questions Images</label>
-        <label role='button' 
-          className={`border rounded-lg  px-4 py-8 mt-2 flex items-center ${dragging ? "border-orange-500" : "border-gray-300"
-            }`}
+        <label
+          role="button"
+          className={`mt-2 flex items-center rounded-lg border px-4 py-8 ${
+            dragging ? "border-orange-500" : "border-gray-300"
+          }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
@@ -215,41 +209,41 @@ const FileUpload = (props) => {
           />
 
           {!file && (
-            <div className="flex items-center"> 
-              <span className="text-[#8c94a3] flex items-center">
+            <div className="flex items-center">
+              <span className="flex items-center text-[#8c94a3]">
                 <img
                   src={images.DownloadUp}
                   // onClick={() =>
                   //   document.getElementById('file').click()
                   // }
                   alt="uploadIcon"
-                  className="p-1 rounded-full mr-2 cursor-pointer border bg-[#e9eaf0]"
+                  className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
                 />{" "}
                 {/* Upload icon */}
                 Drag and drop your files here or
               </span>
               <div
-                className="ml-2 text-orange-500 font-semibold"
-              // onClick={() =>
-              //   document.getElementById('file').click()
-              // }
+                className="ml-2 font-semibold text-orange-500"
+                // onClick={() =>
+                //   document.getElementById('file').click()
+                // }
               >
                 Browse{" "}
-                <span className="text-[#8c94a3] font-normal">
+                <span className="font-normal text-[#8c94a3]">
                   to upload Zip File
                 </span>
               </div>
             </div>
           )}
           {file && (
-            <div className=" w-full flex gap-3 justify-center items-center " >
+            <div className="flex w-full items-center justify-center gap-3">
               <img
                 src={images.DownloadUp}
                 // onClick={() =>
                 //   document.getElementById('file').click()
                 // }
                 alt="uploadIcon"
-                className="p-1 rounded-full mr-2 cursor-pointer border bg-[#e9eaf0]"
+                className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
               />{" "}
               <FaFileExcel size={"40px"} />
               <div>

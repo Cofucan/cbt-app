@@ -24,8 +24,8 @@ const ResultTable = () => {
 
   //open downloadResult Modal.......
   const openDownloadModal = () => {
-    setDownloadResult(true)
-    setVisibleDropdown(null)
+    setDownloadResult(true);
+    setVisibleDropdown(null);
   };
   const closeDownloadModal = () => setDownloadResult(false);
 
@@ -41,16 +41,14 @@ const ResultTable = () => {
     }
   };
 
-  const { data, isLoading, isRefetching } = useGetResult()
+  const { data, isLoading, isRefetching } = useGetResult();
 
   const clickHandler = (item) => {
-    setSingleData(item)
-    toggleDropdown(item.id)
-  }
+    setSingleData(item);
+    toggleDropdown(item.id);
+  };
 
-  const downloadData = () => {
-
-  }
+  const downloadData = () => {};
 
   const menu = (
     <div className="">
@@ -65,14 +63,17 @@ const ResultTable = () => {
   // Table columns
   const columns = [
     { title: "Faculty", dataIndex: "faculty_name", key: "faculty_name" },
-    { title: "Department", dataIndex: "department_name", key: "department_name" },
+    {
+      title: "Department",
+      dataIndex: "department_name",
+      key: "department_name",
+    },
     { title: "Course Title", dataIndex: "title", key: "title" },
     { title: "Course Code", dataIndex: "code", key: "code" },
     {
-      title: "Date", key: "start_at",
-      render: (data) => (
-        <p>{dateFormat(data)}</p>
-      ),
+      title: "Date",
+      key: "start_at",
+      render: (data) => <p>{dateFormat(data)}</p>,
     },
     {
       title: "Action",
@@ -162,25 +163,30 @@ const ResultTable = () => {
         </div>
 
         {/* Ant Design Table */}
-        <LoadingAnimation loading={isLoading} refetching={isRefetching} >
+        <LoadingAnimation loading={isLoading} refetching={isRefetching}>
           <Table
             dataSource={data}
             columns={columns}
             pagination={{
               pageSize: 10,
             }}
-            className="mt-4 custom-table"
+            className="custom-table mt-4"
           />
         </LoadingAnimation>
       </div>
 
       {/*Download Result Modal */}
       {downloadResult && (
-        <DownloadResult data={singleData} closeDownloadModal={closeDownloadModal} />
+        <DownloadResult
+          data={singleData}
+          closeDownloadModal={closeDownloadModal}
+        />
       )}
 
       {/*Delete Result Modal */}
-      {resultDeleted && <DeleteResultModal closeResultDeleteModal={closeResultDeleteModal} />}
+      {resultDeleted && (
+        <DeleteResultModal closeResultDeleteModal={closeResultDeleteModal} />
+      )}
     </>
   );
 };

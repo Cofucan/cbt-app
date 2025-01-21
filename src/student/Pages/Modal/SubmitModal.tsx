@@ -40,8 +40,7 @@ const SubmitModal = ({
 
       // Navigate to ExamFinished with examStartTime in state
       // navigate({to: "/student/exam-success",  state: { examStartTime } });
-      navigate({to: "/student/exam-success"});
-
+      navigate({ to: "/student/exam-success" });
     } catch (error) {
       console.error("Error submitting exam:", error);
       setErrorMessage("");
@@ -54,9 +53,9 @@ const SubmitModal = ({
 
   return (
     <div>
-      <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
-        <div className="bg-white shadow-lg w-[47rem]">
-          <div className="flex justify-between items-center px-6 py-3 border-b">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+        <div className="w-[47rem] bg-white shadow-lg">
+          <div className="flex items-center justify-between border-b px-6 py-3">
             <h2 className="text-lg font-medium">Submit</h2>
             <button
               onClick={ToggleCloseModal}
@@ -65,7 +64,7 @@ const SubmitModal = ({
               <img src={images.Times} alt="Close" />
             </button>
           </div>
-          <div className="p-6 flex flex-col gap-5">
+          <div className="flex flex-col gap-5 p-6">
             <p>Are you sure you want to submit your test?</p>
             <p>
               Once submitted, you will not be able to make any further changes
@@ -73,22 +72,22 @@ const SubmitModal = ({
             </p>
           </div>
           {errorMessage && (
-            <div className="text-[#ff6636] px-4 py-2 font-semibold border-2 border-gray-200 bg-gray-200">
+            <div className="border-2 border-gray-200 bg-gray-200 px-4 py-2 font-semibold text-[#ff6636]">
               {errorMessage}
             </div>
           )}
-          <div className="flex justify-between p-6 space-x-4">
+          <div className="flex justify-between space-x-4 p-6">
             <button
               onClick={ToggleCloseModal}
-              className="px-4 py-2 font-semibold bg-gray-200 text-black"
+              className="bg-gray-200 px-4 py-2 font-semibold text-black"
               disabled={isSubmitting}
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
-              className={`px-5 py-3 bg-[#ff6636] text-white hover:bg-[#e65c2f] font-semibold ${
-                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              className={`bg-[#ff6636] px-5 py-3 font-semibold text-white hover:bg-[#e65c2f] ${
+                isSubmitting ? "cursor-not-allowed opacity-50" : ""
               }`}
               disabled={isSubmitting}
             >

@@ -7,7 +7,7 @@ const useGetProfile = () => {
 
   const { isLoading, isRefetching, data, isError } = useQuery({
     queryKey: [`Profile`],
-    queryFn: () => httpService.get(`user/me/`)
+    queryFn: () => httpService.get(`user/me/`),
   });
   if (isError) {
     localStorage.setItem("token", "");
@@ -17,7 +17,7 @@ const useGetProfile = () => {
   return {
     data: data?.data?.result ?? {},
     isLoading,
-    isRefetching
+    isRefetching,
   };
 };
 

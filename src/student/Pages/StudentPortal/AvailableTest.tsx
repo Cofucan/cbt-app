@@ -14,7 +14,7 @@ const AvailableTest = () => {
 
     if (!token) {
       toast.error("No token found. Redirecting to login...");
-      navigate({to: "/student/login"});
+      navigate({ to: "/student/login" });
       return;
     }
 
@@ -58,34 +58,39 @@ const AvailableTest = () => {
   // Handle case when no available tests
   if (availableTest.length === 0) {
     return (
-      <p className="bg-white px-5 py-3 text-[#ff6636] md:py-6 md:px-10 rounded-lg border-2 border-[#e9eaf0]">
+      <p className="rounded-lg border-2 border-[#e9eaf0] bg-white px-5 py-3 text-[#ff6636] md:px-10 md:py-6">
         No available test found....
       </p>
     );
   }
 
   return (
-    <div className="bg-white px-5 py-3 md:py-6 md:px-10 rounded-lg border-2 border-[#e9eaf0]">
-      <h2 className="text-2xl font-semibold text-[#ff6636] mb-5 lg:mb-10">
+    <div className="rounded-lg border-2 border-[#e9eaf0] bg-white px-5 py-3 md:px-10 md:py-6">
+      <h2 className="mb-5 text-2xl font-semibold text-[#ff6636] lg:mb-10">
         Available Test
       </h2>
 
       {/* Map over availableTest to create multiple buttons */}
       {availableTest.map((test) => (
         <div key={test.id}>
-          <h3 className="text-lg md:text-2xl font-semibold">{test.title}</h3>
-          <p className="text-black text-lg md:text-2xl lg:text-lg pt-3 flex flex-col">
+          <h3 className="text-lg font-semibold md:text-2xl">{test.title}</h3>
+          <p className="flex flex-col pt-3 text-lg text-black md:text-2xl lg:text-lg">
             {formatDateTime(test.start_at)}
           </p>
-          <p className="text-black text-lg md:text-2xl lg:text-lg mt-5">
+          <p className="mt-5 text-lg text-black md:text-2xl lg:text-lg">
             Click Here
           </p>
           <button
-            className="text-[#ff6636] underline flex items-center mt-2 md:gap-2"
-            onClick={() => navigate({to: "/student/course-details/$examId", params: {examId: test.id}})} // Navigate to Details with dynamic examId
+            className="mt-2 flex items-center text-[#ff6636] underline md:gap-2"
+            onClick={() =>
+              navigate({
+                to: "/student/course-details/$examId",
+                params: { examId: test.id },
+              })
+            } // Navigate to Details with dynamic examId
           >
             <img src={images.thumbDirection} alt="Direction" />
-            <span className="md:text-lg font-semibold">{test.title}</span>
+            <span className="font-semibold md:text-lg">{test.title}</span>
           </button>
         </div>
       ))}

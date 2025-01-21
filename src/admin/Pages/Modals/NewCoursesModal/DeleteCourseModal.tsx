@@ -6,20 +6,19 @@ import CustomButton from "../../../components/CustomButton";
 const DeleteCourseModal = ({ data, handleDeleteCancel }) => {
   const images = ImportImgs();
 
-  const { mutate, isLoading, isSuccess } = useDeleteCourse()
-
+  const { mutate, isLoading, isSuccess } = useDeleteCourse();
 
   useEffect(() => {
     if (isSuccess) {
-      handleDeleteCancel()
+      handleDeleteCancel();
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
-      <div className="bg-white shadow-lg w-[35rem]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+      <div className="w-[35rem] bg-white shadow-lg">
         {/* Modal header */}
-        <div className="flex justify-between items-center px-6 py-2 border-b">
+        <div className="flex items-center justify-between border-b px-6 py-2">
           <h2 className="text-xl font-semibold">Delete Course</h2>
           <button
             onClick={handleDeleteCancel}
@@ -36,14 +35,19 @@ const DeleteCourseModal = ({ data, handleDeleteCancel }) => {
 
         {/* Modal footer */}
 
-        <div className="flex justify-between gap-4 p-6 items-center">
+        <div className="flex items-center justify-between gap-4 p-6">
           <button
             onClick={handleDeleteCancel}
-            className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
+            className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200"
           >
             Cancel
           </button>
-          <CustomButton red={true} title="Delete Course" isLoading={isLoading} onClick={() => mutate(data?.id)} />
+          <CustomButton
+            red={true}
+            title="Delete Course"
+            isLoading={isLoading}
+            onClick={() => mutate(data?.id)}
+          />
         </div>
 
         {/* {openDeletedDept && (

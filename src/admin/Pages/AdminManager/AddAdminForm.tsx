@@ -12,33 +12,33 @@ const AddAdminForm = () => {
   const showAdminSuccessModal = () => setOpenSuccessAdminModal(true);
   const closeAdminSuccessModal = () => setOpenSuccessAdminModal(false);
 
-  const { formik, isLoading, isSuccess } = useAddAdmin()
+  const { formik, isLoading, isSuccess } = useAddAdmin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formik?.handleSubmit()
-  }
+    formik?.handleSubmit();
+  };
 
   const handlePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  useEffect(()=> {
-    if(isSuccess){
-      showAdminSuccessModal()
+  useEffect(() => {
+    if (isSuccess) {
+      showAdminSuccessModal();
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
   return (
     <div className="flex items-center">
-      <div className="bg-white p-8 shadow-sm w-full max-w-xl">
-        <h2 className="text-lg font-semibold mb-4">Add Admin</h2>
+      <div className="w-full max-w-xl bg-white p-8 shadow-sm">
+        <h2 className="mb-4 text-lg font-semibold">Add Admin</h2>
 
         <hr className="mb-4" />
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               First Name
             </label>
             <input
@@ -46,13 +46,13 @@ const AddAdminForm = () => {
               placeholder="First name..."
               onChange={formik.handleChange}
               name="first_name"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               Last Name
             </label>
             <input
@@ -60,13 +60,13 @@ const AddAdminForm = () => {
               placeholder="Last name..."
               onChange={formik.handleChange}
               name="last_name"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               Admin Email
             </label>
             <input
@@ -74,13 +74,13 @@ const AddAdminForm = () => {
               placeholder="Email address"
               onChange={formik.handleChange}
               name="email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               Admin Identifier
             </label>
             <input
@@ -88,13 +88,13 @@ const AddAdminForm = () => {
               placeholder="Admin Identifier"
               onChange={formik.handleChange}
               name="identifier"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               Admin Role
             </label>
 
@@ -118,33 +118,36 @@ const AddAdminForm = () => {
                 type={passwordVisible ? "text" : "password"}
                 name="password"
                 placeholder="Type Password"
-                className="border border-[#CBD5E1] px-3 h-[40px] rounded-lg placeholder:text-base text-gray-500 focus:placeholder:text-sm custom-placeholder
-   focus:ring-blue-300 focus:border-blue-400 w-full"
+                className="custom-placeholder h-[40px] w-full rounded-lg border border-[#CBD5E1] px-3 text-gray-500 placeholder:text-base focus:border-blue-400 focus:ring-blue-300 focus:placeholder:text-sm"
               />
               {passwordVisible ? (
                 <FaEye
                   onClick={handlePasswordVisibility}
-                  className="absolute right-3 top-1/2 text-xl  -translate-y-1/2 text-gray-500 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-xl text-gray-500"
                 />
               ) : (
                 <FaEyeSlash
                   onClick={handlePasswordVisibility}
-                  className="absolute right-3 top-1/2  text-xl -translate-y-1/2 text-gray-500 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-xl text-gray-500"
                 />
               )}
             </div>
           </div>
-          <div className="flex justify-between gap-4 pt-10 items-center">
-            <button
-              className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
-            >
+          <div className="flex items-center justify-between gap-4 pt-10">
+            <button className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200">
               Cancel
             </button>
-            <CustomButton title="Add Admin" isLoading={isLoading} onClick={formik?.handleSubmit} />
+            <CustomButton
+              title="Add Admin"
+              isLoading={isLoading}
+              onClick={formik?.handleSubmit}
+            />
           </div>
         </form>
 
-        {openSuccessAdminModal && <SuccessAdminModal closeAdminSuccessModal={closeAdminSuccessModal} />}
+        {openSuccessAdminModal && (
+          <SuccessAdminModal closeAdminSuccessModal={closeAdminSuccessModal} />
+        )}
       </div>
     </div>
   );

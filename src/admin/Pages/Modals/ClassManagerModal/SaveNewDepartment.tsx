@@ -13,10 +13,10 @@ const SaveNewDepartment = ({ handleCancel, onSubmit, success, isLoading }) => {
   return (
     <div>
       {/* Modal */}
-      <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
-        <div className="bg-white shadow-lg w-[31rem]">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+        <div className="w-[31rem] bg-white shadow-lg">
           {/* Modal header */}
-          <div className="flex justify-between items-center px-6 py-2 border-b">
+          <div className="flex items-center justify-between border-b px-6 py-2">
             <h2 className="text-lg font-semibold">Save New Department</h2>
             <button
               onClick={handleCancel}
@@ -32,19 +32,21 @@ const SaveNewDepartment = ({ handleCancel, onSubmit, success, isLoading }) => {
           </div>
 
           {/* Modal footer */}
-          <div className="flex justify-between gap-4 items-center">
+          <div className="flex items-center justify-between gap-4">
             <button
               onClick={handleCancel}
-              className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
+              className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200"
             >
               Cancel
             </button>
-            <CustomButton title="Save Department" isLoading={isLoading} onClick={onSubmit} />
+            <CustomButton
+              title="Save Department"
+              isLoading={isLoading}
+              onClick={onSubmit}
+            />
           </div>
         </div>
-        {success && (
-          <DepartmentAdded handleCancel={handleCancel} />
-        )}
+        {success && <DepartmentAdded handleCancel={handleCancel} />}
       </div>
     </div>
   );

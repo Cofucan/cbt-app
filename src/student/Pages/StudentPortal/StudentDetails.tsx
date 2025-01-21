@@ -27,17 +27,17 @@ const StudentDetails = ({ user }) => {
   }, []);
 
   return (
-    <div className="bg-white py-6 px-5 rounded-lg border-2 border-[#e9eaf0]">
-      <h2 className="text-2xl font-semibold text-[#ff6636] py- mb-4">
+    <div className="rounded-lg border-2 border-[#e9eaf0] bg-white px-5 py-6">
+      <h2 className="py- mb-4 text-2xl font-semibold text-[#ff6636]">
         Student Details
       </h2>
       <img
         src={profileImage}
         alt="Student"
-        className="w-48 h-48 rounded-full object-cover mb-10"
+        className="mb-10 h-48 w-48 rounded-full object-cover"
       />
 
-      <div className="text-black md:text-2xl flex flex-col gap-5 pb-5 xl:pb-0">
+      <div className="flex flex-col gap-5 pb-5 text-black md:text-2xl xl:pb-0">
         <p>
           <span className="font-semibold">Full Name:</span> {user.name}
         </p>

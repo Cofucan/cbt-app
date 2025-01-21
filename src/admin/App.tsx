@@ -26,8 +26,6 @@ import ResultManager from "./Pages/ResultManager/ResultManager";
 import ViewResult from "./Pages/ResultManager/ViewResult";
 import CreateNewRole from "./Pages/AdminManager/CreateNewRole";
 
-
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -35,14 +33,18 @@ const router = createBrowserRouter(
 
       <Route path="/admin" element={<LoggedInAuthenticator />}>
         <Route index path="test-manager" element={<Dashboard />} />
-        <Route index path="test-student-analysis/:id" element={<StudentAnalysis />} />
+        <Route
+          index
+          path="test-student-analysis/:id"
+          element={<StudentAnalysis />}
+        />
         <Route index path="new-test" element={<NewTest />} />
         <Route index path="class-manager" element={<ClassManager />} />
         <Route index path="course-manager" element={<CourseManager />} />
         <Route index path="student-manager" element={<StudentManager />} />
         <Route index path="result-manager" element={<ResultManager />} />
         <Route index path="result-viewResult" element={<ViewResult />} />
-        <Route index path="result-CreateNewRole" element={ <CreateNewRole />} />
+        <Route index path="result-CreateNewRole" element={<CreateNewRole />} />
         <Route index path="admin-manager" element={<AdminManager />} />
         <Route index path="admin-added" element={<AddAdmin />} />
         <Route index path="admin-manageRole" element={<ManagerRoles />} />
@@ -50,8 +52,8 @@ const router = createBrowserRouter(
         <Route index path="settings" element={<Settings />} />
         <Route index path="settings-ActivityLog" element={<ActivityLogs />} />
       </Route>
-    </>
-  )
+    </>,
+  ),
 );
 
 const App = () => <RouterProvider router={router} />;

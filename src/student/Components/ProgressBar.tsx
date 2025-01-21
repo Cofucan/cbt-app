@@ -1,21 +1,21 @@
 import { FC } from "react";
 
 export interface ProgressBarProps {
-  value: number
-  max: number
+  value: number;
+  max: number;
 }
 
 const ProgressBar: FC<ProgressBarProps> = (props) => {
-  const { value, max } = props
+  const { value, max } = props;
   const progressPercentage = (value / max) * 100;
 
   return (
-    <div className="w-full bg-gray-200 rounded-full h-8">
+    <div className="h-8 w-full rounded-full bg-gray-200">
       <div
-        className="bg-[#FF6636] h-8 rounded-full flex items-center justify-center transition-all duration-300"
+        className="flex h-8 items-center justify-center rounded-full bg-[#FF6636] transition-all duration-300"
         style={{ width: `${progressPercentage}%` }}
       >
-        <span className="text-white font-medium">
+        <span className="font-medium text-white">
           {value} Out {max}
         </span>
       </div>

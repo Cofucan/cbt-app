@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ImportingImgs from "./ImportingImgs";
-import { useNavigate } from "@tanstack/react-router";
 import { getUserProfile } from "../api/auth";
 import LogoutModal from "../Pages/Modal/LogoutModal";
 
@@ -43,33 +42,24 @@ const Header = () => {
 
   return (
     <section>
-      <div className="flex justify-between bg-white items-center w-[100%] px-3 lg:px-10 py-3">
-        <img
-          src={images.enugun}
-          alt="mainLogo"
-         width={200}
-        />
+      <div className="flex w-[100%] items-center justify-between bg-white px-3 py-3 lg:px-10">
+        <img src={images.enugun} alt="mainLogo" width={200} />
 
-        <div className="flex gap-10 items-center">
+        <div className="flex items-center gap-10">
           <button
             onClick={OpenModal}
-            className="hidden lg:flex justify-center px-8 py-2 md:px-10 md:py-2  cursor-pointer text-white text-lg lg:text-lg font-semibold bg-[#FF6636] hover:bg-[#f8733a] hover:duration-700"
+            className="hidden cursor-pointer justify-center bg-[#FF6636] px-8 py-2 text-lg font-semibold text-white hover:bg-[#f8733a] hover:duration-700 md:px-10 md:py-2 lg:flex lg:text-lg"
           >
             Logout
           </button>
-          <div className="flex gap-2 items-center">
-            <p className="text-lg hidden lg:block">{profileName}</p>
+          <div className="flex items-center gap-2">
+            <p className="hidden text-lg lg:block">{profileName}</p>
             <img src={profileImage} alt="MainUser" width={30} />
           </div>
         </div>
       </div>
 
-      {openLogoutModal && (
-        <LogoutModal
-          CloseModal={CloseModal}
-         
-        />
-      )}
+      {openLogoutModal && <LogoutModal CloseModal={CloseModal} />}
     </section>
   );
 };

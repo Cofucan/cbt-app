@@ -1,4 +1,3 @@
-
 import { Table, Avatar } from "antd";
 import ImportImgs from "../components/ImportImgs"; // Import your image module
 
@@ -49,7 +48,7 @@ const ActivityLog = () => {
       dateTime: "3 Aug 03:12 PM",
       admin: {
         name: "Mary Jane",
-        avatar: images.Avatar2 ,
+        avatar: images.Avatar2,
       },
       role: "Admin",
       action: "Added Department",

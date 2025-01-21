@@ -15,20 +15,22 @@ const { Search } = Input;
 const StudentTable = () => {
   const images = ImportImgs();
 
-  const [singleData, setSingleData] = useState(null)
+  const [singleData, setSingleData] = useState(null);
 
-  const [facultyId, setFacultyId] = useState("")
-  const [department, setDepartment] = useState("")
-  const [level, setLevel] = useState("")
-  const [keyword, setKeyword] = useState("")
+  const [facultyId, setFacultyId] = useState("");
+  const [department, setDepartment] = useState("");
+  const [level, setLevel] = useState("");
+  const [keyword, setKeyword] = useState("");
 
-  const { data: facultyList } = useGetFaculty()
-  const { data: departmentList } = useGetDepartment(facultyId)
+  const { data: facultyList } = useGetFaculty();
+  const { data: departmentList } = useGetDepartment(facultyId);
 
-
-  const { data, isLoading, isRefetching } = useGetStudent(facultyId, department, keyword, level)
-
-
+  const { data, isLoading, isRefetching } = useGetStudent(
+    facultyId,
+    department,
+    keyword,
+    level,
+  );
 
   const [visibleDropdown, setVisibleDropdown] = useState(null);
   // Sample data
@@ -82,10 +84,10 @@ const StudentTable = () => {
       level: "200",
     },
     // Add more students as needed
-  ]; 
+  ];
 
   const openDeleteModal = () => {
-    setVisibleDropdown(null)
+    setVisibleDropdown(null);
     setIsDeleteModalVisible(true);
   };
   const handleCancelDelete = () => {
@@ -111,9 +113,9 @@ const StudentTable = () => {
   const closeEditModal = () => setIsEditModalVisible(false);
 
   const clickHandler = (item) => {
-    setSingleData(item)
-    toggleDropdown(item.id)
-  }
+    setSingleData(item);
+    toggleDropdown(item.id);
+  };
 
   // Filter and search logic
   const handleSearch = (value) => {
@@ -122,14 +124,14 @@ const StudentTable = () => {
   };
   //open downloadResult Modal.......
   const openEditStudentModal = () => {
-    setIsEditModalVisible(true)
-    setVisibleDropdown(null)
+    setIsEditModalVisible(true);
+    setVisibleDropdown(null);
   };
 
   //open downloadResult Modal.......
   const openDeleteStudentModal = () => {
-    setIsDeleteModalVisible(true)
-    setVisibleDropdown(null)
+    setIsDeleteModalVisible(true);
+    setVisibleDropdown(null);
   };
 
   const menu = (
@@ -154,7 +156,7 @@ const StudentTable = () => {
       searchTerm,
       field === "faculty" ? value : selectedFaculty,
       field === "department" ? value : selectedDepartment,
-      field === "level" ? value : selectedLevel
+      field === "level" ? value : selectedLevel,
     );
   };
 
@@ -163,7 +165,7 @@ const StudentTable = () => {
 
     if (search) {
       filtered = filtered.filter((student) =>
-        student.name.toLowerCase().includes(search.toLowerCase())
+        student.name.toLowerCase().includes(search.toLowerCase()),
       );
     }
 
@@ -173,7 +175,7 @@ const StudentTable = () => {
 
     if (department) {
       filtered = filtered.filter(
-        (student) => student.department === department
+        (student) => student.department === department,
       );
     }
 
@@ -192,7 +194,7 @@ const StudentTable = () => {
       render: (text, record) => (
         <div className="flex items-center gap-2">
           {/* Dummy avatar */}
-          <div className=" w-fit " >
+          <div className="w-fit">
             {/* <img
               src={images.Paul}
               alt="user"
@@ -200,8 +202,7 @@ const StudentTable = () => {
             /> */}
             <CgProfile size={"30px"} />
           </div>
-          <span>{record.first_name
-          }</span>
+          <span>{record.first_name}</span>
         </div>
       ),
     },
@@ -248,13 +249,13 @@ const StudentTable = () => {
   const startIndex = (currentPage - 1) * studentsPerPage;
   const paginatedData = filteredData.slice(
     startIndex,
-    startIndex + studentsPerPage
+    startIndex + studentsPerPage,
   );
 
   return (
-    <div className=" mt-10 bg-gray-50">
+    <div className="mt-10 bg-gray-50">
       {/* Search and Filters */}
-      <div className="flex gap-2 items-center mb-5">
+      <div className="mb-5 flex items-center gap-2">
         {/* <div className="flex flex-col gap-2">
           <label className="text-xs font-medium text-[#6e7485]">Search</label>
           <Input
@@ -272,14 +273,12 @@ const StudentTable = () => {
         </div> */}
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-medium text-[#6e7485]">
-            Search
-          </label>
+          <label className="text-xs font-medium text-[#6e7485]">Search</label>
 
           <input
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="Search for student"
-            className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+            className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
           />
         </div>
 
@@ -291,17 +290,18 @@ const StudentTable = () => {
             <select
               onChange={(e) => setFacultyId(e.target.value)}
               placeholder={"Select Faculty"}
-              className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+              className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Faculty</option>
+              <option value={""}>Select Faculty</option>
               {facultyList?.map((item, index) => {
                 return (
-                  <option key={index} value={item?.id} >{item?.name}</option>
-                )
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                );
               })}
             </select>
           </div>
-
 
           <div className="flex flex-col gap-2">
             <label className="text-xs font-medium text-[#6e7485]">
@@ -310,13 +310,11 @@ const StudentTable = () => {
 
             <select
               onChange={(e) => setDepartment(e.target.value)}
-              className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+              className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Department</option>
+              <option value={""}>Select Department</option>
               {departmentList?.map((item) => {
-                return (
-                  <option value={item?.id} >{item?.name}</option>
-                )
+                return <option value={item?.id}>{item?.name}</option>;
               })}
             </select>
           </div>
@@ -325,9 +323,9 @@ const StudentTable = () => {
             <label className="text-xs font-medium text-[#6e7485]">Level</label>
             <select
               onChange={(e) => setLevel(e.target.value)}
-              className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+              className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Level</option>
+              <option value={""}>Select Level</option>
               <option>400</option>
               <option>300</option>
               <option>200</option>
@@ -338,7 +336,7 @@ const StudentTable = () => {
       </div>
 
       {/* Table */}
-      <LoadingAnimation loading={isLoading} refetching={isRefetching} >
+      <LoadingAnimation loading={isLoading} refetching={isRefetching}>
         <Table
           dataSource={data}
           columns={columns}
@@ -357,9 +355,11 @@ const StudentTable = () => {
         />
       )}
 
-
       {isDeleteModalVisible && (
-        <DeleteDepartmentModal data={singleData} handleCancelDelete={handleCancelDelete} />
+        <DeleteDepartmentModal
+          data={singleData}
+          handleCancelDelete={handleCancelDelete}
+        />
       )}
     </div>
   );

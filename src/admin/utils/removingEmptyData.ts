@@ -1,11 +1,10 @@
-
 const removeEmptyData = (obj) => {
-    for (const key in obj) {
-        if (obj[key] === null || obj[key] === undefined || obj[key] === '') {
-            delete obj[key];
-        }
+  for (const key in obj) {
+    if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
+      delete obj[key];
     }
-    return obj;
+  }
+  return obj;
 };
 
-  export default removeEmptyData
+export default removeEmptyData;

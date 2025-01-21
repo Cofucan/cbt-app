@@ -1,26 +1,25 @@
-
 import ImportImgs from "../../../components/ImportImgs";
 
-const ExamDeactivated = ({TogglecloseSuccessModal}) => {
+const ExamDeactivated = ({ TogglecloseSuccessModal }) => {
   const images = ImportImgs();
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
-      <div className="w-full flex justify-center items-center">
-        <div className="bg-white w-[350px] p-6 rounded shadow text-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+      <div className="flex w-full items-center justify-center">
+        <div className="w-[350px] rounded bg-white p-6 text-center shadow">
           {/* Icon */}
-          <div className="flex justify-center items-center pb-5">
+          <div className="flex items-center justify-center pb-5">
             <img src={images.checkCircle} alt="successMark" />
           </div>
 
           {/* Success Message */}
-          <h2 className="text-lg font-semibold text-black tracking">
+          <h2 className="tracking text-lg font-semibold text-black">
             Exam Deactivated
           </h2>
 
           {/* Continue Button */}
           <button
             onClick={TogglecloseSuccessModal}
-            className="mt-6 px-6 py-3 w-full bg-[#ff6636] text-white rounded-lg hover:shadow-md"
+            className="mt-6 w-full rounded-lg bg-[#ff6636] px-6 py-3 text-white hover:shadow-md"
           >
             Continue
           </button>

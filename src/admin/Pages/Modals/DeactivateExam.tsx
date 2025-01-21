@@ -25,23 +25,23 @@ const DeactivateExam = ({
     setOpenSuccessModal(true);
   };
 
+  const { completedMutate, loadingComplete, completeSuccess } =
+    useActivateExam();
 
-  const { completedMutate, loadingComplete, completeSuccess } = useActivateExam()
-
-  useEffect(()=> {
-    if(completeSuccess) {
-      closeDeactivateExamModal()
+  useEffect(() => {
+    if (completeSuccess) {
+      closeDeactivateExamModal();
     }
-  }, [completeSuccess])
+  }, [completeSuccess]);
 
   return (
     <div>
       {/* Modal */}
       {isOpenDeactivateExam && (
-        <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
-          <div className="bg-white shadow-lg w-[35rem]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+          <div className="w-[35rem] bg-white shadow-lg">
             {/* Modal header */}
-            <div className="flex justify-between items-center px-6 py-2 border-b">
+            <div className="flex items-center justify-between border-b px-6 py-2">
               <h2 className="text-xl font-semibold">Deactivate Exam</h2>
               <button
                 onClick={closeDeactivateExamModal}
@@ -56,15 +56,19 @@ const DeactivateExam = ({
               <p>Are you sure you want to deactivate this exam?</p>
             </div>
 
-            {/* Modal footer */} 
-            <div className="flex justify-between gap-4 px-6 pb-8 pt-6 items-center">
+            {/* Modal footer */}
+            <div className="flex items-center justify-between gap-4 px-6 pb-8 pt-6">
               <button
                 onClick={closeDeactivateExamModal}
-                className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
+                className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200"
               >
                 Cancel
               </button>
-              <CustomButton title="Deactivate Exam" isLoading={loadingComplete} onClick={()=> completedMutate(data?.id)} />
+              <CustomButton
+                title="Deactivate Exam"
+                isLoading={loadingComplete}
+                onClick={() => completedMutate(data?.id)}
+              />
             </div>
           </div>
         </div>

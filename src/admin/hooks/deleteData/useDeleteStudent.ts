@@ -9,18 +9,22 @@ const useDeleteStudent = () => {
     mutationFn: (id: string) => httpService.delete(`app_admin/students/${id}/`),
     onError: (error) => {
       console.log(error?.response?.data?.detail);
-      toast?.error(error?.response?.data?.detail ? error?.response?.data?.detail : "Error occured");
+      toast?.error(
+        error?.response?.data?.detail
+          ? error?.response?.data?.detail
+          : "Error occured",
+      );
     },
     onSuccess: async () => {
       await query?.invalidateQueries({ queryKey: ["students"] });
       toast?.success("Student Deleted Successfully");
-    }
+    },
   });
 
   return {
     mutate,
     isLoading: isPending,
-    isSuccess
+    isSuccess,
   };
 };
 

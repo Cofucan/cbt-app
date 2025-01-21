@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 // IMPORT IMAGES FOR SIDEBAR
 import CapGray from "../assets/Cap-gray.svg";
@@ -49,8 +49,7 @@ import Paul from "../assets/paul.svg";
 //IMPORT IMAGES FOR TEXTMANAGER
 import Addicon from "../assets/addicon.svg";
 
-
-const  ImportImgs = () => {
+const ImportImgs = () => {
   const images = {
     CapGray,
     CapWhite,
@@ -100,4 +99,4 @@ const  ImportImgs = () => {
   return images;
 };
 
-export default ImportImgs
+export default ImportImgs;

@@ -14,7 +14,7 @@ const rolesData = {
     "Can issue refunds",
     "Can manage content",
   ],
-  "Admins": [
+  Admins: [
     "Can manage bets",
     "Can view user wallets",
     "Can approve transactions",
@@ -37,7 +37,7 @@ const RolePermissions = () => {
     rolesData[activeRole].reduce((acc, permission) => {
       acc[permission] = true; // All switches initially set to true
       return acc;
-    }, {})
+    }, {}),
   );
 
   const handleRoleChange = (role) => {
@@ -46,7 +46,7 @@ const RolePermissions = () => {
       rolesData[role].reduce((acc, permission) => {
         acc[permission] = true; // Reset switch states when role changes
         return acc;
-      }, {})
+      }, {}),
     );
   };
 
@@ -61,18 +61,18 @@ const RolePermissions = () => {
     <div className="flex h-screen">
       {/* Sidebar Navigation */}
       <div className="px-4">
-        <div className=" bg-white p-1 border-2">
+        <div className="border-2 bg-white p-1">
           <ul>
             {Object.keys(rolesData).map((role) => (
               <li
                 key={role}
-                className={`px-4 py-2 cursor-pointer text-lg border-b ${
+                className={`cursor-pointer border-b px-4 py-2 text-lg ${
                   activeRole === role ? "bg-[#ff6636] text-white" : "text-black"
                 }`}
                 onClick={() => handleRoleChange(role)}
               >
                 {role}
-                <p className="text-sm text-gray-300 mt-1">
+                <p className="mt-1 text-sm text-gray-300">
                   {role === "Super Admin" && "Full access, control"}
                   {role === "Admins" && "Moderate access control"}
                   {role === "Customer Service" && "Support-focused access"}
@@ -84,7 +84,7 @@ const RolePermissions = () => {
       </div>
 
       {/* Permissions Section */}
-      <div className="w-3/4 bg-white px-6 py-4 border-2">
+      <div className="w-3/4 border-2 bg-white px-6 py-4">
         <div className="border-b-2 pb-2">
           <h2 className="text-xl font-semibold">Permissions</h2>
           <p className="text-gray-600">
@@ -96,19 +96,18 @@ const RolePermissions = () => {
           {rolesData[activeRole].map((permission) => (
             <div
               key={permission}
-              className="flex items-center justify-between mb-4"
+              className="mb-4 flex items-center justify-between"
             >
               <span className="text-[#525252]">{permission}</span>
-              <label className="inline-flex relative items-center cursor-pointer">
+              <label className="relative inline-flex cursor-pointer items-center">
                 <input
                   type="checkbox"
                   className="sr-only"
                   checked={switchStates[permission]}
                   onChange={() => toggleSwitch(permission)}
                 />
-                
 
-                <div className="w-11 h-6 bg-gray-200 rounded-full relative">
+                <div className="relative h-6 w-11 rounded-full bg-gray-200">
                   {/* Conditionally render the image based on switch state */}
                   {switchStates[permission] ? (
                     <img
@@ -126,7 +125,7 @@ const RolePermissions = () => {
 
                   {/* The dot inside the toggle switch */}
                   <span
-                    className={`dot absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition ${
+                    className={`dot absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition ${
                       switchStates[permission] ? "translate-x-6" : ""
                     }`}
                   ></span>
@@ -136,7 +135,7 @@ const RolePermissions = () => {
           ))}
         </div>
 
-        <button className="mt-6 px-6 py-3 bg-[#ff6636] text-white font-semibold rounded-lg hover:bg-orange-600">
+        <button className="mt-6 rounded-lg bg-[#ff6636] px-6 py-3 font-semibold text-white hover:bg-orange-600">
           Save Preferences
         </button>
       </div>

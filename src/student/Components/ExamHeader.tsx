@@ -20,7 +20,7 @@ const ExamHeader = ({
   const STORAGE_KEY_START = `examStartTime_${studentId}_${title}`;
   const [timeRemaining, setTimeRemaining] = useState(INITIAL_TIME);
   const navigate = useNavigate();
-  const [courseDetails, setCourseDetails] = useState([])
+  const [courseDetails, setCourseDetails] = useState([]);
 
   useEffect(() => {
     const getCourseDetails = async () => {
@@ -45,7 +45,7 @@ const ExamHeader = ({
 
     return `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
       2,
-      "0"
+      "0",
     )} : ${String(secs).padStart(2, "0")}`;
   };
 
@@ -61,8 +61,7 @@ const ExamHeader = ({
       // Perform logout
       localStorage.removeItem("token");
       localStorage.removeItem(`examStartTime_${studentId}_${title}`);
-      navigate({to: "/student"});
-
+      navigate({ to: "/student" });
 
       if (onExamEnd) onExamEnd();
     } catch (error) {
@@ -72,13 +71,15 @@ const ExamHeader = ({
 
   useEffect(() => {
     // Set exam start time in localStorage
-    if (!(localStorage.getItem(STORAGE_KEY_START))) {
+    if (!localStorage.getItem(STORAGE_KEY_START)) {
       localStorage.setItem(STORAGE_KEY_START, examStartTime);
     }
 
     // Calculate remaining time based on exam start time
     const calculateRemainingTime = () => {
-      const elapsedTime = Math.floor((Date.now() - new Date(examStartTime)) / 1000);
+      const elapsedTime = Math.floor(
+        (Date.now() - new Date(examStartTime)) / 1000,
+      );
       const remainingTime = INITIAL_TIME - elapsedTime;
       return remainingTime > 0 ? remainingTime : 0;
     };
@@ -102,18 +103,18 @@ const ExamHeader = ({
   }, [STORAGE_KEY_START, INITIAL_TIME]);
 
   return (
-    <section className="bg-[#1d2026] w-[90%] mx-auto mt-10">
-      <div className="flex flex-col gap-3 lg:flex-row justify-between items-center px-3 lg:px-10 py-5">
-        <div className="text-white flex flex-col gap-2">
+    <section className="mx-auto mt-10 w-[90%] bg-[#1d2026]">
+      <div className="flex flex-col items-center justify-between gap-3 px-3 py-5 lg:flex-row lg:px-10">
+        <div className="flex flex-col gap-2 text-white">
           <p className="font-light">{courseDetails.session} Session TEST</p>
-          <h1 className="text-lg lg:text-2xl font-semibold">{title}</h1>
+          <h1 className="text-lg font-semibold lg:text-2xl">{title}</h1>
         </div>
 
-        <div className="flex items-start gap-2 flex-col text-white">
+        <div className="flex flex-col items-start gap-2 text-white">
           <p className="mr-4">Exam Progress</p>
-          <div className="w-60 lg:w-72 bg-gray-300 rounded-xl overflow-hidden">
+          <div className="w-60 overflow-hidden rounded-xl bg-gray-300 lg:w-72">
             <div
-              className="bg-[#ff6636] text-white text-center text-sm h-8"
+              className="h-8 bg-[#ff6636] text-center text-sm text-white"
               style={{ width: `${progressPercentage}%` }}
             >
               <p className="py-2">

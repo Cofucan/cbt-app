@@ -1,5 +1,3 @@
-
-
 import bgImgMain from "../assets/backgroundImage.png";
 import logo from "../assets/logo.svg";
 import mainLogo from "../assets/logo2.svg";
@@ -18,7 +16,7 @@ import arrowleft from "../assets/arrow-left.svg";
 import SuccessHand from "../assets/SuccessHand.svg";
 import enugun from "../assets/enugun.png";
 import defaultUser from "../assets/defaultImage.png";
-import computer_lab from "../assets/computer_lab.jpg"
+import computer_lab from "../assets/computer_lab.jpg";
 
 const ImportingImgs = () => {
   const images = {
@@ -40,7 +38,7 @@ const ImportingImgs = () => {
     SuccessHand,
     enugun,
     defaultUser,
-    computer_lab
+    computer_lab,
   };
   return images;
 };

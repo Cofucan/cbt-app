@@ -5,40 +5,40 @@ import TextManagerTable from "../../../../admin/Tables/TextManagerTable.tsx";
 import NewFacultyModal from "../../../../admin/Pages/Modals/NewFacultyModal.tsx";
 import NewDepartmentModal from "../../../../admin/Pages/Modals/ClassManagerModal/NewDepartmentModal.tsx";
 
-export const Route = createFileRoute('/admin/_auth/test/')({
+export const Route = createFileRoute("/admin/_auth/test/")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const images = ImportImgs()
-  const [isOpen, setIsOpen] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const images = ImportImgs();
+  const [isOpen, setIsOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
   // Handlers to open/close the FacultyModal
-  const showModal = () => setVisible(true)
-  const handleCancel = () => setVisible(false)
+  const showModal = () => setVisible(true);
+  const handleCancel = () => setVisible(false);
   const handleSave = () => {
     // Handle saving logic
-    setVisible(false)
-  }
+    setVisible(false);
+  };
   // Handlers to open/close the DepartmentModal
-  const showDeptModal = () => setIsModalVisible(true)
-  const handleCancelDept = () => setIsModalVisible(false)
+  const showDeptModal = () => setIsModalVisible(true);
+  const handleCancelDept = () => setIsModalVisible(false);
 
   return (
     <section className="full">
-      <div className="w-[95%] mx-auto h-full py-10">
+      <div className="mx-auto h-full w-[95%] py-10">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold">Test Manager</h2>
           <div className="relative">
             {/* Add More Button */}
             <button
               onClick={toggleDropdown}
-              className="px-4 py-2 flex items-center gap-2 text-white bg-[#ff6636] shadow-md focus:outline-none"
+              className="flex items-center gap-2 bg-[#ff6636] px-4 py-2 text-white shadow-md focus:outline-none"
               aria-expanded={isOpen}
             >
               Add More
@@ -51,23 +51,23 @@ function RouteComponent() {
 
             {/* Dropdown Menu */}
             {isOpen && (
-              <div className="bg-white w-full py-1 absolute z-10 shadow-lg border border-gray-200">
-                <div className="flex flex-col gap-2 text-[#4E5566] text-[14px]">
+              <div className="absolute z-10 w-full border border-gray-200 bg-white py-1 shadow-lg">
+                <div className="flex flex-col gap-2 text-[14px] text-[#4E5566]">
                   <Link
-                    to={'/admin/new-test'}
-                    className="cursor-pointer hover:bg-[#FFEEE8] hover:text-[#000] px-2 py-1 rounded transition"
+                    to={"/admin/new-test"}
+                    className="cursor-pointer rounded px-2 py-1 transition hover:bg-[#FFEEE8] hover:text-[#000]"
                   >
                     Add Test
                   </Link>
                   <p
                     onClick={showModal}
-                    className="cursor-pointer hover:bg-[#FFEEE8] hover:text-[#000] px-2 py-1 rounded transition"
+                    className="cursor-pointer rounded px-2 py-1 transition hover:bg-[#FFEEE8] hover:text-[#000]"
                   >
                     Add Faculty
                   </p>
                   <p
                     onClick={showDeptModal}
-                    className="cursor-pointer hover:bg-[#FFEEE8] hover:text-[#000] px-2 py-1 rounded transition"
+                    className="cursor-pointer rounded px-2 py-1 transition hover:bg-[#FFEEE8] hover:text-[#000]"
                   >
                     Add Department
                   </p>
@@ -96,6 +96,5 @@ function RouteComponent() {
         />
       )}
     </section>
-  )
+  );
 }
-

@@ -1,13 +1,11 @@
-import formatter from "format-number"
-
+import formatter from "format-number";
 
 export const formatNumber = (number, prefix = "£") => {
-  if(number === "***") {
-    return prefix+" ****"
+  if (number === "***") {
+    return prefix + " ****";
   } else {
-    return(
-      formatter({ prefix })(number % 1 !== 0 ? number?.toFixed(2) : number)
-    )
+    return formatter({ prefix })(
+      number % 1 !== 0 ? number?.toFixed(2) : number,
+    );
   }
-}
-  
+};

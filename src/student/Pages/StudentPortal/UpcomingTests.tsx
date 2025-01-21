@@ -12,7 +12,7 @@ const UpcomingTests = () => {
 
     if (!token) {
       toast.error("No token found. Redirecting to login...");
-      navigate({to: "/student/login"});
+      navigate({ to: "/student/login" });
       return;
     }
 
@@ -23,7 +23,7 @@ const UpcomingTests = () => {
       if (data?.results?.length > 0) {
         // Sort the tests by start_at (exam time) in ascending order
         const sortedTests = data.results.sort(
-          (a, b) => new Date(a.start_at) - new Date(b.start_at)
+          (a, b) => new Date(a.start_at) - new Date(b.start_at),
         );
 
         // Slice the array to get the first 2 tests
@@ -55,18 +55,22 @@ const UpcomingTests = () => {
   };
 
   if (upcomingTest.length === 0) {
-    return <p className="bg-white px-5 text-[#ff6636] py-3 md:py-6 md:px-10 rounded-lg border-2 border-[#e9eaf0]">No available upcoming test found.</p>;
+    return (
+      <p className="rounded-lg border-2 border-[#e9eaf0] bg-white px-5 py-3 text-[#ff6636] md:px-10 md:py-6">
+        No available upcoming test found.
+      </p>
+    );
   }
 
   return (
-    <div className="bg-white px-5 py-5 md:py-6 md:px-10 rounded-lg border-2 border-[#e9eaf0]">
-      <h2 className="text-2xl font-semibold text-[#ff6636] mb-5 lg:mb-10">
+    <div className="rounded-lg border-2 border-[#e9eaf0] bg-white px-5 py-5 md:px-10 md:py-6">
+      <h2 className="mb-5 text-2xl font-semibold text-[#ff6636] lg:mb-10">
         Upcoming Tests
       </h2>
       {upcomingTest.map((test) => (
         <div key={test.id} className="mb-4">
-          <h3 className="text-lg md:text-2xl font-semibold">{test.title}</h3>
-          <p className="text-black text-lg md:text-2xl lg:text-lg pt-3 flex flex-col">
+          <h3 className="text-lg font-semibold md:text-2xl">{test.title}</h3>
+          <p className="flex flex-col pt-3 text-lg text-black md:text-2xl lg:text-lg">
             {formatDateTime(test.start_at)}
           </p>
         </div>

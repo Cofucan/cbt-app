@@ -7,8 +7,7 @@ import AuthContext from "../../context/AuthProvider";
 import { baseUrl } from "../../../lib/utils";
 
 const Header = ({ courseDetails, examId }) => {
-
-  const {logout} = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const images = ImportingImgs();
   const navigate = useNavigate();
   const [isOpenStartExamModal, setIsOpenStartExamModal] = useState(false);
@@ -16,7 +15,7 @@ const Header = ({ courseDetails, examId }) => {
 
   const handleLogout = () => {
     logout();
-    navigate({to: "/student/login"});
+    navigate({ to: "/student/login" });
   };
 
   useEffect(() => {
@@ -27,7 +26,9 @@ const Header = ({ courseDetails, examId }) => {
           const logoData = await getSchoolConfig(token);
           const logoPath = logoData?.logo;
 
-          const logoUrl = logoPath ? `${baseUrl}/media/${logoPath}` : images.mainLogo;
+          const logoUrl = logoPath
+            ? `${baseUrl}/media/${logoPath}`
+            : images.mainLogo;
           setSchoolLogo(logoUrl);
 
           console.log("School Logo URL in landingPage:", logoPath);
@@ -50,19 +51,19 @@ const Header = ({ courseDetails, examId }) => {
   };
 
   return (
-    <div className="flex justify-between bg-white items-center w-[100%] px-3 lg:px-10 py-5">
+    <div className="flex w-[100%] items-center justify-between bg-white px-3 py-5 lg:px-10">
       <img src={images.enugun} alt="mainLogo" width={200} />
 
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <button
           onClick={ToggleStartExamModal}
-          className="hidden lg:flex justify-center px-8 py-2 md:px-10 md:py-2  cursor-pointer text-[#FF6636] text-lg lg:text-lg font-semibold bg-[#FFEEE8]"
+          className="hidden cursor-pointer justify-center bg-[#FFEEE8] px-8 py-2 text-lg font-semibold text-[#FF6636] md:px-10 md:py-2 lg:flex lg:text-lg"
         >
           Start Test
         </button>
         <button
           onClick={handleLogout}
-          className="flex justify-center px-8 py-2 md:px-10 md:py-2  cursor-pointer text-white text-lg lg:text-lg font-semibold bg-[#FF6636] hover:bg-[#f8733a] hover:duration-700"
+          className="flex cursor-pointer justify-center bg-[#FF6636] px-8 py-2 text-lg font-semibold text-white hover:bg-[#f8733a] hover:duration-700 md:px-10 md:py-2 lg:text-lg"
         >
           Logout
         </button>

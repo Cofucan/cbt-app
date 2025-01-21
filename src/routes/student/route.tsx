@@ -1,14 +1,16 @@
-import {createFileRoute, Outlet} from '@tanstack/react-router'
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import "react-toastify/dist/ReactToastify.css";
-import '../../student/index.css'
-import {AuthProvider} from "../../student/context/AuthProvider.tsx";
+import "../../student/index.css";
+import { AuthProvider } from "../../student/context/AuthProvider.tsx";
 
-export const Route = createFileRoute('/student')({
+export const Route = createFileRoute("/student")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <AuthProvider>
-    <Outlet/>
-  </AuthProvider>
+  return (
+    <AuthProvider>
+      <Outlet />
+    </AuthProvider>
+  );
 }

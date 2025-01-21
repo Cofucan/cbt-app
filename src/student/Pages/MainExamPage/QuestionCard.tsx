@@ -12,8 +12,10 @@ const QuestionCard = ({
   handleAnswerChange,
   selectedAnswers,
   totalQuestions,
-  examId
-}: {examId: string}) => {
+  examId,
+}: {
+  examId: string;
+}) => {
   const images = ImportingImgs();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,7 +23,7 @@ const QuestionCard = ({
   const handleChecked = (questionNumber) => {
     return (
       selectedAnswers.find(
-        (answer) => answer.question_number === questionNumber
+        (answer) => answer.question_number === questionNumber,
       )?.selected_option || ""
     );
   };
@@ -32,11 +34,10 @@ const QuestionCard = ({
     console.log("Navigating with selectedAnswers:", selectedAnswers);
 
     setTimeout(() => {
-      navigate({to: "/student/question-details/$examId", params: {examId}})
+      navigate({ to: "/student/question-details/$examId", params: { examId } });
       // navigate(`/QuestionDetails/${examId}`, {
       //   state: { selectedAnswers, totalQuestions},
       // });
-
 
       setIsSubmitting(false);
     }, 5000);
@@ -57,7 +58,7 @@ const QuestionCard = ({
   return (
     <section>
       <div className="bg-white p-8">
-        <h2 className="md:text-lg mb-4">
+        <h2 className="mb-4 md:text-lg">
           {/* {questions.number}. {questions.text} */}
           {questions.student_question_number}. {questions.text}
         </h2>
@@ -66,7 +67,7 @@ const QuestionCard = ({
           <img
             src={`${baseUrl}${questions.image_url}`}
             alt={`Question ${questions.number}`}
-            className="mb-6 w-60 h-52 "
+            className="mb-6 h-52 w-60"
           />
         )}
 
@@ -86,12 +87,12 @@ const QuestionCard = ({
                     type="radio"
                     name={`question-${questions.student_question_number}`} // Use questions.number for unique names
                     id={`option-${questions.student_question_number}-${index}`} // Unique ID for each option
-                    className="w-5 h-5 accent-[#ff6636] "
+                    className="h-5 w-5 accent-[#ff6636]"
                     checked={isChecked} // Set checked based on selectedAnswers
                     onChange={() =>
                       handleAnswerChange(
                         questions.student_question_number,
-                        option
+                        option,
                       )
                     } // Track selected answer
                   />
@@ -108,11 +109,11 @@ const QuestionCard = ({
         </div>
       </div>
 
-      <div className="flex justify-between mx-2 md:mx-10 lg:mx-0">
+      <div className="mx-2 flex justify-between md:mx-10 lg:mx-0">
         {/* Previous Button */}
         <button
           onClick={onPrev}
-          className="mt-6 bg-[#ffeee8] font-semibold text-[#ff6636] px-14 py-3 flex items-center gap-2"
+          className="mt-6 flex items-center gap-2 bg-[#ffeee8] px-14 py-3 font-semibold text-[#ff6636]"
         >
           Previous
         </button>
@@ -121,14 +122,14 @@ const QuestionCard = ({
         {buttonChange ? (
           <button
             onClick={GoToQuestionsDetails}
-            className="mt-6 bg-[#ff6636] text-white py-3 px-14 font-semibold"
+            className="mt-6 bg-[#ff6636] px-14 py-3 font-semibold text-white"
           >
             {isSubmitting ? <BeatLoader color="#fff" /> : " Review"}
           </button>
         ) : (
           <button
             onClick={onNext}
-            className="mt-6 bg-[#ff6636] text-white px-14 py-3 flex items-center gap-2"
+            className="mt-6 flex items-center gap-2 bg-[#ff6636] px-14 py-3 text-white"
           >
             Next
           </button>

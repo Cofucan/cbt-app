@@ -7,27 +7,31 @@ import useGetDepartment from "../../../hooks/getData/useGetDepartment";
 import useAddCourse from "../../../hooks/postData/useAddCourse";
 import CustomButton from "../../../components/CustomButton";
 
-const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
-  const images = ImportImgs(); 
+const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
+  const images = ImportImgs();
 
   //Edit Course modal Logic
-  const [openSaveEditCourseModal, setSaveEditCourseModal] = useState(false)
+  const [openSaveEditCourseModal, setSaveEditCourseModal] = useState(false);
   const showSaveEditModal = () => setSaveEditCourseModal(true);
   const CancelSaveEditModal = () => setSaveEditCourseModal(false);
 
   const faculties = ["Engineering", "Business", "Arts"];
   const levels = ["100", "200", "300", "400"];
 
-  const { data: facultyList } = useGetFaculty()
+  const { data: facultyList } = useGetFaculty();
 
-  const { formik, editSuccess, loadingEdit } = useAddCourse(data?.id)
-  const { data: departmentList } = useGetDepartment(formik?.values?.faculty_id)
+  const { formik, editSuccess, loadingEdit } = useAddCourse(data?.id);
+  const { data: departmentList } = useGetDepartment(formik?.values?.faculty_id);
 
   console.log(data);
 
   const filteredData = () => {
-    let value = facultyList.find(faculty => faculty.name === data?.faculty?.name)
-    let depart = departmentList.find(faculty => faculty.name === data?.department?.name)
+    let value = facultyList.find(
+      (faculty) => faculty.name === data?.faculty?.name,
+    );
+    let depart = departmentList.find(
+      (faculty) => faculty.name === data?.department?.name,
+    );
     console.log(value?.id);
     console.log(depart);
     formik?.setValues({
@@ -36,22 +40,22 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
       title: data?.title,
       code: data?.code,
       level: data?.level,
-    })
-    formik.setFieldValue("faculty_id", value?.id)
-    formik.setFieldValue("department_id", depart?.id)
-  }
+    });
+    formik.setFieldValue("faculty_id", value?.id);
+    formik.setFieldValue("department_id", depart?.id);
+  };
 
   useEffect(() => {
-    if(!formik?.values?.faculty_id) {
-      filteredData()
+    if (!formik?.values?.faculty_id) {
+      filteredData();
     }
-  }, [facultyList])
-  
+  }, [facultyList]);
+
   useEffect(() => {
     if (editSuccess) {
-      handleCancel()
+      handleCancel();
     }
-  }, [editSuccess])
+  }, [editSuccess]);
 
   return (
     <div>
@@ -62,7 +66,7 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
         footer={null}
         width={500}
         closeIcon={
-          <span className="text-gray-400 text-lg">
+          <span className="text-lg text-gray-400">
             <img src={images.Times} alt="Times" />
           </span>
         }
@@ -71,12 +75,16 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
           {/* Faculty Name Dropdown */}
 
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Faculty Name</label>
+            <label className="mb-2 block text-gray-700">Faculty Name</label>
             <Select
               placeholder="Select Faculty"
               className="w-full"
-              value={formik?.values?.faculty_id ? formik?.values?.faculty_id : ""}
-              onChange={(value) => formik.setFieldValue("fafaculty_idculty", value)}
+              value={
+                formik?.values?.faculty_id ? formik?.values?.faculty_id : ""
+              }
+              onChange={(value) =>
+                formik.setFieldValue("fafaculty_idculty", value)
+              }
             >
               {facultyList.map((item) => (
                 <Option key={item?.id} value={item?.id}>
@@ -88,9 +96,13 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
 
           {/* Departments Input */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Departments</label>
+            <label className="mb-2 block text-gray-700">Departments</label>
             <Select
-              placeholder={data?.department?.name ? data?.department?.name :"Select Department"}
+              placeholder={
+                data?.department?.name
+                  ? data?.department?.name
+                  : "Select Department"
+              }
               className="w-full"
               value={formik?.values?.department_id}
               onChange={(value) => formik.setFieldValue("department_id", value)}
@@ -105,7 +117,7 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
 
           {/* Level Dropdown */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Level</label>
+            <label className="mb-2 block text-gray-700">Level</label>
             <Select
               placeholder="Select Level"
               className="w-full"
@@ -122,7 +134,7 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
 
           {/* Course Title Input */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Course Title</label>
+            <label className="mb-2 block text-gray-700">Course Title</label>
             <Input
               placeholder="Introduction to Programming"
               className="w-full"
@@ -134,22 +146,28 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel, }) => {
 
           {/* Course Code Input */}
           <div className="mb-6">
-            <label className="block text-gray-700 mb-2">Course Code</label>
-            <Input placeholder="COM 101" className="w-full"
+            <label className="mb-2 block text-gray-700">Course Code</label>
+            <Input
+              placeholder="COM 101"
+              className="w-full"
               value={formik?.values?.code}
               name="code"
-              onChange={formik.handleChange} />
+              onChange={formik.handleChange}
+            />
           </div>
 
-
-          <div className="flex justify-between gap-4 pt-6 items-center">
+          <div className="flex items-center justify-between gap-4 pt-6">
             <button
               onClick={handleCancel}
-              className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
+              className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200"
             >
               Cancel
             </button>
-            <CustomButton title="Edit Student Data" isLoading={loadingEdit} onClick={formik?.handleSubmit} />
+            <CustomButton
+              title="Edit Student Data"
+              isLoading={loadingEdit}
+              onClick={formik?.handleSubmit}
+            />
           </div>
           {/* Save New Course Modal */}
           {openSaveEditCourseModal && (

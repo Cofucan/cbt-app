@@ -23,21 +23,19 @@ const departments = {
 const levels = ["100", "200", "300", "400"];
 
 const TestManager = () => {
+  const [facultyId, setFacultyId] = useState("");
+  const [department, setDepartment] = useState("");
+  const [level, setLevel] = useState("");
+  const [keyword, setKeyword] = useState("");
 
-
-  const [facultyId, setFacultyId] = useState("")
-  const [department, setDepartment] = useState("")
-  const [level, setLevel] = useState("")
-  const [keyword, setKeyword] = useState("")
-
-  const { data: facultyList } = useGetFaculty()
-  const { data: departmentList } = useGetDepartment(facultyId)
+  const { data: facultyList } = useGetFaculty();
+  const { data: departmentList } = useGetDepartment(facultyId);
 
   const navigate = useNavigate();
   const images = ImportImgs();
   // const [filteredData, setFilteredData] = useState(coursesData);
-  const [faculty, setFaculty] = useState(null); 
-  const [singleData, setSingleData] = useState(null) 
+  const [faculty, setFaculty] = useState(null);
+  const [singleData, setSingleData] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [visibleDropdown, setVisibleDropdown] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -45,11 +43,15 @@ const TestManager = () => {
   const [isOpenDeleteExam, setIsOpenDeleteExam] = useState(false);
   const [addMoreQuestions, setAddMoreQuestions] = useState(false);
 
-  const { isLoading, data: filteredData, isRefetching } = useGetExam(facultyId, department, keyword, level)
+  const {
+    isLoading,
+    data: filteredData,
+    isRefetching,
+  } = useGetExam(facultyId, department, keyword, level);
 
   //Activate Exam Modal IsOpen
   const openModal = () => {
-    setVisibleDropdown(null)
+    setVisibleDropdown(null);
     setIsOpen(true);
   };
   const closeModal = () => {
@@ -58,21 +60,21 @@ const TestManager = () => {
 
   //deactivate exam modal logic
   const openDeactivateExamModal = () => {
-    setVisibleDropdown(null)
+    setVisibleDropdown(null);
     setIsOpenDeactivateExam(true);
   };
 
   const closeDeactivateExamModal = () => {
     setIsOpenDeactivateExam(close);
   };
-  
+
   const closeDeleteExamModal = () => {
     setIsOpenDeleteExam(false);
   };
 
   //Add More Questions Modal
   const openAddMoreQuestion = () => {
-    setVisibleDropdown(null)
+    setVisibleDropdown(null);
     setAddMoreQuestions(true);
   };
   const closeAddMoreQuestion = () => {
@@ -91,7 +93,7 @@ const TestManager = () => {
 
   const handleFacultyChange = (value) => {
     setFaculty(value);
-    setDepartment(null); // Reset department when faculty changes 
+    setDepartment(null); // Reset department when faculty changes
   };
 
   const handleDepartmentChange = (value) => {
@@ -114,7 +116,7 @@ const TestManager = () => {
       setVisibleDropdown(key?.id); // Open the clicked dropdown
     }
     console.log(key);
-    setSingleData(key)
+    setSingleData(key);
   };
 
   const menu = (
@@ -127,7 +129,17 @@ const TestManager = () => {
           Deactivate Exam
         </Menu.Item>
         {/* <Menu.Item key="3" onClick={() => navigate("/admin/test-student-analysis/" + singleData?.id)}>Student Analysis</Menu.Item> */}
-        <Menu.Item key="3" onClick={() => navigate({to: "/admin/test/student-analysis/$id", params: {id: singleData?.id}})}>Student Analysis</Menu.Item>
+        <Menu.Item
+          key="3"
+          onClick={() =>
+            navigate({
+              to: "/admin/test/student-analysis/$id",
+              params: { id: singleData?.id },
+            })
+          }
+        >
+          Student Analysis
+        </Menu.Item>
         <Menu.Item key="4" onClick={openAddMoreQuestion}>
           Add More Questions
         </Menu.Item>
@@ -205,7 +217,7 @@ const TestManager = () => {
               <img src={images.DotsThree} alt="Action" />
             </button>
           </Dropdown>
-        )
+        );
       },
     },
   ];
@@ -262,7 +274,7 @@ const TestManager = () => {
               marginBottom: 16,
               fontSize: "14px",
               fontWeight: "400",
-            }} 
+            }}
           />
         </div>
 
@@ -273,17 +285,18 @@ const TestManager = () => {
             </label>
             <select
               onChange={(e) => setFacultyId(e.target.value)}
-              className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+              className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Faculty</option>
+              <option value={""}>Select Faculty</option>
               {facultyList?.map((item, index) => {
                 return (
-                  <option key={index} value={item?.id} >{item?.name}</option>
-                )
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                );
               })}
             </select>
           </div>
-
 
           <div className="flex flex-col gap-2">
             <label className="text-xs font-medium text-[#6e7485]">
@@ -292,13 +305,15 @@ const TestManager = () => {
 
             <select
               onChange={(e) => setDepartment(e.target.value)}
-              className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+              className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Department</option>
+              <option value={""}>Select Department</option>
               {departmentList?.map((item, index) => {
                 return (
-                  <option key={index} value={item?.id} >{item?.name}</option>
-                )
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -307,19 +322,19 @@ const TestManager = () => {
             <label className="text-xs font-medium text-[#6e7485]">Level</label>
             <select
               onChange={(e) => setLevel(e.target.value)}
-              className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+              className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
             >
-              <option value={""} >Select Level</option>
+              <option value={""}>Select Level</option>
               <option>400</option>
               <option>300</option>
               <option>200</option>
               <option>100</option>
             </select>
           </div>
-        </div> 
+        </div>
       </div>
       {/* Table */}
-      <LoadingAnimation loading={isLoading} refeching={isRefetching} >
+      <LoadingAnimation loading={isLoading} refeching={isRefetching}>
         <Table
           className="custom-table"
           columns={columns}

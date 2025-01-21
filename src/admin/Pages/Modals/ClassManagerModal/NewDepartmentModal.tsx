@@ -7,17 +7,17 @@ import useGetFaculty from "../../../hooks/getData/useGetFaculty";
 import CustomButton from "../../../components/CustomButton";
 
 interface NewDepartmentModalProps {
-  visible: boolean
-  handleCancel: () => void
+  visible: boolean;
+  handleCancel: () => void;
 }
 
 const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
-                              visible,
-                              handleCancel
-                            }) => {
+  visible,
+  handleCancel,
+}) => {
   const images = ImportImgs();
 
-  // Sample data for faculty and level options 
+  // Sample data for faculty and level options
   const levels = ["100", "200", "300", "400"];
   const { data: faculty } = useGetFaculty();
   const { formik, isLoading, isSuccess } = useAddDepartment();
@@ -38,7 +38,7 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
           footer={null}
           width={500} // Adjust width if needed
           closeIcon={
-            <span className="text-gray-400 text-lg">
+            <span className="text-lg text-gray-400">
               <img src={images.Times} alt="Times" />
             </span>
           } // Custom close icon
@@ -47,25 +47,23 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
           <div className="p-4">
             {/* Faculty Name Dropdown */}
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Faculty Name</label>
+              <label className="mb-2 block text-gray-700">Faculty Name</label>
               <select
                 onChange={formik.handleChange}
-                // value={formik.values.faculty_id} 
+                // value={formik.values.faculty_id}
                 name="faculty"
-                className="border px-3 py-2 w-full rounded text-[#8c94a3]"
+                className="w-full rounded border px-3 py-2 text-[#8c94a3]"
               >
                 <option value={""}>Select Faculty</option>
                 {faculty?.map((item) => {
-                  return (
-                    <option value={Number(item?.id)}>{item?.name}</option>
-                  );
+                  return <option value={Number(item?.id)}>{item?.name}</option>;
                 })}
               </select>
             </div>
 
             {/* Departments Input */}
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Departments</label>
+              <label className="mb-2 block text-gray-700">Departments</label>
               <Input
                 placeholder="Department"
                 className="w-full py-2"
@@ -75,14 +73,18 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
             </div>
 
             {/* Buttons */}
-            <div className="flex justify-between gap-4 items-center">
+            <div className="flex items-center justify-between gap-4">
               <button
                 onClick={handleCancel}
-                className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
+                className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200"
               >
                 Cancel
               </button>
-              <CustomButton title="Save Department" isLoading={isLoading} onClick={formik?.handleSubmit} />
+              <CustomButton
+                title="Save Department"
+                isLoading={isLoading}
+                onClick={formik?.handleSubmit}
+              />
             </div>
           </div>
         </Modal>

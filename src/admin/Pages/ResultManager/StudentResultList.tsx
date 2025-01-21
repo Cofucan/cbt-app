@@ -1,5 +1,3 @@
-
-
 const StudentCard = ({
   id,
   score,
@@ -10,9 +8,11 @@ const StudentCard = ({
   testDate,
 }) => {
   return (
-    <div className="border-2 border-[#fffff] p-4 bg-white">
+    <div className="border-2 border-[#fffff] bg-white p-4">
       <div className="flex items-start">
-        <span className="text-[#ff6636] bg-[#f5f7fa] px-4 py-2 font-bold text-sm mr-5">#{id}</span>
+        <span className="mr-5 bg-[#f5f7fa] px-4 py-2 text-sm font-bold text-[#ff6636]">
+          #{id}
+        </span>
         <div>
           <p className="font-semibold">Score: {score}/100</p>
           <p>
@@ -112,7 +112,7 @@ const StudentResultList = () => {
 
   return (
     <div className="mt-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {students.map((student) => (
           <StudentCard
             key={student.id}

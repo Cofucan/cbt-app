@@ -8,7 +8,7 @@ const StartExamModal = ({
   ToggleStartExamModalClose,
   courseDetails,
   examId,
-  totalQuestions,
+  totalQuestions
 }) => {
   const images = ImportingImgs();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const StartExamModal = ({
     try {
       await startExam(examId, {}, token);
       ToggleStartExamModalClose();
-      await navigate({ to: "/student/exams/$examId", params: { examId } });
+      navigate({to: "/student/exams/$examId", params: {examId}})
     } catch (error) {
       setError("unable to start exam");
     } finally {
@@ -34,10 +34,10 @@ const StartExamModal = ({
   return (
     <div>
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
-        <div className="w-[47rem] bg-white shadow-lg">
+      <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
+        <div className="bg-white shadow-lg w-[47rem] ">
           {/* Modal header */}
-          <div className="flex items-center justify-between border-b px-6 py-3">
+          <div className="flex justify-between items-center px-6 py-3 border-b">
             <h2 className="text-lg font-medium">Confirm Test Attempt</h2>
             <button
               onClick={ToggleStartExamModalClose}
@@ -68,7 +68,7 @@ const StartExamModal = ({
                 <img src={images.Document} alt="Document" />
                 <p>Questions: {totalQuestions}</p>
               </div>
-              <div className="mt-2 flex items-center gap-2 border-2 border-[#febb79] bg-[#febb79] bg-opacity-20 px-5 py-3">
+              <div className="flex items-center gap-2 border-2 px-5 py-3 mt-2 border-[#febb79] bg-[#febb79] bg-opacity-20">
                 <img src={images.octagon} alt="Document" />
                 <p>
                   Once you start, the timer will begin and you cannot pause the
@@ -81,16 +81,16 @@ const StartExamModal = ({
           </div>
 
           {/* Modal footer */}
-          <div className="flex justify-between space-x-4 p-6">
+          <div className="flex justify-between p-6 space-x-4">
             <button
               onClick={ToggleStartExamModalClose}
-              className="bg-gray-200 px-4 py-2 font-semibold text-black"
+              className="px-4 py-2 font-semibold bg-gray-200 text-black"
             >
               Cancel
             </button>
             <button
               onClick={startExamFn}
-              className="bg-[#ff6636] px-5 py-3 text-white hover:bg-[#ff6636]"
+              className="px-5 py-3 bg-[#ff6636] text-white hover:bg-[#ff6636]"
             >
               {loading ? <BeatLoader color="#fff" /> : "Start Test"}
             </button>

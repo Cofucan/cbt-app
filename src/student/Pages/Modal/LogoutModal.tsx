@@ -4,19 +4,19 @@ import { useNavigate } from "@tanstack/react-router";
 import AuthContext from "../../context/AuthProvider";
 
 const LogoutModal = ({ CloseModal }) => {
-  const {logout } = useContext(AuthContext)
+  const { logout } = useContext(AuthContext);
   const images = ImportingImgs();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();  
-    navigate({to: "/student/login"}); 
+    logout();
+    navigate({ to: "/student/login" });
   };
   return (
     <div>
-      <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
-        <div className="bg-white shadow-lg w-[47rem]">
-          <div className="flex justify-between items-center px-6 py-3 border-b">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+        <div className="w-[47rem] bg-white shadow-lg">
+          <div className="flex items-center justify-between border-b px-6 py-3">
             <h2 className="text-lg font-medium">Logout</h2>
             <button
               onClick={CloseModal}
@@ -32,16 +32,16 @@ const LogoutModal = ({ CloseModal }) => {
               test.Are you sure you want to logout?
             </p>
           </div>
-          <div className="flex justify-between p-6 space-x-4">
+          <div className="flex justify-between space-x-4 p-6">
             <button
               onClick={CloseModal}
-              className="px-4 py-2 font-semibold bg-gray-200 text-black"
+              className="bg-gray-200 px-4 py-2 font-semibold text-black"
             >
               Cancel
             </button>
             <button
               onClick={handleLogout}
-              className="px-5 py-3 bg-[#ff6636] text-white hover:bg-[#e65c2f] font-semibold"
+              className="bg-[#ff6636] px-5 py-3 font-semibold text-white hover:bg-[#e65c2f]"
             >
               Logout
             </button>

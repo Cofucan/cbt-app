@@ -49,32 +49,29 @@ export const userLogin = createAsyncThunk(
     } catch (error) {
       return thunkApi.rejectWithValue("Network error. Please try again.");
     }
-  }
+  },
 );
 
 // Async thunk to get exams
-export const getExams = createAsyncThunk(
-  "getExams",
-  async (data, thunkAPI) => {
-    try {
-      const response = await fetch(`${baseUrl}/app_admin/exams/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${data.token}`,
-        },
-      });
+export const getExams = createAsyncThunk("getExams", async (data, thunkAPI) => {
+  try {
+    const response = await fetch(`${baseUrl}/app_admin/exams/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${data.token}`,
+      },
+    });
 
-      const result = await response.json();
-      if (!response.ok) {
-        return thunkAPI.rejectWithValue(result.detail || "Failed to fetch exams");
-      }
-
-      return result;
-    } catch (error) {
-      return thunkAPI.rejectWithValue("Network error. Please try again.");
+    const result = await response.json();
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(result.detail || "Failed to fetch exams");
     }
+
+    return result;
+  } catch (error) {
+    return thunkAPI.rejectWithValue("Network error. Please try again.");
   }
-);
+});
 
 // Auth slice
 const userReducer = createSlice({

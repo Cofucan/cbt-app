@@ -13,7 +13,15 @@ const AddMoreQuestions = ({
 }) => {
   const [bulkUpload, setBulkUpload] = useState(false);
 
-  const { addBulkFormik, successSingleQusetion, loadingSingleQuestion, numberOfQuestion, setNumberOfQuestion, image, setImage } = useAddTest(data?.id)
+  const {
+    addBulkFormik,
+    successSingleQusetion,
+    loadingSingleQuestion,
+    numberOfQuestion,
+    setNumberOfQuestion,
+    image,
+    setImage,
+  } = useAddTest(data?.id);
 
   const ToggleBulkUploadOpen = () => {
     setBulkUpload(true);
@@ -32,24 +40,24 @@ const AddMoreQuestions = ({
 
   useEffect(() => {
     if (successSingleQusetion) {
-      closeAddMoreQuestion()
+      closeAddMoreQuestion();
     }
-  }, [successSingleQusetion])
+  }, [successSingleQusetion]);
 
   const handleBrowseQuest = (e) => {
     const selected = e.target.files[0];
     console.log(selected);
-    setImage(selected)
+    setImage(selected);
   };
 
   return (
     <div>
       {/* Modal */}
       {addMoreQuestions && (
-        <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
-          <div className="bg-white shadow-lg w-[30rem] h-full overflow-y-auto scrollbar-hide">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+          <div className="h-full w-[30rem] overflow-y-auto bg-white shadow-lg scrollbar-hide">
             {/* Modal header */}
-            <div className="flex justify-between items-center px-6 pb-3 pt-6 border-b">
+            <div className="flex items-center justify-between border-b px-6 pb-3 pt-6">
               <h2 className="text-sm font-semibold">Add More Questions</h2>
               <button
                 onClick={closeAddMoreQuestion}
@@ -59,13 +67,13 @@ const AddMoreQuestions = ({
               </button>
             </div>
             {/* Modal Sub Header */}
-            <div className="flex justify-between items-center px-6 pb-3 pt-6">
-              <h2 className="text-sm font-semibold border-b border-[#ff6636] leading-8">
+            <div className="flex items-center justify-between px-6 pb-3 pt-6">
+              <h2 className="border-b border-[#ff6636] text-sm font-semibold leading-8">
                 Single Upload
               </h2>
               <button
                 onClick={ToggleBulkUploadOpen}
-                className="text-white bg-[#ff6636] px-6 py-2"
+                className="bg-[#ff6636] px-6 py-2 text-white"
               >
                 Bulk Upload
               </button>
@@ -81,14 +89,14 @@ const AddMoreQuestions = ({
               />
             )}
             ;{/* Modal content */}
-            <div className="p-6 space-y-4">
+            <div className="space-y-4 p-6">
               {/* Question Input */}
               <div>
                 <label className="text-sm font-medium">Question</label>
                 <textarea
                   name="text"
                   onChange={addBulkFormik.handleChange}
-                  className="w-full border rounded mt-2 p-2 placeholder:text-sm"
+                  className="mt-2 w-full rounded border p-2 placeholder:text-sm"
                   rows="4"
                   placeholder="Write your question here..."
                 />
@@ -99,28 +107,31 @@ const AddMoreQuestions = ({
                 <label className="text-sm font-medium">
                   Add Image (Optional)
                 </label>
-                <div
-                  className="mt-2 p-2 border border-gray-300 rounded flex justify-center items-center">
+                <div className="mt-2 flex items-center justify-center rounded border border-gray-300 p-2">
                   <input
                     type="file"
                     className="hidden"
-                    onChange={handleBrowseQuest} />
+                    onChange={handleBrowseQuest}
+                  />
 
                   {!image && (
-                    <div className=" w-full flex gap-3 justify-center items-center " >
+                    <div className="flex w-full items-center justify-center gap-3">
                       <img
                         src={images.DownloadUp}
                         alt="Upload"
-                        className="mr-2 p-1 rounded-full bg-[#FFEEE8] cursor-pointer "
+                        className="mr-2 cursor-pointer rounded-full bg-[#FFEEE8] p-1"
                         onClick={() =>
                           document.querySelector('input[type="file"]').click()
                         }
                       />
-                      <span className="text-[#BFBFBF] text-sm">
+                      <span className="text-sm text-[#BFBFBF]">
                         Drag and drop or{" "}
-                        <span onClick={() =>
-                          document.querySelector('input[type="file"]').click()
-                        } className="text-[#ff6636] font-bold cursor-pointer">
+                        <span
+                          onClick={() =>
+                            document.querySelector('input[type="file"]').click()
+                          }
+                          className="cursor-pointer font-bold text-[#ff6636]"
+                        >
                           Browse
                         </span>{" "}
                         to upload image
@@ -129,12 +140,14 @@ const AddMoreQuestions = ({
                   )}
 
                   {image && (
-                    <div className=" w-full flex gap-3 justify-center items-center " >
+                    <div className="flex w-full items-center justify-center gap-3">
                       <img
                         src={images.DownloadUp}
-                        onClick={() => document.querySelector('input[type="file"]').click() }
+                        onClick={() =>
+                          document.querySelector('input[type="file"]').click()
+                        }
                         alt="uploadIcon"
-                        className="p-1 rounded-full mr-2 cursor-pointer border bg-[#e9eaf0]"
+                        className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
                       />{" "}
                       <MdInsertPhoto size={"40px"} />
                       <div>
@@ -154,7 +167,7 @@ const AddMoreQuestions = ({
                     type="text"
                     name="option_1"
                     onChange={addBulkFormik.handleChange}
-                    className="w-full border rounded mt-2 p-2"
+                    className="mt-2 w-full rounded border p-2"
                     placeholder="Option A"
                   />
                 </div>
@@ -164,7 +177,7 @@ const AddMoreQuestions = ({
                     type="text"
                     name="option_2"
                     onChange={addBulkFormik.handleChange}
-                    className="w-full border rounded mt-2 p-2"
+                    className="mt-2 w-full rounded border p-2"
                     placeholder="Option B"
                   />
                 </div>
@@ -174,7 +187,7 @@ const AddMoreQuestions = ({
                     type="text"
                     name="option_3"
                     onChange={addBulkFormik.handleChange}
-                    className="w-full border rounded mt-2 p-2"
+                    className="mt-2 w-full rounded border p-2"
                     placeholder="Option C"
                   />
                 </div>
@@ -184,7 +197,7 @@ const AddMoreQuestions = ({
                     type="text"
                     name="option_4"
                     onChange={addBulkFormik.handleChange}
-                    className="w-full border rounded mt-2 p-2"
+                    className="mt-2 w-full rounded border p-2"
                     placeholder="Option D"
                   />
                 </div>
@@ -197,7 +210,7 @@ const AddMoreQuestions = ({
                   type="text"
                   name="answer"
                   onChange={addBulkFormik.handleChange}
-                  className="w-full border rounded mt-2 p-2"
+                  className="mt-2 w-full rounded border p-2"
                   placeholder="Correct Option"
                 />
               </div>
@@ -208,22 +221,24 @@ const AddMoreQuestions = ({
                   type="number"
                   value={numberOfQuestion}
                   onChange={(e) => setNumberOfQuestion(e.target.value)}
-                  className="w-full border rounded mt-2 p-2"
+                  className="mt-2 w-full rounded border p-2"
                   placeholder="Question Number"
                 />
               </div>
             </div>
             {/* Modal footer */}
-
-
-            <div className="flex justify-between gap-4 px-6 pb-8 pt-6 items-center">
+            <div className="flex items-center justify-between gap-4 px-6 pb-8 pt-6">
               <button
                 onClick={closeAddMoreQuestion}
-                className="bg-gray-100 text-gray-500 border-none rounded-lg hover:bg-gray-200 px-4 h-[40px] w-full "
+                className="h-[40px] w-full rounded-lg border-none bg-gray-100 px-4 text-gray-500 hover:bg-gray-200"
               >
                 Cancel
               </button>
-              <CustomButton title="Add Question" isLoading={loadingSingleQuestion} onClick={() => addBulkFormik.handleSubmit()} />
+              <CustomButton
+                title="Add Question"
+                isLoading={loadingSingleQuestion}
+                onClick={() => addBulkFormik.handleSubmit()}
+              />
             </div>
           </div>
         </div>

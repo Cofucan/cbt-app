@@ -23,7 +23,7 @@ const NewDepartmentModal = ({ visible, handleCancel, handleSave }) => {
         footer={null}
         width={500} // Adjust width if needed
         closeIcon={
-          <span className="text-gray-400 text-lg">
+          <span className="text-lg text-gray-400">
             <img src={images.Times} alt="Times" />
           </span>
         } // Custom close icon
@@ -32,7 +32,7 @@ const NewDepartmentModal = ({ visible, handleCancel, handleSave }) => {
         <div className="p-4">
           {/* Faculty Name Dropdown */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Faculty Name</label>
+            <label className="mb-2 block text-gray-700">Faculty Name</label>
             <Select
               placeholder="Select Faculty"
               className="w-full"
@@ -49,7 +49,7 @@ const NewDepartmentModal = ({ visible, handleCancel, handleSave }) => {
 
           {/* Departments Input */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Departments</label>
+            <label className="mb-2 block text-gray-700">Departments</label>
             <Input
               placeholder="Department"
               className="w-full py-2"
@@ -60,7 +60,7 @@ const NewDepartmentModal = ({ visible, handleCancel, handleSave }) => {
 
           {/* Level Dropdown */}
           <div className="mb-6">
-            <label className="block text-gray-700 mb-2">Level</label>
+            <label className="mb-2 block text-gray-700">Level</label>
             <Select
               placeholder="Select Level"
               className="w-full"
@@ -76,16 +76,16 @@ const NewDepartmentModal = ({ visible, handleCancel, handleSave }) => {
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <button
               onClick={handleCancel}
-              className="bg-gray-100 text-gray-500 border-none hover:bg-gray-200 px-4 py-2"
+              className="border-none bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-200"
             >
               Cancel
             </button>
             <button
               onClick={() => handleSave({ faculty, department, level })}
-              className="bg-[#ff6636] text-white border-none hover:bg-[#ff6636] px-6 py-2"
+              className="border-none bg-[#ff6636] px-6 py-2 text-white hover:bg-[#ff6636]"
             >
               Save Department
             </button>

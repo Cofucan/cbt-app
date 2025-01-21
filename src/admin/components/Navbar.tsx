@@ -11,7 +11,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isModalProfileView, setIsModalProfileView] = useState(false);
   const profileRef = useRef(null); // Ref for the profile dropdown
-  const { data } = useGetProfile()
+  const { data } = useGetProfile();
 
   const toggleProfileDropdown = () => {
     setIsModalProfileView((prev) => !prev);
@@ -41,28 +41,28 @@ const Navbar = () => {
   // Function to handle closing the dropdown after clicking any item
   const handleDropdownClick = (to: string) => {
     setIsModalProfileView(false); // Close dropdown
-    navigate({to}); // Navigate to the corresponding page
+    navigate({ to }); // Navigate to the corresponding page
   };
 
   const clickHandler = () => {
-    localStorage.setItem("token", "")
+    localStorage.setItem("token", "");
     // navigate("/")
-    navigate({to:"/admin"})
-  }
+    navigate({ to: "/admin" });
+  };
 
   return (
-    <section className="w-full h-full bg-white z-50">
-      <div className="flex items-center justify-between px-3 lg:px-8 py-3">
+    <section className="z-50 h-full w-full bg-white">
+      <div className="flex items-center justify-between px-3 py-3 lg:px-8">
         <div className="flex items-center gap-20">
           <img
             src={logo}
             alt="logo"
             height={200}
             width={200}
-            className="object-cover w-[200px]"
+            className="w-[200px] object-cover"
           />
-          <div className="hidden lg:flex flex-col">
-            <p className="tracking-tighter text-sm text-gray-600">
+          <div className="hidden flex-col lg:flex">
+            <p className="text-sm tracking-tighter text-gray-600">
               Good Morning
             </p>
             <h2 className="tracking text-lg font-semibold text-black">
@@ -71,11 +71,11 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="w-[35%] md:w-[50%] lg:w-[35%] hidden md:block">
-          <div className="bg-[#f5f7fa] flex items-center w-full xl:max-w-2xl border border-gray-300 rounded-lg py-3">
+        <div className="hidden w-[35%] md:block md:w-[50%] lg:w-[35%]">
+          <div className="flex w-full items-center rounded-lg border border-gray-300 bg-[#f5f7fa] py-3 xl:max-w-2xl">
             <CiSearch className="ms-3 text-2xl text-[black]" />
             <input
-              className="bg-[#f5f7fa] border-none focus:border-none focus:ring-0 outline-none w-full h-full text-gray-700 placeholder-gray-500"
+              className="h-full w-full border-none bg-[#f5f7fa] text-gray-700 placeholder-gray-500 outline-none focus:border-none focus:ring-0"
               type="text"
               placeholder="Search"
             />
@@ -84,47 +84,49 @@ const Navbar = () => {
 
         <div className="flex items-center justify-between gap-3">
           <div className="hidden lg:flex">
-            <p>{data?.first_name} {data?.last_name}</p>
+            <p>
+              {data?.first_name} {data?.last_name}
+            </p>
           </div>
           <div
             onClick={toggleProfileDropdown}
-            className="relative flex items-center gap-3 cursor-pointer"
+            className="relative flex cursor-pointer items-center gap-3"
           >
             <img
               src={user}
               alt="user"
-              className="object-cover w-10 h-10 rounded-full"
+              className="h-10 w-10 rounded-full object-cover"
             />
             <img
               src={arrowdown}
               alt="arrowdown"
-              className="object-cover w-5 h-5 hidden lg:flex"
+              className="hidden h-5 w-5 object-cover lg:flex"
             />
           </div>
-          <button className="xl:hidden text-2xl">
-            <FiMenu className="border-2 border-[#ff6636] bg-[#fff] w-8 h-7 rounded text-[#ff6636]" />
+          <button className="text-2xl xl:hidden">
+            <FiMenu className="h-7 w-8 rounded border-2 border-[#ff6636] bg-[#fff] text-[#ff6636]" />
           </button>
 
           {isModalProfileView && (
             <div
               ref={profileRef} // Attach ref to the modal
-              className="flex flex-col bg-white border border-gray-300 w-36 absolute top-[65px] right-5 smd:top-[90px] lg:top-[95px] xl:right-10 xl:top-[54px]"
+              className="smd:top-[90px] absolute right-5 top-[65px] flex w-36 flex-col border border-gray-300 bg-white lg:top-[95px] xl:right-10 xl:top-[54px]"
             >
               <div
                 onClick={() => handleDropdownClick("/admin/my-account")}
-                className="px-3 py-2 text-[15px] hover:bg-[#FFEEE8] hover:py-2 hover:px-3 cursor-pointer"
+                className="cursor-pointer px-3 py-2 text-[15px] hover:bg-[#FFEEE8] hover:px-3 hover:py-2"
               >
                 View Profile
               </div>
               <div
                 onClick={() => handleDropdownClick("/admin/settings")}
-                className="px-3 py-2 text-[15px] hover:bg-[#FFEEE8] hover:py-2 hover:px-3 cursor-pointer"
+                className="cursor-pointer px-3 py-2 text-[15px] hover:bg-[#FFEEE8] hover:px-3 hover:py-2"
               >
                 Settings
               </div>
               <div
                 onClick={clickHandler}
-                className="px-3 py-2 text-[15px] hover:bg-[#FFEEE8] hover:py-2 hover:px-3 cursor-pointer"
+                className="cursor-pointer px-3 py-2 text-[15px] hover:bg-[#FFEEE8] hover:px-3 hover:py-2"
               >
                 Logout
               </div>

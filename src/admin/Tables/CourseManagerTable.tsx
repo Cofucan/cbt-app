@@ -23,16 +23,16 @@ const CourseManagerTable = () => {
 
   //OPEN EDIT MODAL LOGIC
   const handleOpenEditModal = () => {
-    setVisibleDropdown(null)
+    setVisibleDropdown(null);
     setEditModalOpen(true);
   };
   const handleCancel = () => setEditModalOpen(false);
 
   //OPEN DELETE MODAL LOGIC
   const handleDeleteShow = () => {
-    setVisibleDropdown(null)
-    setDeleteModalOpen(true)
-  }
+    setVisibleDropdown(null);
+    setDeleteModalOpen(true);
+  };
   const handleDeleteCancel = () => setDeleteModalOpen(false);
   //Table Dropdwon Action
   const toggleDropdown = (key) => {
@@ -41,19 +41,21 @@ const CourseManagerTable = () => {
     } else {
       setVisibleDropdown(key?.id); // Open the clicked dropdown
     }
-    setSingleData(key)
+    setSingleData(key);
   };
 
-  const [facultyId, setFacultyId] = useState("")
-  const [departmentId, setDepartmentId] = useState("")
-  const [level, setLevel] = useState("")
+  const [facultyId, setFacultyId] = useState("");
+  const [departmentId, setDepartmentId] = useState("");
+  const [level, setLevel] = useState("");
 
-  const { data: facultyList } = useGetFaculty()
-  const { data: departmentList } = useGetDepartment(facultyId)
+  const { data: facultyList } = useGetFaculty();
+  const { data: departmentList } = useGetDepartment(facultyId);
 
-
-  const { data, isLoading, isRefetching } = useGetCourse(facultyId, departmentId, level)
-
+  const { data, isLoading, isRefetching } = useGetCourse(
+    facultyId,
+    departmentId,
+    level,
+  );
 
   const courses = [
     {
@@ -88,16 +90,12 @@ const CourseManagerTable = () => {
     {
       title: "Faculty",
       key: "faculty",
-      render: (item) => (
-        <p>{item?.faculty?.name}</p>
-      )
+      render: (item) => <p>{item?.faculty?.name}</p>,
     },
     {
       title: "Department",
       key: "department",
-      render: (item) => (
-        <p>{item?.department?.name}</p>
-      )
+      render: (item) => <p>{item?.department?.name}</p>,
     },
     {
       title: "Course Title",
@@ -126,7 +124,7 @@ const CourseManagerTable = () => {
   return (
     <div>
       {/* Filters and Search */}
-      <div className="flex w-fit gap-4 items-center mb-6">
+      <div className="mb-6 flex w-fit items-center gap-4">
         {/* <div className="flex flex-col gap-2">
           <label className="text-xs font-medium text-[#6e7485]">Search</label>
           <Input
@@ -147,13 +145,11 @@ const CourseManagerTable = () => {
           <select
             onChange={(e) => setFacultyId(e.target.value)}
             placeholder={"Select Faculty"}
-            className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+            className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
           >
-            <option value={""} >Select Faculty</option>
+            <option value={""}>Select Faculty</option>
             {facultyList?.map((item) => {
-              return (
-                <option value={item?.id} >{item?.name}</option>
-              )
+              return <option value={item?.id}>{item?.name}</option>;
             })}
           </select>
         </div>
@@ -164,13 +160,11 @@ const CourseManagerTable = () => {
 
           <select
             onChange={(e) => setDepartmentId(e.target.value)}
-            className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+            className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
           >
-            <option value={""} >Select Department</option>
+            <option value={""}>Select Department</option>
             {departmentList?.map((item) => {
-              return (
-                <option value={item?.id} >{item?.name}</option>
-              )
+              return <option value={item?.id}>{item?.name}</option>;
             })}
           </select>
         </div>
@@ -178,9 +172,9 @@ const CourseManagerTable = () => {
           <label className="text-xs font-medium text-[#6e7485]">Level</label>
           <select
             onChange={(e) => setLevel(e.target.value)}
-            className="border px-3 py-2 w-[200px] rounded text-[#8c94a3]"
+            className="w-[200px] rounded border px-3 py-2 text-[#8c94a3]"
           >
-            <option value={""} >Select Level</option>
+            <option value={""}>Select Level</option>
             <option>400</option>
             <option>300</option>
             <option>200</option>
@@ -190,7 +184,7 @@ const CourseManagerTable = () => {
       </div>
 
       {/* Course Table */}
-      <LoadingAnimation loading={isLoading} refetching={isRefetching} >
+      <LoadingAnimation loading={isLoading} refetching={isRefetching}>
         <Table
           className="custom-table"
           columns={columns}
@@ -208,7 +202,10 @@ const CourseManagerTable = () => {
       )}
 
       {DeleteModalOpen && (
-        <DeleteCourseModal data={singleData} handleDeleteCancel={handleDeleteCancel} />
+        <DeleteCourseModal
+          data={singleData}
+          handleDeleteCancel={handleDeleteCancel}
+        />
       )}
     </div>
   );

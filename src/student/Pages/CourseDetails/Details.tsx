@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import StartExamModal from "../Modal/StartExamModal";
 import { BeatLoader } from "react-spinners";
 import { startExam } from "../../api/auth";
-import {useNavigate} from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 
 const Details = ({ courseDetails, loading, examId, semester }) => {
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ const Details = ({ courseDetails, loading, examId, semester }) => {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div
-          className="px-10 py-2 cursor-pointer text-white text-lg font-medium"
+          className="cursor-pointer px-10 py-2 text-lg font-medium text-white"
           disabled={loading}
         >
           <BeatLoader color="green" size={20} />
@@ -25,12 +25,12 @@ const Details = ({ courseDetails, loading, examId, semester }) => {
     );
 
   return (
-    <section className="flex flex-col gap-6 mt-10">
-      <div className="w-[90%] lg:w-[60%] mx-auto bg-white px-5 py-3 md:py-6 md:px-10 border-2 border-[#e9eaf0]">
-        <h2 className="text-2xl font-semibold text-[#ff6636] mb-5 lg:mb-5">
+    <section className="mt-10 flex flex-col gap-6">
+      <div className="mx-auto w-[90%] border-2 border-[#e9eaf0] bg-white px-5 py-3 md:px-10 md:py-6 lg:w-[60%]">
+        <h2 className="mb-5 text-2xl font-semibold text-[#ff6636] lg:mb-5">
           Course Details
         </h2>
-        <div className="text-black md:text-lg flex flex-col gap-5 pb-5 xl:pb-0">
+        <div className="flex flex-col gap-5 pb-5 text-black md:text-lg xl:pb-0">
           <p>
             <span className="font-semibold">Course Name:</span>{" "}
             {courseDetails?.name || "N/A"}
@@ -53,8 +53,7 @@ const Details = ({ courseDetails, loading, examId, semester }) => {
             {courseDetails?.instructor_name || "N/A"}
           </p>
           <p>
-            <span className="font-semibold">Semester:</span>{" "}
-            {semester || "N/A"}
+            <span className="font-semibold">Semester:</span> {semester || "N/A"}
           </p>
           <p>
             <span className="font-semibold">Session:</span>{" "}
@@ -64,11 +63,11 @@ const Details = ({ courseDetails, loading, examId, semester }) => {
       </div>
 
       {/* Important Instructions */}
-      <div className="w-[90%] lg:w-[60%] mx-auto bg-white px-5 py-3 md:py-6 md:px-10 border-2 border-[#e9eaf0]">
-        <h2 className="text-2xl font-semibold text-[#ff6636] mb-5 lg:mb-5">
+      <div className="mx-auto w-[90%] border-2 border-[#e9eaf0] bg-white px-5 py-3 md:px-10 md:py-6 lg:w-[60%]">
+        <h2 className="mb-5 text-2xl font-semibold text-[#ff6636] lg:mb-5">
           Important Instructions
         </h2>
-        <ul className="list-disc flex flex-col gap-2 text-lg">
+        <ul className="flex list-disc flex-col gap-2 text-lg">
           <li>
             The total number of questions is {courseDetails?.no_of_questions}
           </li>
@@ -79,16 +78,16 @@ const Details = ({ courseDetails, loading, examId, semester }) => {
         </ul>
       </div>
 
-      <div className="flex justify-between items-center w-[90%] lg:w-[60%] mx-auto mb-10">
+      <div className="mx-auto mb-10 flex w-[90%] items-center justify-between lg:w-[60%]">
         <button
-          onClick={() => navigate({to: "/student/student-portal"})}
-          className="flex justify-center px-8 py-2 md:px-24 md:py-4 cursor-pointer text-lg lg:text-2xl font-semibold bg-[#FFEEE8] text-[#FF6636] hover:duration-700"
+          onClick={() => navigate({ to: "/student/student-portal" })}
+          className="flex cursor-pointer justify-center bg-[#FFEEE8] px-8 py-2 text-lg font-semibold text-[#FF6636] hover:duration-700 md:px-24 md:py-4 lg:text-2xl"
         >
           Back
         </button>
         <button
           onClick={ToggleStartExamModal}
-          className="flex justify-center px-8 py-2 md:px-24 md:py-4 cursor-pointer text-white text-lg lg:text-2xl font-semibold bg-[#FF6636] hover:bg-[#f8733a] hover:duration-700"
+          className="flex cursor-pointer justify-center bg-[#FF6636] px-8 py-2 text-lg font-semibold text-white hover:bg-[#f8733a] hover:duration-700 md:px-24 md:py-4 lg:text-2xl"
         >
           Start Test
         </button>
