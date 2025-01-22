@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { useNavigate} from "@tanstack/react-router";
 import { BeatLoader } from "react-spinners";
 import { baseUrl } from "../../../lib/utils";
+import { Answer } from "./QuickNavigation.tsx";
 
 // Define types for question, answer, and props
 interface Question {
-  student_question_number: number;
+  student_question_number: number | string;
   text: string;
   image_url?: string;
   option_1: string;
@@ -15,13 +16,9 @@ interface Question {
   option_4: string;
 }
 
-interface Answer {
-  question_number: number;
-  selected_option: string;
-}
 
 interface QuestionCardProps {
-  questions: Question;
+  questions: Partial<Question>;
   questionNumber: number;
   onNext: () => void;
   onPrev: () => void;
@@ -98,7 +95,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           {options.map((option, index) => {
             if (option === "nan") return null; // Skip if option is 'nan'
             const isChecked =
-              handleChecked(questions.student_question_number) === option;
+              handleChecked(Number(questions.student_question_number)) === option;
 
             return (
               <div key={index} className="flex items-center space-x-2">
@@ -112,8 +109,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                     checked={isChecked} // Set checked based on selectedAnswers
                     onChange={() =>
                       handleAnswerChange(
-                        questions.student_question_number,
-                        option,
+                        Number(questions.student_question_number),
+                        option ?? "",
                       )
                     } // Track selected answer
                   />

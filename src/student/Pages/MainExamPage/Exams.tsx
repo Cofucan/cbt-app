@@ -3,12 +3,10 @@ import React, { useEffect, useState } from "react";
 import Header from "../../Components/MainHeader";
 import ExamHeader from "../../Components/ExamHeader";
 import QuestionCard from "./QuestionCard";
-import QuickNavigation from "./QuickNavigation";
+import QuickNavigation, { Answer } from "./QuickNavigation";
 import Footer from "../../Components/Footer";
-import SubmitModal from "../Modal/SubmitModal";
-import { startExam, submitAnswer, getUserProfile } from "../../api/auth";
+import { getUserProfile, startExam, submitAnswer } from "../../api/auth";
 import { BeatLoader } from "react-spinners";
-import { useParams } from "@tanstack/react-router";
 
 interface Question {
   question_text: string;
@@ -21,28 +19,24 @@ interface Question {
   options: string[];
 }
 
-interface Answer {
-  question_number: number;
-  selected_option: string;
-}
 
 interface AttemptedQuestion {
-  student_question_number: number;
+  student_question_number: number | string;
   selected_option: string | null;
   question: Question;
 }
 
-interface ExamsProps {}
+interface ExamsProps {
+  examId: string;
+}
 
-const Exams: React.FC<ExamsProps> = () => {
-  const { examId } = useParams<{ examId: string }>();
-
+const Exams: React.FC<ExamsProps> = ({ examId }) => {
   console.log("EXAMID", examId);
-  const [examStartTime, setExamStartTime] = useState<string | null>(null);
+  const [examStartTime, setExamStartTime] = useState<string | undefined>();
   const [buttonChange, setButtonChange] = useState<boolean>(false);
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   // const [openModal, setOpenModal] = useState<boolean>(false);
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<Partial<Question>[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -52,7 +46,7 @@ const Exams: React.FC<ExamsProps> = () => {
 
   const token = localStorage.getItem("token");
   const session = JSON.parse(
-    localStorage.getItem("schoolConfig")!,
+    localStorage.getItem("schoolConfig")!
   ).current_session;
 
   // Fetch Student ID
@@ -85,23 +79,26 @@ const Exams: React.FC<ExamsProps> = () => {
         const data = await startExam(examId, {}, token);
         if (data && data.attempted_questions) {
           setQuestions(
+            // @ts-ignore
             data.attempted_questions.map(
-              (q: { student_question_number: number; question: Question }) => ({
+              (q) => ({
                 student_question_number: q.student_question_number,
                 question_text: q.question.question_text,
-                options: q.question.options,
+                options: q.question.options
                 // any other properties of the question you want to include
-              }),
-            ),
+              })
+            )
           );
 
           setSelectedAnswers(
             data.attempted_questions
+              // @ts-ignore
               .filter((q: AttemptedQuestion) => q.selected_option !== null)
+              // @ts-ignore
               .map((q: AttemptedQuestion) => ({
                 question_number: q.student_question_number,
-                selected_option: q.selected_option!,
-              })),
+                selected_option: q.selected_option!
+              }))
           );
 
           setCourseTitle(data.exam.title);
@@ -150,12 +147,12 @@ const Exams: React.FC<ExamsProps> = () => {
   // Handle Answer Change
   const handleAnswerChange = (
     questionNumber: number,
-    selectedOption: string,
+    selectedOption: string
   ) => {
     setSelectedAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       const answerIndex = updatedAnswers.findIndex(
-        (ans) => ans.question_number === questionNumber,
+        (ans) => ans.question_number === questionNumber
       );
 
       if (answerIndex > -1) {
@@ -163,7 +160,7 @@ const Exams: React.FC<ExamsProps> = () => {
       } else {
         updatedAnswers.push({
           question_number: questionNumber,
-          selected_option: selectedOption,
+          selected_option: selectedOption
         });
       }
 
@@ -180,11 +177,11 @@ const Exams: React.FC<ExamsProps> = () => {
   const submitAnswers = async (answersToSubmit: Answer[]) => {
     const formattedAnswers = answersToSubmit.map((answer) => ({
       question_number: parseInt(answer.question_number.toString(), 10),
-      selected_option: answer.selected_option || "",
+      selected_option: answer.selected_option || ""
     }));
 
     const requestBody = {
-      attempted_questions: formattedAnswers,
+      attempted_questions: formattedAnswers
     };
 
     try {
@@ -197,7 +194,7 @@ const Exams: React.FC<ExamsProps> = () => {
 
   // Calculate Progress Percentage
   const progressPercentage = Math.floor(
-    (selectedAnswers.length / questions.length) * 100,
+    (selectedAnswers.length / questions.length) * 100
   );
 
   if (loading) {

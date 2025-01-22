@@ -10,7 +10,6 @@ const AddAdminForm = () => {
   const [openSuccessAdminModal, setOpenSuccessAdminModal] = useState(false);
 
   const showAdminSuccessModal = () => setOpenSuccessAdminModal(true);
-  const closeAdminSuccessModal = () => setOpenSuccessAdminModal(false);
 
   const { formik, isLoading, isSuccess } = useAddAdmin();
 
@@ -146,7 +145,7 @@ const AddAdminForm = () => {
         </form>
 
         {openSuccessAdminModal && (
-          <SuccessAdminModal closeAdminSuccessModal={closeAdminSuccessModal} />
+          <SuccessAdminModal />
         )}
       </div>
     </div>

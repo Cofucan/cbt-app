@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ImportingImgs from "../../Components/ImportingImgs";
 import { getUserProfile } from "../../api/auth";
 
-const StudentDetails = ({ user }) => {
+interface StudentDetailsProps {
+  user: {
+    profile: { department_name: string; faculty_name: string; level: string };
+    name: string, identifier: string
+  };
+}
+
+const StudentDetails: FC<StudentDetailsProps> = ({ user }) => {
   const images = ImportingImgs();
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState<string | undefined>();
 
   useEffect(() => {
     const fetchProfileImage = async () => {

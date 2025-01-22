@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { fetchUpcomingTest } from "../../api/auth";
 import { toast } from "react-toastify";
 
 const UpcomingTests = () => {
   const navigate = useNavigate();
-  const [upcomingTest, setUpComingTest] = useState([]);
+  const [upcomingTest, setUpComingTest] = useState<{start_at: string, id: string, title: string}[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
       toast.error("No token found. Redirecting to login...");
-      navigate({ to: "/student/login" });
+      void navigate({ to: "/student/login" });
       return;
     }
 
@@ -23,7 +23,7 @@ const UpcomingTests = () => {
       if (data?.results?.length > 0) {
         // Sort the tests by start_at (exam time) in ascending order
         const sortedTests = data.results.sort(
-          (a, b) => new Date(a.start_at) - new Date(b.start_at),
+          (a: {start_at: string}, b: {start_at: string}) => new Date(a.start_at).valueOf() - new Date(b.start_at).valueOf(),
         );
 
         // Slice the array to get the first 2 tests
@@ -37,7 +37,7 @@ const UpcomingTests = () => {
   }, [navigate]);
 
   // Format the date and time to match your required format
-  const formatDateTime = (dateString) => {
+  const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString("en-US", {
       weekday: "long",

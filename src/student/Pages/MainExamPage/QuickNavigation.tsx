@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate} from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { BeatLoader } from "react-spinners";
+import { useStudentData } from "../../context/StudentDataContext.tsx";
 
-interface Answer {
-  question_number: number;
-  selected_option: string;
+export interface Answer {
+  question_number: number | string;
+  selected_option: string | number;
 }
 
 interface QuickNavigationProps {
@@ -12,19 +13,21 @@ interface QuickNavigationProps {
   onSelect: (questionNumber: number) => void;
   totalQuestions: number;
   selectedAnswers: Answer[];
-  examStartTime: string | null;
+  examStartTime: string | undefined;
   examId: string;
   loading: boolean;
 }
 
 const QuickNavigation: React.FC<QuickNavigationProps> = ({
-  currentQuestion,
-  onSelect,
-  totalQuestions,
-  selectedAnswers,
-  examStartTime,
-  examId,
-}) => {
+                                                           currentQuestion,
+                                                           onSelect,
+                                                           totalQuestions,
+                                                           selectedAnswers,
+                                                           examStartTime,
+                                                           examId
+                                                         }) => {
+  const studentData = useStudentData();
+
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,29 +35,19 @@ const QuickNavigation: React.FC<QuickNavigationProps> = ({
   const handleChecked = (questionNumber: number) => {
     return (
       selectedAnswers.find(
-        (answer) => answer.question_number === questionNumber,
+        (answer) => answer.question_number === questionNumber
       )?.selected_option || ""
     );
   };
 
-  const GoToQuestionsDetails = () => {
+  const GoToQuestionsDetails = async () => {
     setIsSubmitting(true);
-
-    console.log("Navigating with selectedAnswers:", selectedAnswers);
-
-    setTimeout(() => {
-      navigate({
-        to: `/student/question-details/${examId}`,
-        state: { selectedAnswers, totalQuestions, examStartTime } as Record<
-          string,
-          any
-        >,
-      });
-
-      console.log("ExamStartTimeINQuestion", examStartTime);
-
-      setIsSubmitting(false);
-    }, 2000);
+    studentData.setData({ selectedAnswers, totalQuestions, examStartTime: examStartTime ?? undefined });
+    await navigate({
+      to: `/student/question-details/${examId}`,
+      params: { examId }
+    });
+    setIsSubmitting(false);
   };
 
   return (

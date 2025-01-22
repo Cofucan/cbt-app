@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ courseDetails, examId }) => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const logoData = await getSchoolConfig(token);
+          const logoData = await getSchoolConfig();
           const logoPath = logoData?.logo;
 
           const logoUrl = logoPath

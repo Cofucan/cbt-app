@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { Answer } from "../MainExamPage/QuickNavigation.tsx";
 // import { useParams } from "@tanstack/react-router";
 
 interface CourseDetails {
@@ -11,7 +12,7 @@ interface CourseDetails {
 
 interface QuestionTableProps {
   courseDetails: CourseDetails | null;
-  selectedAnswers: { question_number: number; selected_option: string }[];
+  selectedAnswers: Answer[];
   totalQuestions: number;
   status: string;
   examId: string;

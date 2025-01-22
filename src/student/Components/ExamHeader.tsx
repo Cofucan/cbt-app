@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { fetchCourseDetails, submitExam } from "../api/auth";
-
-// Define types for the props
-interface Answer {
-  question_number: number;
-  selected_option: string;
-}
+import { Answer } from "../Pages/MainExamPage/QuickNavigation.tsx";
 
 interface ExamHeaderProps {
   title: string;
@@ -20,7 +15,7 @@ interface ExamHeaderProps {
   totalQuestions: number;
   answeredQuestions: number;
   answers: Answer[];
-  setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>; // Assuming this is how you are passing the answers setter
+  setAnswers: Dispatch<SetStateAction<Answer[]>>; // Assuming this is how you are passing the answers setter
 }
 
 const ExamHeader = ({

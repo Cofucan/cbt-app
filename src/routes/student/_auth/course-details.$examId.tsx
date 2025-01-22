@@ -1,10 +1,6 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import {
-  fetchCourseDetails,
-  getSchoolConfig,
-  getUserProfile,
-} from "../../../student/api/auth.ts";
+import { fetchCourseDetails, getSchoolConfig, getUserProfile } from "../../../student/api/auth.ts";
 import { BeatLoader } from "react-spinners";
 import Header from "../../../student/Components/MainHeader.tsx";
 import Details from "../../../student/Pages/CourseDetails/Details.tsx";
@@ -16,9 +12,9 @@ export const Route = createFileRoute("/student/_auth/course-details/$examId")({
 
 function RouteComponent() {
   const [courseDetails, setCourseDetails] = useState(null);
-  const [semester, setSemester] = useState(null);
+  const [semester, setSemester] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
-  const [studentId, setStudentId] = useState(null);
+  // const [studentId, setStudentId] = useState(null);
 
   const token = localStorage.getItem("token");
   const { examId } = Route.useParams();
@@ -42,7 +38,7 @@ function RouteComponent() {
   useEffect(() => {
     const getSemester = async () => {
       try {
-        const data = await getSchoolConfig(token);
+        const data = await getSchoolConfig();
 
         setSemester(data.semester);
       } catch (error) {
@@ -63,7 +59,7 @@ function RouteComponent() {
           const profileData = await getUserProfile(token);
           const id = profileData?.result?.profile.id;
           console.log("Student Profile Id:", id);
-          setStudentId(id);
+          // setStudentId(id);
         } else {
           console.error("No token found");
         }
@@ -80,7 +76,6 @@ function RouteComponent() {
       <div className="flex min-h-screen items-center justify-center">
         <div
           className="cursor-pointer px-10 py-2 text-lg font-medium text-white"
-          disabled={loading}
         >
           <BeatLoader color="#ff6636" size={20} />
         </div>
@@ -91,7 +86,6 @@ function RouteComponent() {
     <section className="bg-gray-50">
       <div>
         <Header
-          courseDetails={courseDetails}
           // examId={examId}
           // logout={logout}
           // studentId={studentId}

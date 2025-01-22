@@ -7,7 +7,7 @@ import ImportingImgs from "../../Components/ImportingImgs";
 const AvailableTest = () => {
   const images = ImportingImgs();
   const navigate = useNavigate();
-  const [availableTest, setAvailableTest] = useState([]);
+  const [availableTest, setAvailableTest] = useState<{id: string, start_at: string, title: string}[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,7 +38,7 @@ const AvailableTest = () => {
   }, [navigate]);
 
   // Format the date and time to match your required format
-  const formatDateTime = (dateString) => {
+  const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString("en-US", {
       weekday: "long",

@@ -1,7 +1,7 @@
 import ImportImgs from "../../../components/ImportImgs";
 import { useNavigate } from "@tanstack/react-router";
 
-const SuccessAdminModal = ({ closeAdminSuccessModal }) => {
+const SuccessAdminModal = () => {
   const navigate = useNavigate();
   const images = ImportImgs();
   return (

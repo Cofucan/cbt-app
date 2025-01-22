@@ -54,7 +54,7 @@ const Header = () => {
           </button>
           <div className="flex items-center gap-2">
             <p className="hidden text-lg lg:block">{profileName}</p>
-            <img src={profileImage} alt="MainUser" width={30} />
+            {profileImage && <img src={profileImage} alt="MainUser" width={30} /> }
           </div>
         </div>
       </div>

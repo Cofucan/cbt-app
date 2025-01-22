@@ -15,7 +15,7 @@ const useAddTest = (id?: string) => {
   const query = useQueryClient();
   const [question, setQuestion] = useState<File | undefined>();
   const [file, setFile] = useState<File | undefined>();
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File | undefined>();
 
   const { data, isLoading: loading } = useGetSettings();
   const [numberOfQuestion, setNumberOfQuestion] = useState("");

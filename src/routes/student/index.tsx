@@ -1,8 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import ImportingImgs from "../../student/Components/ImportingImgs.tsx";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getSchoolConfig } from "../../student/api/auth.ts";
-import { baseUrl } from "../../lib/utils.ts";
 
 export const Route = createFileRoute("/student/")({
   component: RouteComponent,
@@ -11,20 +10,20 @@ export const Route = createFileRoute("/student/")({
 function RouteComponent() {
   const images = ImportingImgs();
   const navigate = useNavigate();
-  const [schoolLogo, setSchoolLogo] = useState(null);
+  // const [schoolLogo, setSchoolLogo] = useState(null);
 
   useEffect(() => {
     const fetchSchoolLogo = async () => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const logoData = await getSchoolConfig(token);
+          const logoData = await getSchoolConfig();
           const logoPath = logoData?.logo;
 
-          const logoUrl = logoPath
-            ? `${baseUrl}/media/${logoPath}`
-            : images.mainLogo;
-          setSchoolLogo(logoUrl);
+          // const logoUrl = logoPath
+          //   ? `${baseUrl}/media/${logoPath}`
+          //   : images.mainLogo;
+          // setSchoolLogo(logoUrl);
 
           console.log("School Logo URL in landingPage:", logoPath);
         } else {

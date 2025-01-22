@@ -1,6 +1,6 @@
 import ImportImgs from "../../../components/ImportImgs";
 
-const RemoveAdmin = ({ handleCancel }) => {
+const RemoveAdmin = ({ handleCancel }: {handleCancel: () => void}) => {
   const images = ImportImgs();
 
   return (

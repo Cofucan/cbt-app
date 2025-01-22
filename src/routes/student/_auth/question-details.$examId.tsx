@@ -1,22 +1,22 @@
-import {createFileRoute, useLocation, useNavigate, useParams} from '@tanstack/react-router'
-import React, {useEffect, useState} from "react";
-import {fetchCourseDetails} from "../../../student/api/auth.ts";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { fetchCourseDetails } from "../../../student/api/auth.ts";
 import Header from "../../../student/Components/MainHeader.tsx";
 import ExamTable from "../../../student/Pages/ExamTable/ExamTable.tsx";
 import SubmitModal from "../../../student/Pages/Modal/SubmitModal.tsx";
 import Footer from "../../../student/Components/Footer.tsx";
+import { useStudentData } from "../../../student/context/StudentDataContext.tsx";
 
 export const Route = createFileRoute("/student/_auth/question-details/$examId")(
   {
-    component: RouteComponent,
-  },
+    component: RouteComponent
+  }
 );
 
 function RouteComponent() {
   //getting selectedAnswers from useNavigation in QuickNavigation
-  const location = useLocation();
-  const { selectedAnswers, totalQuestions, examStartTime } =
-    location.state || {};
+  const studentData = useStudentData();
+  const { selectedAnswers, totalQuestions, examStartTime } = studentData.data;
 
   console.log("questions", totalQuestions);
   console.log("Selected Answerss:", selectedAnswers);
@@ -25,12 +25,11 @@ function RouteComponent() {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [courseDetails, setCourseDetails] = useState(null);
-  const [courseTitle, setCourseTitle] = useState(null);
-  const [courseDuration, setCourseDuration] = useState(null);
+  // const [courseTitle, setCourseTitle] = useState(null);
 
-        const token = localStorage.getItem("token");
-        const { examId } = Route.useParams(); // Extract examId from route params
-        // console.log("Exam ID:", examId);
+  const token = localStorage.getItem("token");
+  const { examId } = Route.useParams(); // Extract examId from route params
+  // console.log("Exam ID:", examId);
 
   useEffect(() => {
     const getCourseDetails = async () => {
@@ -38,7 +37,7 @@ function RouteComponent() {
         const data = await fetchCourseDetails(examId, token);
         // console.log("Course Details:", data);
         setCourseDetails(data);
-        setCourseTitle(data.title);
+        // setCourseTitle(data.title);
       } catch (error) {
         console.error("Failed to fetch course details:", error);
       } finally {
@@ -67,11 +66,10 @@ function RouteComponent() {
       </div>
 
       <div className="mt-10">
-        <ExamTable
+        {selectedAnswers && totalQuestions ? <ExamTable
           courseDetails={courseDetails}
           selectedAnswers={selectedAnswers}
-          totalQuestions={totalQuestions}
-        />
+          totalQuestions={totalQuestions} status={""} examId={""} /> : <></>}
         <div className="mx-auto flex w-[90%] items-center justify-between py-5">
           <button
             onClick={backToExamsPage}
@@ -88,7 +86,7 @@ function RouteComponent() {
         </div>
       </div>
 
-      {openModal && (
+      {openModal && examStartTime && selectedAnswers && (
         <div>
           <SubmitModal
             ToggleCloseModal={ToggleCloseModal}

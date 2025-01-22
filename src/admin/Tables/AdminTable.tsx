@@ -71,7 +71,7 @@ const AdminTable = () => {
       </LoadingAnimation>
 
       {openDeleteModal && (
-        <DeleteAddmin data={adminId} handleCancel={handleCancel} />
+        <DeleteAddmin data={{ id: adminId }} handleCancel={handleCancel} />
       )}
     </>
   );

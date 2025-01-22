@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import ImportingImgs from "../../Components/ImportingImgs";
 import { useNavigate } from "@tanstack/react-router";
 import { submitExam } from "../../api/auth";
+import { Answer } from "../MainExamPage/QuickNavigation";
 
 
 interface SubmitModalProps {
   ToggleCloseModal: () => void;  
   examId: string;  
   token: string | null; 
-  selectedAnswers: { question_number: string; selected_option: string }[];  
+  selectedAnswers: Answer[];
   examStartTime: string;  
 }
 
@@ -38,7 +39,7 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
       }
 
       const formattedAnswers = selectedAnswers.map((answer) => ({
-        question_number: parseInt(answer.question_number, 10),
+        question_number: parseInt(answer.question_number.toString(), 10),
         selected_option: answer.selected_option || "",
       }));
 

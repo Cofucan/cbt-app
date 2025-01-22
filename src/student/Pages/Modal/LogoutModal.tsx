@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
 import ImportingImgs from "../../Components/ImportingImgs";
 import { useNavigate } from "@tanstack/react-router";
-import AuthContext from "../../context/AuthProvider";
+import { useAuth } from "../../context/AuthProvider";
 
-const LogoutModal = ({ CloseModal }) => {
-  const { logout } = useContext(AuthContext);
+const LogoutModal = ({ CloseModal }: {CloseModal: () => void}) => {
+  const { logout } = useAuth();
   const images = ImportingImgs();
   const navigate = useNavigate();
 

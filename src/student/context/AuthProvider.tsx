@@ -64,7 +64,7 @@
 
 // src/context/AuthProvider.tsx
 
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, useContext } from "react";
 
 // Define the AuthContextType interface
 interface AuthContextType {
@@ -79,7 +79,11 @@ interface AuthContextType {
 
 // Create the context with a default value of undefined (we'll handle this below)
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("Invalid Auth Context");
+  return context;
+};
 // Define the AuthProvider component
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [auth, setAuth] = useState(() => {

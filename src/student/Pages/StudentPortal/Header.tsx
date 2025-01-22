@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import ImportingImgs from "../../Components/ImportingImgs";
 import { useNavigate } from "@tanstack/react-router";
 import { getSchoolConfig } from "../../api/auth";
-import AuthContext from "../../context/AuthProvider";
-import { baseUrl } from "../../../lib/utils";
+import { useAuth } from "../../context/AuthProvider";
 
 const Header = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout } = useAuth();
   const images = ImportingImgs();
   const navigate = useNavigate();
 
-  const [schoolLogo, setSchoolLogo] = useState(null);
+  // const [schoolLogo, setSchoolLogo] = useState<string | undefined>();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     logout();
-    navigate({ to: "/student/login" });
+    await navigate({ to: "/student/login" });
   };
 
   useEffect(() => {
@@ -22,13 +21,13 @@ const Header = () => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const schoolConfig = await getSchoolConfig(token);
+          const schoolConfig = await getSchoolConfig();
           const logoPath = schoolConfig?.logo;
-
-          const logoUrl = logoPath
-            ? `${baseUrl}/media/${logoPath}`
-            : images.mainLogo;
-          setSchoolLogo(logoUrl);
+          //
+          // const logoUrl = logoPath
+          //   ? `${baseUrl}/media/${logoPath}`
+          //   : images.mainLogo;
+          // setSchoolLogo(logoUrl);
 
           console.log("School Logo URL in landingPage:", logoPath);
 

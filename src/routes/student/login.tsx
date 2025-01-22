@@ -1,37 +1,36 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../../student/context/AuthProvider.tsx";
+import { FormEvent, useEffect, useState } from "react";
+import { useAuth } from "../../student/context/AuthProvider.tsx";
 import ImportingImgs from "../../student/Components/ImportingImgs.tsx";
-import { getSchoolConfig, loginUser } from "../../student/api/auth.ts";
-import { baseUrl } from "../../lib/utils.ts";
+import { loginUser } from "../../student/api/auth.ts";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
+import { AxiosError } from "axios";
 
 export const Route = createFileRoute("/student/login")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { setAuth, auth } = useContext(AuthContext);
 
   const images = ImportingImgs();
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [schoolLogo, setSchoolLogo] = useState(null);
+  // const [schoolLogo, setSchoolLogo] = useState(null);
 
   useEffect(() => {
     const fetchSchoolLogo = async () => {
       try {
-        const logoData = await getSchoolConfig();
-        const logoPath = logoData?.logo;
+        // const logoData = await getSchoolConfig();
+        // const logoPath = logoData?.logo;
 
-        const logoUrl = logoPath
-          ? `${baseUrl}/media/${logoPath}`
-          : images.mainLogo;
-        setSchoolLogo(logoUrl);
+        // const logoUrl = logoPath
+        //   ? `${baseUrl}/media/${logoPath}`
+        //   : images.mainLogo;
+        // setSchoolLogo(logoUrl);
       } catch (error) {
         console.error("Error fetching school logo:", error);
       }
@@ -40,7 +39,7 @@ function RouteComponent() {
     fetchSchoolLogo();
   }, []);
 
-  const { login } = useContext(AuthContext); // import the login function
+  const { login } = useAuth()
 
   const { mutate } = useMutation({
     mutationFn: loginUser,
@@ -61,7 +60,7 @@ function RouteComponent() {
         navigate({ to: "/student/student-portal" });
       }, 2000);
     },
-    onError: (error) => {
+    onError: (error: AxiosError<{ message: string }>) => {
       console.error("Login failed:", error.response?.data || error.message);
       toast.error(
         error.response?.data?.message || "Login failed. Please try again.",
@@ -70,7 +69,7 @@ function RouteComponent() {
     },
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!identifier.trim()) {
       toast.error("Please enter a valid exam number.");
@@ -81,7 +80,10 @@ function RouteComponent() {
 
     // Call the mutation function with the identifier
     mutate(
-      { identifier },
+      {
+        username: identifier,
+        error: ""
+      },
       {
         onSettled: () => {
           setLoading(false);

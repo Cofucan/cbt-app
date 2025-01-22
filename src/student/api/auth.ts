@@ -151,6 +151,7 @@
 
 import axiosInstance from "./axiosConfig";
 import axios from "axios";
+import { Answer } from "../Pages/MainExamPage/QuickNavigation.tsx";
 
 // Define the types for API responses, request body, etc.
 
@@ -177,15 +178,18 @@ interface ExamSubmitResponse {
 }
 
 interface SubmitAnswerRequestBody {
-  attempted_questions: {
-    question_number: number;
-    selected_option: string;
-  }[];
+  attempted_questions: Answer[];
 }
 
 interface ExamStartResponse {
+  exam: { title: string, expected_end_at: string, started_at: string };
   start_time: string;
   remaining_time: string;
+  attempted_questions: {
+    selected_option: number | string;
+    student_question_number: string, question: Record<string, string>
+  }[];
+  expected_end_at: string, started_at: string
   // Add other fields returned on starting the exam
 }
 
@@ -193,6 +197,7 @@ interface SchoolConfig {
   logo: any;
   name: string;
   academic_year: string;
+  semester: string;
   // Add other config fields
 }
 
@@ -201,7 +206,7 @@ export const loginUser = async (credentials: LoginCredentials) => {
   try {
     const { data } = await axiosInstance.post(
       "/user/student-login/",
-      credentials,
+      credentials
     );
     return data;
   } catch (error) {
@@ -215,12 +220,12 @@ export const loginUser = async (credentials: LoginCredentials) => {
 };
 
 // Get user Profile Image
-export const getUserProfile = async ( token: string | null) => {
+export const getUserProfile = async (token: string | null) => {
   try {
     const response = await axiosInstance.get("/user/me/", {
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
+        Authorization: `Bearer ${token}`
+      }
     });
     return response.data;
   } catch (error) {
@@ -230,36 +235,36 @@ export const getUserProfile = async ( token: string | null) => {
 };
 
 // Fetch Student Available Tests
-export const fetchAvailableTest = async ( token: string | null) => {
+export const fetchAvailableTest = async (token: string | null) => {
   const response = await axiosInstance.get("/student/exams/available/", {
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   });
   return response.data; // Return test details from the API response
 };
 
 // Fetch Student Upcoming Tests
-export const fetchUpcomingTest = async ( token: string | null) => {
+export const fetchUpcomingTest = async (token: string | null) => {
   const response = await axiosInstance.get("/student/exams/upcoming/", {
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   });
   return response.data;
 };
 
 // Fetch Student Exam Details
-export const fetchCourseDetails = async (examId: string,  token: string | null) => {
+export const fetchCourseDetails = async (examId: string, token: string | null) => {
   try {
     const response = await axiosInstance.get(`/student/exams/${examId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     });
 
-    return response.data; 
+    return response.data;
   } catch (error) {
     console.error("Error fetching course details:", error);
     throw error;
@@ -270,7 +275,7 @@ export const fetchCourseDetails = async (examId: string,  token: string | null) 
 export const submitAnswer = async (
   examId: string,
   requestBody: SubmitAnswerRequestBody,
-   token: string | null,
+  token: string | null
 ) => {
   try {
     const { data } = await axiosInstance.post(
@@ -279,12 +284,12 @@ export const submitAnswer = async (
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      },
+          "Content-Type": "application/json"
+        }
+      }
     );
 
-    return data; 
+    return data;
   } catch (error) {
     console.error("Error in submitting Answers:", error);
     throw error;
@@ -295,7 +300,7 @@ export const submitAnswer = async (
 export const submitExam = async (
   examId: string,
   requestBody: SubmitAnswerRequestBody,
-   token: string | null,
+  token: string | null
 ): Promise<ExamSubmitResponse> => {
   try {
     const { data } = await axiosInstance.post(
@@ -304,12 +309,12 @@ export const submitExam = async (
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      },
+          "Content-Type": "application/json"
+        }
+      }
     );
 
-    return data; 
+    return data;
   } catch (error) {
     console.error("Error in submitting exam:", error);
     throw error;
@@ -320,7 +325,7 @@ export const submitExam = async (
 export const startExam = async (
   examId: string,
   requestBody: object,
-   token: string | null,
+  token: string | null
 ): Promise<ExamStartResponse> => {
   try {
     const { data } = await axiosInstance.post(
@@ -329,9 +334,9 @@ export const startExam = async (
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      },
+          "Content-Type": "application/json"
+        }
+      }
     );
 
     return data; // Assuming the response contains exam start time and remaining time
@@ -342,7 +347,7 @@ export const startExam = async (
 };
 
 // Fetch School Config
-export const getSchoolConfig = async (token: string): Promise<SchoolConfig> => {
+export const getSchoolConfig = async (): Promise<SchoolConfig> => {
   try {
     const response = await axiosInstance.get("/school/config/");
     return response.data; // Assuming response contains school config details

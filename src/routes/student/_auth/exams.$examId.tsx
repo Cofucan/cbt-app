@@ -1,42 +1,32 @@
 // import 'antd/dist/reset.css'; // Ant Design reset CSS
-import {
-  createFileRoute,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import {
-  getUserProfile,
-  startExam,
-  submitAnswer,
-} from "../../../student/api/auth.ts";
+import { getUserProfile, startExam, submitAnswer } from "../../../student/api/auth.ts";
 import { BeatLoader } from "react-spinners";
 import QuestionCard from "../../../student/Pages/MainExamPage/QuestionCard.tsx";
 import ExamHeader from "../../../student/Components/ExamHeader.tsx";
 import Header from "../../../student/Components/MainHeader.tsx";
-import QuickNavigation from "../../../student/Pages/MainExamPage/QuickNavigation.tsx";
+import QuickNavigation, { Answer } from "../../../student/Pages/MainExamPage/QuickNavigation.tsx";
 import Footer from "../../../student/Components/Footer.tsx";
 
 export const Route = createFileRoute("/student/_auth/exams/$examId")({
-  component: RouteComponent,
+  component: RouteComponent
 });
 
 function RouteComponent() {
-  const navigate = useNavigate();
   const { examId } = Route.useParams();
-  const [examStartTime, setExamStartTime] = useState(null);
+  const [examStartTime, setExamStartTime] = useState<string | undefined>();
   const [buttonChange, setButtonChange] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(1);
-  const [openModal, setOpenModal] = useState(false);
-  const [questions, setQuestions] = useState([]);
+  // const [openModal, setOpenModal] = useState(false);
+  const [questions, setQuestions] = useState<{ student_question_number: string; }[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
-  const [lastSubmittedCount, setLastSubmittedCount] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>([]);
 
-  const [error, setError] = useState<string | null>(null);
-  const [courseTitle, setCourseTitle] = useState(null);
-  const [courseDuration, setCourseDuration] = useState<number | null>(null);
+  const [error, setError] = useState<string | undefined>();
+  const [courseTitle, setCourseTitle] = useState<string | undefined>();
+  const [courseDuration, setCourseDuration] = useState<number | undefined>();
   const [studentId, setStudentId] = useState(null);
 
   // Fetch token from localStorage
@@ -44,7 +34,7 @@ function RouteComponent() {
 
   // Fetch the session from the localStorage
   const session = JSON.parse(
-    localStorage.getItem("schoolConfig"),
+    localStorage.getItem("schoolConfig") ?? ""
   ).current_session;
 
   // Fetch student profile to get studentId
@@ -78,8 +68,8 @@ function RouteComponent() {
           setQuestions(
             data.attempted_questions.map((q) => ({
               student_question_number: q.student_question_number,
-              ...q.question,
-            })),
+              ...q.question
+            }))
           );
 
           // Extract and set selected answers based on attempted questions
@@ -88,15 +78,15 @@ function RouteComponent() {
               .filter((q) => q.selected_option !== null) // Filter out questions with null selected_option
               .map((q) => ({
                 question_number: q.student_question_number,
-                selected_option: q.selected_option,
-              })),
+                selected_option: q.selected_option
+              }))
           );
 
           setCourseTitle(data.exam.title);
 
           // Calculate duration in minutes
           const durationInMs =
-            new Date(data.expected_end_at) - new Date(data.started_at);
+            new Date(data.expected_end_at).valueOf() - new Date(data.started_at).valueOf();
           const durationInMinutes = Math.floor(durationInMs / (1000 * 60));
 
           setExamStartTime(data.started_at);
@@ -134,12 +124,12 @@ function RouteComponent() {
   };
 
   // Handle answer change
-  const handleAnswerChange = (questionNumber, selectedOption) => {
+  const handleAnswerChange = (questionNumber: string | number, selectedOption: string) => {
     // Update selected answers
     setSelectedAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       const answerIndex = updatedAnswers.findIndex(
-        (ans) => ans.question_number === questionNumber,
+        (ans) => ans.question_number === questionNumber
       );
 
       if (answerIndex > -1) {
@@ -147,7 +137,7 @@ function RouteComponent() {
       } else {
         updatedAnswers.push({
           question_number: questionNumber,
-          selected_option: selectedOption,
+          selected_option: selectedOption
         });
       }
 
@@ -161,10 +151,10 @@ function RouteComponent() {
   };
 
   // Submit answers to the server
-  const submitAnswers = async (answersToSubmit) => {
+  const submitAnswers = async (answersToSubmit: any[]) => {
     const formattedAnswers = answersToSubmit.map((answer) => ({
       question_number: parseInt(answer.question_number, 10),
-      selected_option: answer.selected_option || "",
+      selected_option: answer.selected_option || ""
     }));
 
     const requestBody = { attempted_questions: formattedAnswers };
@@ -178,7 +168,7 @@ function RouteComponent() {
   };
 
   const progressPercentage = Math.floor(
-    (selectedAnswers.length / questions.length) * 100,
+    (selectedAnswers.length / questions.length) * 100
   );
 
   // Render loader or error if applicable
@@ -204,7 +194,7 @@ function RouteComponent() {
       {courseTitle &&
         studentId &&
         examId &&
-        courseDuration !== null &&
+        courseDuration &&
         examStartTime && (
           <ExamHeader
             title={courseTitle}
@@ -241,12 +231,12 @@ function RouteComponent() {
             <QuickNavigation
               currentQuestion={currentQuestion}
               onSelect={handleQuestionSelect}
-              toggleOpenModal={() => setOpenModal(true)}
+
+              // toggleOpenModal={() => setOpenModal(true)}
               totalQuestions={questions.length}
               selectedAnswers={selectedAnswers}
               loading={loading}
-              examStartTime={examStartTime}
-            />
+              examStartTime={examStartTime} examId={examId} />
           </div>
         </div>
       </div>

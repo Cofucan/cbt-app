@@ -1,19 +1,16 @@
-import {
-  createFileRoute,
-  useLocation,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import ImportingImgs from "../../../student/Components/ImportingImgs.tsx";
 import { useEffect, useState } from "react";
 import Header from "../../../student/Components/MainHeader.tsx";
 import Footer from "../../../student/Components/Footer.tsx";
+import { useStudentData } from "../../../student/context/StudentDataContext.tsx";
 
 export const Route = createFileRoute("/student/_auth/exam-success")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const location = useLocation();
+  const studentData = useStudentData()
   const navigate = useNavigate();
   const images = ImportingImgs();
 
@@ -21,14 +18,14 @@ function RouteComponent() {
 
   useEffect(() => {
     // Get the exam start time from location state
-    const { examStartTime } = location.state || {};
+    const { examStartTime } = studentData.data;
 
     console.log("examStartTime", examStartTime);
 
     if (examStartTime) {
       // Get the current time as the submission time
-      const examEndTime = new Date();
-      const startTime = new Date(examStartTime);
+      const examEndTime = new Date().valueOf();
+      const startTime = new Date(examStartTime).valueOf();
 
       // Calculate the time difference in milliseconds
       const timeDifference = examEndTime - startTime;
@@ -40,7 +37,7 @@ function RouteComponent() {
       // Format time taken as "X minutes Y seconds"
       setTimeTaken(`${minutes} minutes ${seconds} seconds`);
     }
-  }, [location.state]);
+  }, [studentData.data]);
 
   return (
     <section className="bg-gray-50">
