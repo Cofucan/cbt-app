@@ -6,11 +6,11 @@ import { getSchoolConfig } from "../../api/auth";
 import AuthContext from "../../context/AuthProvider";
 import { baseUrl } from "../../../lib/utils";
 
-// Define types for the courseDetails and examId props
+
 interface CourseDetails {
   duration: number;
   no_of_questions: number;
-  [key: string]: any; // Allow for additional properties
+  [key: string]: any;
 }
 
 interface HeaderProps {

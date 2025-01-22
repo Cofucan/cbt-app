@@ -76,7 +76,7 @@ const QuickNavigation: React.FC<QuickNavigationProps> = ({
         onClick={GoToQuestionsDetails}
         className="mt-6 w-[70%] bg-[#ff6636] py-3 font-semibold text-white lg:w-full"
       >
-        {isSubmitting ? <BeatLoader color="#fff" /> : "Submit Test"}
+        {isSubmitting ? <BeatLoader color="#fff" /> : "Preview"}
       </button>
     </div>
   );

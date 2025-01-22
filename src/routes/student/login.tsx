@@ -13,12 +13,10 @@ export const Route = createFileRoute("/student/login")({
 });
 
 function RouteComponent() {
-
   const images = ImportingImgs();
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [loading, setLoading] = useState(false);
-
   // const [schoolLogo, setSchoolLogo] = useState(null);
 
   useEffect(() => {
@@ -26,7 +24,6 @@ function RouteComponent() {
       try {
         // const logoData = await getSchoolConfig();
         // const logoPath = logoData?.logo;
-
         // const logoUrl = logoPath
         //   ? `${baseUrl}/media/${logoPath}`
         //   : images.mainLogo;
@@ -39,7 +36,7 @@ function RouteComponent() {
     fetchSchoolLogo();
   }, []);
 
-  const { login } = useAuth()
+  const { login } = useAuth();
 
   const { mutate } = useMutation({
     mutationFn: loginUser,
@@ -47,15 +44,11 @@ function RouteComponent() {
       // Save token and user data in local storage
       const token = data.access_token;
       const user = data.student;
-
-      // Call login from AuthContext to set auth state
       login(token, user);
-
       localStorage.setItem("token", token);
       localStorage.setItem("student", JSON.stringify(user));
       toast.success("Login Successful!");
 
-      // Redirect to the student portal after a short delay
       setTimeout(() => {
         navigate({ to: "/student/student-portal" });
       }, 2000);
@@ -76,13 +69,11 @@ function RouteComponent() {
       return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true);
 
-    // Call the mutation function with the identifier
     mutate(
       {
-        username: identifier,
-        error: ""
+        identifier,
       },
       {
         onSettled: () => {
@@ -100,7 +91,6 @@ function RouteComponent() {
           src={images.enugun}
           alt="Logo"
           className="object-cover px-8 py-3"
-          // width={120}
           width={200}
         />
       </div>
@@ -120,7 +110,6 @@ function RouteComponent() {
               src={images.enugun}
               alt="Main Logo"
               className="bg-cover object-cover"
-              // width={150}
               width={300}
             />
             <h2 className="text-2xl font-semibold text-[#13175A]">
