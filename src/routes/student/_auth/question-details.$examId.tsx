@@ -1,11 +1,6 @@
-import {
-  createFileRoute,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
-import React, { useEffect, useState } from "react";
-import { fetchCourseDetails } from "../../../student/api/auth.ts";
+import {createFileRoute, useLocation, useNavigate, useParams} from '@tanstack/react-router'
+import React, {useEffect, useState} from "react";
+import {fetchCourseDetails} from "../../../student/api/auth.ts";
 import Header from "../../../student/Components/MainHeader.tsx";
 import ExamTable from "../../../student/Pages/ExamTable/ExamTable.tsx";
 import SubmitModal from "../../../student/Pages/Modal/SubmitModal.tsx";
@@ -33,9 +28,9 @@ function RouteComponent() {
   const [courseTitle, setCourseTitle] = useState(null);
   const [courseDuration, setCourseDuration] = useState(null);
 
-  const token = localStorage.getItem("token");
-  const { examId } = Route.useParams(); // Extract examId from route params
-  // console.log("Exam ID:", examId);
+        const token = localStorage.getItem("token");
+        const { examId } = Route.useParams(); // Extract examId from route params
+        // console.log("Exam ID:", examId);
 
   useEffect(() => {
     const getCourseDetails = async () => {

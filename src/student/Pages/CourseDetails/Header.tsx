@@ -6,12 +6,31 @@ import { getSchoolConfig } from "../../api/auth";
 import AuthContext from "../../context/AuthProvider";
 import { baseUrl } from "../../../lib/utils";
 
-const Header = ({ courseDetails, examId }) => {
-  const { logout } = useContext(AuthContext);
+// Define types for the courseDetails and examId props
+interface CourseDetails {
+  duration: number;
+  no_of_questions: number;
+  [key: string]: any; // Allow for additional properties
+}
+
+interface HeaderProps {
+  courseDetails: CourseDetails;
+  examId: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ courseDetails, examId }) => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("Header must be used within an AuthProvider");
+  }
+
+  const { logout } = context;
   const images = ImportingImgs();
   const navigate = useNavigate();
-  const [isOpenStartExamModal, setIsOpenStartExamModal] = useState(false);
-  const [schoolLogo, setSchoolLogo] = useState(null);
+  const [isOpenStartExamModal, setIsOpenStartExamModal] =
+    useState<boolean>(false);
+  const [schoolLogo, setSchoolLogo] = useState<string>("");
 
   const handleLogout = () => {
     logout();
@@ -46,13 +65,14 @@ const Header = ({ courseDetails, examId }) => {
   const ToggleStartExamModal = () => {
     setIsOpenStartExamModal(true);
   };
+
   const ToggleStartExamModalClose = () => {
     setIsOpenStartExamModal(false);
   };
 
   return (
     <div className="flex w-[100%] items-center justify-between bg-white px-3 py-5 lg:px-10">
-      <img src={images.enugun} alt="mainLogo" width={200} />
+      <img src={schoolLogo} alt="mainLogo" width={200} />
 
       <div className="flex items-center gap-2">
         <button
@@ -68,11 +88,13 @@ const Header = ({ courseDetails, examId }) => {
           Logout
         </button>
       </div>
+
       {isOpenStartExamModal && (
         <StartExamModal
           ToggleStartExamModalClose={ToggleStartExamModalClose}
           courseDetails={courseDetails}
           examId={examId}
+          totalQuestions={courseDetails?.no_of_questions} // Ensuring totalQuestions is passed correctly
         />
       )}
     </div>

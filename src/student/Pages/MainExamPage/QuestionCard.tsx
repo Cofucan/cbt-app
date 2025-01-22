@@ -1,26 +1,53 @@
 import React, { useState } from "react";
-import ImportingImgs from "../../Components/ImportingImgs";
-import { useNavigate, useParams } from "@tanstack/react-router";
+// import ImportingImgs from "../../Components/ImportingImgs";
+import { useNavigate} from "@tanstack/react-router";
 import { BeatLoader } from "react-spinners";
 import { baseUrl } from "../../../lib/utils";
 
-const QuestionCard = ({
+// Define types for question, answer, and props
+interface Question {
+  student_question_number: number;
+  text: string;
+  image_url?: string;
+  option_1: string;
+  option_2: string;
+  option_3: string;
+  option_4: string;
+}
+
+interface Answer {
+  question_number: number;
+  selected_option: string;
+}
+
+interface QuestionCardProps {
+  questions: Question;
+  questionNumber: number;
+  onNext: () => void;
+  onPrev: () => void;
+  buttonChange: boolean;
+  handleAnswerChange: (questionNumber: number, selectedOption: string) => void;
+  selectedAnswers: Answer[];
+  totalQuestions: number;
+  examId: string;
+  studentId: number | null;
+}
+
+const QuestionCard: React.FC<QuestionCardProps> = ({
   questions,
   onNext,
   onPrev,
   buttonChange,
   handleAnswerChange,
   selectedAnswers,
-  totalQuestions,
+  // totalQuestions,
   examId,
-}: {
-  examId: string;
 }) => {
-  const images = ImportingImgs();
+  // const images = ImportingImgs();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChecked = (questionNumber) => {
+  const handleChecked = (questionNumber: number) => {
     return (
       selectedAnswers.find(
         (answer) => answer.question_number === questionNumber,
@@ -34,10 +61,7 @@ const QuestionCard = ({
     console.log("Navigating with selectedAnswers:", selectedAnswers);
 
     setTimeout(() => {
-      navigate({ to: "/student/question-details/$examId", params: { examId } });
-      // navigate(`/QuestionDetails/${examId}`, {
-      //   state: { selectedAnswers, totalQuestions},
-      // });
+      navigate({ to: `/student/question-details/${examId}`, params: { examId } });
 
       setIsSubmitting(false);
     }, 5000);
@@ -58,16 +82,15 @@ const QuestionCard = ({
   return (
     <section>
       <div className="bg-white p-8">
-        <h2 className="mb-4 md:text-lg">
-          {/* {questions.number}. {questions.text} */}
+        <h2 className="md:text-lg mb-4">
           {questions.student_question_number}. {questions.text}
         </h2>
 
         {questions.image_url && (
           <img
             src={`${baseUrl}${questions.image_url}`}
-            alt={`Question ${questions.number}`}
-            className="mb-6 h-52 w-60"
+            alt={`Question ${questions.student_question_number}`}
+            className="mb-6 w-60 h-52"
           />
         )}
 
@@ -79,9 +102,7 @@ const QuestionCard = ({
 
             return (
               <div key={index} className="flex items-center space-x-2">
-                <div className="font-bold">
-                  {String.fromCharCode(65 + index)}.
-                </div>
+                <div className="font-bold">{String.fromCharCode(65 + index)}.</div>
                 <div>
                   <input
                     type="radio"

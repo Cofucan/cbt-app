@@ -2,6 +2,27 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { fetchCourseDetails, submitExam } from "../api/auth";
 
+// Define types for the props
+interface Answer {
+  question_number: number;
+  selected_option: string;
+}
+
+interface ExamHeaderProps {
+  title: string;
+  session:any ;
+  studentId: number;
+  examId: string;
+  onExamEnd?: () => void;
+  examStartTime: string;
+  courseDuration: number;
+  progressPercentage: number;
+  totalQuestions: number;
+  answeredQuestions: number;
+  answers: Answer[];
+  setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>; // Assuming this is how you are passing the answers setter
+}
+
 const ExamHeader = ({
   title,
   studentId,
@@ -13,54 +34,44 @@ const ExamHeader = ({
   totalQuestions,
   answeredQuestions,
   answers,
-  // session,
-}) => {
+  // setAnswers,
+}: ExamHeaderProps) => {
   const token = localStorage.getItem("token");
   const INITIAL_TIME = courseDuration * 60;
   const STORAGE_KEY_START = `examStartTime_${studentId}_${title}`;
   const [timeRemaining, setTimeRemaining] = useState(INITIAL_TIME);
   const navigate = useNavigate();
-  const [courseDetails, setCourseDetails] = useState([]);
+  const [courseDetails, setCourseDetails] = useState<any>([]);
 
   useEffect(() => {
     const getCourseDetails = async () => {
       try {
         const data = await fetchCourseDetails(examId, token);
-        // console.log("Course Details:", data);
         setCourseDetails(data);
       } catch (error) {
         console.error("Failed to fetch course details:", error);
-      } finally {
-        setLoading(false);
       }
     };
     getCourseDetails();
   }, [examId, token]);
 
-  // console.log("courseDetails", courseDetails)
-  const formatTime = (seconds) => {
+  const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
 
-    return `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
-      2,
-      "0",
-    )} : ${String(secs).padStart(2, "0")}`;
+    return `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(2, "0")} : ${String(secs).padStart(2, "0")}`;
   };
 
-  // Automatically submit exam on timeout
   const submitAnswers = async () => {
-    const token = localStorage.getItem("token");
     const requestBody = { attempted_questions: answers };
 
     try {
       const response = await submitExam(examId, requestBody, token);
       console.log("Exam submitted successfully:", response);
 
-      // Perform logout
       localStorage.removeItem("token");
-      localStorage.removeItem(`examStartTime_${studentId}_${title}`);
+      localStorage.removeItem(STORAGE_KEY_START);
       navigate({ to: "/student" });
 
       if (onExamEnd) onExamEnd();
@@ -70,16 +81,12 @@ const ExamHeader = ({
   };
 
   useEffect(() => {
-    // Set exam start time in localStorage
-    if (!localStorage.getItem(STORAGE_KEY_START)) {
+    if (!(localStorage.getItem(STORAGE_KEY_START))) {
       localStorage.setItem(STORAGE_KEY_START, examStartTime);
     }
 
-    // Calculate remaining time based on exam start time
     const calculateRemainingTime = () => {
-      const elapsedTime = Math.floor(
-        (Date.now() - new Date(examStartTime)) / 1000,
-      );
+      const elapsedTime = Math.floor((Date.now() - new Date(examStartTime).getTime()) / 1000);
       const remainingTime = INITIAL_TIME - elapsedTime;
       return remainingTime > 0 ? remainingTime : 0;
     };
@@ -88,9 +95,6 @@ const ExamHeader = ({
 
     const countdown = setInterval(() => {
       const newRemainingTime = calculateRemainingTime();
-
-      // console.log("Remaining Time:", newRemainingTime);
-
       if (newRemainingTime <= 0) {
         clearInterval(countdown);
         submitAnswers();
@@ -100,7 +104,7 @@ const ExamHeader = ({
     }, 1000);
 
     return () => clearInterval(countdown);
-  }, [STORAGE_KEY_START, INITIAL_TIME]);
+  }, [STORAGE_KEY_START, INITIAL_TIME, examStartTime]);
 
   return (
     <section className="mx-auto mt-10 w-[90%] bg-[#1d2026]">
@@ -117,9 +121,7 @@ const ExamHeader = ({
               className="h-8 bg-[#ff6636] text-center text-sm text-white"
               style={{ width: `${progressPercentage}%` }}
             >
-              <p className="py-2">
-                {answeredQuestions} out of {totalQuestions}
-              </p>
+              <p className="py-2">{answeredQuestions} out of {totalQuestions}</p>
             </div>
           </div>
         </div>

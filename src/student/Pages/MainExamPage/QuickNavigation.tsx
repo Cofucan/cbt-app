@@ -1,20 +1,35 @@
-import React, { useState } from "react";
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useState } from "react";
+import { useNavigate} from "@tanstack/react-router";
 import { BeatLoader } from "react-spinners";
 
-const QuickNavigation = ({
+interface Answer {
+  question_number: number;
+  selected_option: string;
+}
+
+interface QuickNavigationProps {
+  currentQuestion: number;
+  onSelect: (questionNumber: number) => void;
+  totalQuestions: number;
+  selectedAnswers: Answer[];
+  examStartTime: string | null;
+  examId: string;
+  loading: boolean;
+}
+
+const QuickNavigation: React.FC<QuickNavigationProps> = ({
   currentQuestion,
   onSelect,
-  toggleOpenModal,
   totalQuestions,
   selectedAnswers,
   examStartTime,
+  examId,
 }) => {
   const navigate = useNavigate();
-  const { examId } = useParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChecked = (questionNumber) => {
+  // Check if the question has been answered
+  const handleChecked = (questionNumber: number) => {
     return (
       selectedAnswers.find(
         (answer) => answer.question_number === questionNumber,
@@ -28,15 +43,18 @@ const QuickNavigation = ({
     console.log("Navigating with selectedAnswers:", selectedAnswers);
 
     setTimeout(() => {
-      // navigate(`/QuestionDetails/${examId}`, {
-      //   state: { selectedAnswers, totalQuestions, examStartTime }
-      // });
-      navigate({ to: "/student/question-details/$examId", params: { examId } });
+      navigate({
+        to: `/student/question-details/${examId}`,
+        state: { selectedAnswers, totalQuestions, examStartTime } as Record<
+          string,
+          any
+        >,
+      });
 
       console.log("ExamStartTimeINQuestion", examStartTime);
 
       setIsSubmitting(false);
-    }, 5000);
+    }, 2000);
   };
 
   return (
@@ -65,7 +83,7 @@ const QuickNavigation = ({
         onClick={GoToQuestionsDetails}
         className="mt-6 w-[70%] bg-[#ff6636] py-3 font-semibold text-white lg:w-full"
       >
-        {isSubmitting ? <BeatLoader color="#fff" /> : " Submit Test"}
+        {isSubmitting ? <BeatLoader color="#fff" /> : "Submit Test"}
       </button>
     </div>
   );

@@ -4,7 +4,17 @@ import { useNavigate } from "@tanstack/react-router";
 import { startExam } from "../../api/auth";
 import { BeatLoader } from "react-spinners";
 
-const StartExamModal = ({
+interface StartExamProps {
+  ToggleStartExamModalClose: () => void;
+  courseDetails: {
+    duration: number;
+    // Add other course details fields here as needed
+  };
+  examId: string;
+  totalQuestions: number;
+}
+
+const StartExamModal: React.FC<StartExamProps> = ({
   ToggleStartExamModalClose,
   courseDetails,
   examId,
@@ -21,11 +31,18 @@ const StartExamModal = ({
 
     setLoading(true);
     try {
-      await startExam(examId, {}, token);
+      // Store the response for debugging
+      const response = await startExam(examId, {}, token);
+      
+      // Debugging: Log the response
+      console.log("Start Exam Response:", response);
+
+      // Close the modal and navigate to the exam
       ToggleStartExamModalClose();
-      await navigate({ to: "/student/exams/$examId", params: { examId } });
+      navigate({ to: `/student/exams/${examId}`, params: { examId } });
     } catch (error) {
-      setError("unable to start exam");
+      setError("Unable to start exam. Please try again.");
+      console.error("Error starting exam:", error);
     } finally {
       setLoading(false);
     }
@@ -34,8 +51,8 @@ const StartExamModal = ({
   return (
     <div>
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
-        <div className="w-[47rem] bg-white shadow-lg">
+      <div className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50">
+        <div className="bg-white shadow-lg w-[47rem]">
           {/* Modal header */}
           <div className="flex items-center justify-between border-b px-6 py-3">
             <h2 className="text-lg font-medium">Confirm Test Attempt</h2>

@@ -1,25 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ImportingImgs from "../../Components/ImportingImgs";
 import { useNavigate } from "@tanstack/react-router";
 import { submitExam } from "../../api/auth";
 
-const SubmitModal = ({
+
+interface SubmitModalProps {
+  ToggleCloseModal: () => void;  
+  examId: string;  
+  token: string | null; 
+  selectedAnswers: { question_number: string; selected_option: string }[];  
+  examStartTime: string;  
+}
+
+const SubmitModal: React.FC<SubmitModalProps> = ({
   ToggleCloseModal,
   examId,
   token,
   selectedAnswers,
-  examStartTime,
+  // examStartTime,
 }) => {
   const images = ImportingImgs();
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
+  
+  // Define types for the state
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(""); 
+  // Handle submit
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setErrorMessage("");
 
     try {
+       console.log("Raw answers:", selectedAnswers);
+
       if (selectedAnswers.length === 0) {
         throw new Error("No answers provided.");
       }
@@ -28,24 +41,26 @@ const SubmitModal = ({
         question_number: parseInt(answer.question_number, 10),
         selected_option: answer.selected_option || "",
       }));
+
+       console.log("Formatted answers:", formattedAnswers);
+      
       const requestBody = {
         attempted_questions: formattedAnswers,
       };
 
       console.log("Request body:", requestBody);
+      
       const response = await submitExam(examId, requestBody, token);
       console.log("Submission response:", response);
 
       localStorage.removeItem("token");
 
-      // Navigate to ExamFinished with examStartTime in state
-      // navigate({to: "/student/exam-success",  state: { examStartTime } });
+      // Navigate to ExamFinished page
       navigate({ to: "/student/exam-success" });
-    } catch (error) {
+
+    } catch (error: any) {
       console.error("Error submitting exam:", error);
-      setErrorMessage("");
-      // error.message || "Failed to submit the exam. Please try again."
-      // <p>Exam Submitted Successfully,Please Logout</p>
+      setErrorMessage(error.message || "Failed to submit the exam. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
