@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import { Input, Modal, Select } from "antd";
 import SaveNewCourseModal from "./SaveNewCourseModal";
@@ -7,15 +7,20 @@ import useGetDepartment from "../../../hooks/getData/useGetDepartment";
 import useAddCourse from "../../../hooks/postData/useAddCourse";
 import CustomButton from "../../../components/CustomButton";
 
-const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
+interface EditCourseModalProps {
+  data: Record<string, any> | undefined | null,
+  EditModalOpen: boolean,
+  handleCancel: () => void
+}
+
+const EditCourseModal: FC<EditCourseModalProps> = (props) => {
+  const { data, EditModalOpen, handleCancel } = props;
   const images = ImportImgs();
 
   //Edit Course modal Logic
   const [openSaveEditCourseModal, setSaveEditCourseModal] = useState(false);
-  const showSaveEditModal = () => setSaveEditCourseModal(true);
   const CancelSaveEditModal = () => setSaveEditCourseModal(false);
 
-  const faculties = ["Engineering", "Business", "Arts"];
   const levels = ["100", "200", "300", "400"];
 
   const { data: facultyList } = useGetFaculty();
@@ -27,10 +32,10 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
 
   const filteredData = () => {
     let value = facultyList.find(
-      (faculty) => faculty.name === data?.faculty?.name,
+      (faculty) => faculty.name === data?.faculty?.name
     );
     let depart = departmentList.find(
-      (faculty) => faculty.name === data?.department?.name,
+      (faculty) => faculty.name === data?.department?.name
     );
     console.log(value?.id);
     console.log(depart);
@@ -39,7 +44,7 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
       // "email": data?.email,
       title: data?.title,
       code: data?.code,
-      level: data?.level,
+      level: data?.level
     });
     formik.setFieldValue("faculty_id", value?.id);
     formik.setFieldValue("department_id", depart?.id);
@@ -71,7 +76,7 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
           </span>
         }
       >
-        <div className="p-4">
+        <form className="p-4" onSubmit={formik?.handleSubmit}>
           {/* Faculty Name Dropdown */}
 
           <div className="mb-4">
@@ -85,12 +90,8 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
               onChange={(value) =>
                 formik.setFieldValue("fafaculty_idculty", value)
               }
+              options={facultyList.map(x => ({ value: x.id, label: <span>{x.name}</span> }))}
             >
-              {facultyList.map((item) => (
-                <Option key={item?.id} value={item?.id}>
-                  {item?.name}
-                </Option>
-              ))}
             </Select>
           </div>
 
@@ -106,12 +107,8 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
               className="w-full"
               value={formik?.values?.department_id}
               onChange={(value) => formik.setFieldValue("department_id", value)}
+              options={departmentList.map(x => ({ value: x.id, label: <span>{x.name}</span> }))}
             >
-              {departmentList.map((item) => (
-                <Option key={item?.id} value={item?.id}>
-                  {item?.name}
-                </Option>
-              ))}
             </Select>
           </div>
 
@@ -123,12 +120,8 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
               className="w-full"
               value={formik?.values?.level}
               onChange={(value) => formik.setFieldValue("level", value)}
+              options={levels.map(x => ({ value: x, label: <span>{x}</span> }))}
             >
-              {levels.map((levelOption) => (
-                <Option key={levelOption} value={levelOption}>
-                  {levelOption}
-                </Option>
-              ))}
             </Select>
           </div>
 
@@ -166,14 +159,13 @@ const EditCourseModal = ({ data, EditModalOpen, handleCancel }) => {
             <CustomButton
               title="Edit Student Data"
               isLoading={loadingEdit}
-              onClick={formik?.handleSubmit}
             />
           </div>
           {/* Save New Course Modal */}
           {openSaveEditCourseModal && (
             <SaveNewCourseModal CancelSaveModal={CancelSaveEditModal} />
           )}
-        </div>
+        </form>
       </Modal>
     </div>
   );

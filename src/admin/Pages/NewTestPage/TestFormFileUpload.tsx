@@ -1,12 +1,12 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import { FaFileExcel } from "react-icons/fa";
+interface FileUploadProps { setQuestion: Dispatch<SetStateAction<File | undefined>>; question: File | undefined; setFile: Dispatch<SetStateAction<File | undefined>>; file: File | undefined; }
 
-const FileUpload = (props) => {
+const FileUpload: FC<FileUploadProps> = (props) => {
   const { setQuestion, question, setFile, file } = props;
 
   const images = ImportImgs();
-  // const [files, setFiles] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [downloadFile, setDownloadFile] = useState<File | null>(null); // State to store the file to download
 
@@ -36,7 +36,7 @@ const FileUpload = (props) => {
     setDragging(false);
   };
 
-  const handleDrop = (e:  React.DragEvent<HTMLLabelElement> ) => {
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     setDragging(false);
     const droppedFiles = Array.from(e.dataTransfer.files);
@@ -49,7 +49,7 @@ const FileUpload = (props) => {
       const fileType = file.type;
       return fileType === "text/csv" || fileType === "application/zip";
     });
-    setQuestion(selectedFiles);
+    setQuestion(selectedFiles[0]);
     // setFiles((prevFiles) => [...prevFiles, ...validFiles]);
     if (validFiles.length > 0) {
       setDownloadFile(validFiles[0]); // Set the first valid file for download
@@ -91,9 +91,8 @@ const FileUpload = (props) => {
         <label className="pb-4 text-[#1d2026]">Upload Questions</label>
         <label className="flex items-center gap-16">
           <div
-            className={`mt-2 flex w-[80%] items-center rounded border px-4 py-8 ${
-              dragging ? "border-orange-500" : "border-gray-300"
-            }`}
+            className={`mt-2 flex w-[80%] items-center rounded border px-4 py-8 ${dragging ? "border-orange-500" : "border-gray-300"
+              }`}
             onDragOver={handleDragOverQuestion}
             onDragLeave={handleDragLeaveQuestion}
             onDrop={handleDropQuestion}
@@ -120,9 +119,9 @@ const FileUpload = (props) => {
                 </span>
                 <div
                   className="ml-2 font-semibold text-orange-500"
-                  // onClick={() =>
-                  //   document.querySelector('input[type="file"]').click()
-                  // }
+                // onClick={() =>
+                //   document.querySelector('input[type="file"]').click()
+                // }
                 >
                   Browse{" "}
                   <span className="font-normal text-[#8c94a3]">
@@ -166,9 +165,8 @@ const FileUpload = (props) => {
         <label className="pb-4 text-[#1d2026]">Upload Questions Images</label>
         <label
           role="button"
-          className={`mt-2 flex items-center rounded-lg border px-4 py-8 ${
-            dragging ? "border-orange-500" : "border-gray-300"
-          }`}
+          className={`mt-2 flex items-center rounded-lg border px-4 py-8 ${dragging ? "border-orange-500" : "border-gray-300"
+            }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
@@ -196,9 +194,9 @@ const FileUpload = (props) => {
               </span>
               <div
                 className="ml-2 font-semibold text-orange-500"
-                // onClick={() =>
-                //   document.getElementById('file').click()
-                // }
+              // onClick={() =>
+              //   document.getElementById('file').click()
+              // }
               >
                 Browse{" "}
                 <span className="font-normal text-[#8c94a3]">

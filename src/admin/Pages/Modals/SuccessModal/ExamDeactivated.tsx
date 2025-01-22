@@ -1,6 +1,6 @@
 import ImportImgs from "../../../components/ImportImgs";
 
-const ExamDeactivated = ({ TogglecloseSuccessModal }) => {
+const ExamDeactivated = ({ TogglecloseSuccessModal }: {TogglecloseSuccessModal: () => void}) => {
   const images = ImportImgs();
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">

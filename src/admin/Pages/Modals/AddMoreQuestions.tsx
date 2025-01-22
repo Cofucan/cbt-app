@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import BulkQuestionUpload from "./BulkQuestionUpload";
 import useAddTest from "../../hooks/postData/useAddTest";
@@ -45,8 +45,8 @@ const AddMoreQuestions: FC<AddMoreQuestionsProps> = (props) => {
     }
   }, [successSingleQusetion]);
 
-  const handleBrowseQuest = (e) => {
-    const selected = e.target.files[0];
+  const handleBrowseQuest = (e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
     console.log(selected);
     setImage(selected);
   };

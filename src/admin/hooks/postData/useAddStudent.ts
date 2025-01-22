@@ -4,8 +4,10 @@ import toast from "react-hot-toast";
 import httpService from "../../utils/httpService";
 import findEmptyFields from "../../utils/findEmptyField";
 import removeEmptyData from "../../utils/removingEmptyData";
+import { AxiosError } from "axios";
+import { AdminErrorResponse } from "../../utils";
 
-const useAddStudent = (id) => {
+const useAddStudent = (id?: string | number) => {
   const query = useQueryClient();
   const formik = useFormik({
     initialValues: {
@@ -36,8 +38,8 @@ const useAddStudent = (id) => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info) => httpService.post(`app_admin/students/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/students/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail
@@ -56,8 +58,8 @@ const useAddStudent = (id) => {
     isPending: loadingEdit,
     isSuccess: editSuccess,
   } = useMutation({
-    mutationFn: (info) => httpService.put(`app_admin/students/${id}/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.put(`app_admin/students/${id}/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail

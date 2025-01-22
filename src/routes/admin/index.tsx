@@ -1,7 +1,6 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useSelector } from "react-redux";
+import { createFileRoute } from "@tanstack/react-router";
 import useAuth from "../../admin/hooks/useAuth.ts";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import logo from "../../admin/assets/enugun.png";
 import saly from "../../admin/assets/esut_computer_lab.jpg";
 import { BeatLoader } from "react-spinners";
@@ -12,9 +11,6 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function RouteComponent() {
-  const navigate = useNavigate();
-  const { loading } = useSelector((state) => state.user);
-
   const { isLoading, formik } = useAuth();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -22,7 +18,7 @@ function RouteComponent() {
     setPasswordVisible(!passwordVisible);
   };
 
-  const Submit = (e) => {
+  const Submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     formik?.handleSubmit();
   };
@@ -45,7 +41,7 @@ function RouteComponent() {
               </h3>
             </div>
             <form
-              onSubmit={(e) => Submit(e)}
+              onSubmit={Submit}
               className="flex flex-col gap-6 lg:w-full lg:gap-8"
             >
               <div className="mx-3 flex flex-col gap-3 md:mx-10 md:w-[85%] lg:gap-5">

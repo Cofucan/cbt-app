@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import findEmptyFields from "../utils/findEmptyField";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { AdminErrorResponse } from "../utils.ts";
+import { AxiosError } from "axios";
 
 const useAuth = () => {
   const navigate = useNavigate();
@@ -25,8 +27,8 @@ const useAuth = () => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info) => unsecureHttpService.post(`user/login/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => unsecureHttpService.post(`user/login/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail

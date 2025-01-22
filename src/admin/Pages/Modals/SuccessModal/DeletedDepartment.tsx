@@ -1,6 +1,6 @@
 import ImportImgs from "../../../components/ImportImgs";
 
-const DeletedDepartment = ({ handleCancelDelete }) => {
+const DeletedDepartment = ({ handleCancelDelete }: {handleCancelDelete: () => void}) => {
   const images = ImportImgs();
 
   return (

@@ -3,11 +3,14 @@ import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import httpService from "../../utils/httpService";
 import findEmptyFields from "../../utils/findEmptyField";
+import { AxiosError } from "axios";
+import { AdminErrorResponse } from "../../utils";
 
 const useAddFaculty = () => {
   const query = useQueryClient();
   const formik = useFormik({
     initialValues: {
+      faculty: "",
       name: "",
     },
     onSubmit: (values) => {
@@ -24,8 +27,8 @@ const useAddFaculty = () => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info) => httpService.post(`app_admin/faculties/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/faculties/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail

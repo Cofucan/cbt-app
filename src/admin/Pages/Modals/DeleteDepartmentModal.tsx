@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import DeletedDepartment from "./SuccessModal/DeletedDepartment";
-import useDeleteDepartment from "../../hooks/deleteData/useDeleteDepartment";
-import { Button } from "antd";
-import { data } from "autoprefixer";
 import CustomButton from "../../components/CustomButton";
 import useDeleteStudent from "../../hooks/deleteData/useDeleteStudent";
 
-const DeleteDepartmentModal = ({ data, handleCancelDelete }) => {
-  const images = ImportImgs();
-  const [openDeletedDept, setOpenDeletedDept] = useState(false);
+interface DeleteDepartmentModalProps {
+  data: Record<string, any> | undefined | null,
+  handleCancelDelete: () => void
+}
 
-  const ToggleOpenDeleteDept = () => {
-    setOpenDeletedDept(true);
-  };
+const DeleteDepartmentModal: FC<DeleteDepartmentModalProps> = (props) => {
+  const { data, handleCancelDelete } = props;
+  const images = ImportImgs();
+  const openDeletedDept = false
+  // const [openDeletedDept, setOpenDeletedDept] = useState(false);
 
   const { mutate, isLoading, isSuccess } = useDeleteStudent();
 
@@ -42,22 +42,6 @@ const DeleteDepartmentModal = ({ data, handleCancelDelete }) => {
           <p>Are you sure you want to Delete this Department?</p>
         </div>
 
-        {/* Modal footer */}
-        {/* <div className="flex justify-between p-6 space-x-4">
-          <button
-            onClick={handleCancelDelete}
-            className="px-4 py-2 bg-gray-200 font-bold text-black"
-          >
-            Cancel
-          </button>
-          <Button loading={isLoading} 
-            onClick={mutate(data?.id)}
-            className="px-4 py-2 !bg-[red] text-white hover:bg-[red]"
-          >
-            Delete Department
-          </Button>
-        </div> */}
-
         <div className="flex items-center justify-between gap-4 p-6">
           <button
             onClick={handleCancelDelete}
@@ -74,7 +58,6 @@ const DeleteDepartmentModal = ({ data, handleCancelDelete }) => {
         </div>
 
         {openDeletedDept && (
-          // <div className="h-32 w-96 bg-red-700"></div>
           <DeletedDepartment handleCancelDelete={handleCancelDelete} />
         )}
       </div>

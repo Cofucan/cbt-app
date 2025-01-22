@@ -9,7 +9,7 @@ const useGetSettings = () => {
   });
 
   return {
-    data: data?.data ?? {},
+    data: data?.data,
     isLoading,
     isRefetching,
   };

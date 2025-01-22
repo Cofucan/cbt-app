@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
-import ImportImgs from "../../components/ImportImgs";
-import DeletedDepartment from "./SuccessModal/DeletedDepartment";
-import useDeleteDepartment from "../../hooks/deleteData/useDeleteDepartment";
-import { Button } from "antd";
-import { data } from "autoprefixer";
-import CustomButton from "../../components/CustomButton";
+import { FC, useEffect } from "react";
 import useDeleteStudent from "../../../hooks/deleteData/useDeleteStudent";
+import ImportImgs from "../../../components/ImportImgs.tsx";
+import CustomButton from "../../../components/CustomButton.tsx";
 
-const DeleteStudentModal = ({ data, handleCancelDelete }) => {
+interface DeleteStudentModalProps {
+  data: Record<string, any> | null | undefined,
+  handleCancelDelete: () => void
+}
+
+const DeleteStudentModal: FC<DeleteStudentModalProps> = (props) => {
+  const { data, handleCancelDelete } = props;
   const images = ImportImgs();
-  const [openDeletedDept, setOpenDeletedDept] = useState(false);
-
-  const ToggleOpenDeleteDept = () => {
-    setOpenDeletedDept(true);
-  };
 
   const { mutate, isLoading, isSuccess } = useDeleteStudent();
 
@@ -43,20 +40,6 @@ const DeleteStudentModal = ({ data, handleCancelDelete }) => {
         </div>
 
         {/* Modal footer */}
-        {/* <div className="flex justify-between p-6 space-x-4">
-          <button
-            onClick={handleCancelDelete}
-            className="px-4 py-2 bg-gray-200 font-bold text-black"
-          >
-            Cancel
-          </button>
-          <Button loading={isLoading} 
-            onClick={mutate(data?.id)}
-            className="px-4 py-2 !bg-[red] text-white hover:bg-[red]"
-          >
-            Delete Department
-          </Button>
-        </div> */}
 
         <div className="flex items-center justify-between gap-4 p-6">
           <button

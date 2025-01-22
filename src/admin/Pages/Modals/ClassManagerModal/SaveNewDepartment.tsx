@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import { FC } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import DepartmentAdded from "../SuccessModal/DepartmentAdded";
 import CustomButton from "../../../components/CustomButton";
 
-const SaveNewDepartment = ({ handleCancel, onSubmit, success, isLoading }) => {
-  const [addDeptSuccess, setAddDeptSuccess] = useState(false);
+interface SaveNewDepartmentProps {
+  handleCancel?: () => void
+  onSubmit?: () => void,
+  success?: boolean,
+  isLoading?: boolean
+}
 
-  const ToggleSuccess = () => {
-    setAddDeptSuccess(true);
-  };
+const SaveNewDepartment: FC<SaveNewDepartmentProps> = (props) => {
+  const { handleCancel, onSubmit, success, isLoading } = props;
+
   const images = ImportImgs();
   return (
     <div>

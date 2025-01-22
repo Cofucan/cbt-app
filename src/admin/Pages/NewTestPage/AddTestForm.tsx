@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Key, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ImportImgs from "../../components/ImportImgs";
@@ -20,17 +20,17 @@ const AddTestForm = () => {
     file,
     setFile,
     data,
-    loading,
+    loading
   } = useAddTest();
 
   const { data: facultyList } = useGetFaculty();
   const { data: departmentList } = useGetDepartment(formik?.values?.faculty_id);
   const { data: courseList } = useGetCourse(
-    null,
-    formik?.values?.department_id,
+    undefined,
+    formik?.values?.department_id
   );
 
-  const datePickerRef = useRef(null);
+  const datePickerRef = useRef<DatePicker>(null);
 
   const changeHandler = (item: { target: { value: string; }; }) => {
     const dataInfo = JSON.parse(item?.target?.value);
@@ -76,7 +76,7 @@ const AddTestForm = () => {
                 selected={
                   formik?.values?.start_at
                     ? new Date(formik?.values?.start_at)
-                    : ""
+                    : new Date()
                 }
                 showTimeSelect
                 onChange={(date) => formik.setFieldValue("start_at", date)}
@@ -117,7 +117,7 @@ const AddTestForm = () => {
               className="rounded border px-3 py-2 text-[#8c94a3]"
             >
               <option value={""}>Select Course</option>
-              {courseList?.map((item) => {
+              {courseList?.map((item: { id: Key, title: string }) => {
                 return (
                   <option key={item.id} value={JSON.stringify(item)}>
                     {item?.title}

@@ -1,73 +1,12 @@
-import {
-  createFileRoute,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import ImportImgs from "../../../../admin/components/ImportImgs.tsx";
-import { useState } from "react";
+import { Key, useState } from "react";
 import useGetExamData from "../../../../admin/hooks/getData/useGetExamData.ts";
 import { dateFormat } from "../../../../admin/utils/dateFormat.ts";
 
 export const Route = createFileRoute("/admin/_auth/test/student-analysis/$id")({
-  component: RouteComponent,
+  component: RouteComponent
 });
-const studentsData = [
-  {
-    name: "Oge Cynthia",
-    examNo: "WGC023IV",
-    loginTime: "Sep 24 / 03:00 PM",
-    faculty: "Engineering",
-    department: "Civil Engineering",
-    ipAddress: "230-A3B",
-    testStatus: "Submitted",
-  },
-  {
-    name: "Oge Cynthia",
-    examNo: "WGC023IV",
-    loginTime: "Sep 24 / 03:00 PM",
-    faculty: "Engineering",
-    department: "Chemical Engineering",
-    ipAddress: "230-A3B",
-    testStatus: "In progress",
-  },
-  {
-    name: "Oge Cynthia",
-    examNo: "WGC023IV",
-    loginTime: "Sep 24 / 03:00 PM",
-    faculty: "Engineering",
-    department: "Civil Engineering",
-    ipAddress: "230-A3B",
-    testStatus: "Disconnected",
-  },
-  {
-    name: "Oge Oke",
-    examNo: "WGC023IV",
-    loginTime: "Sep 24 / 03:00 PM",
-    faculty: "Engineering",
-    department: "Civil Engineering",
-    ipAddress: "230-A3B",
-    testStatus: "Disconnected",
-  },
-  {
-    name: "Oge Cynthia",
-    examNo: "WGC023IV",
-    loginTime: "Sep 24 / 03:00 PM",
-    faculty: "Engineering",
-    department: "Civil Engineering",
-    ipAddress: "230-A3B",
-    testStatus: "Submitted",
-  },
-  {
-    name: "Oge Cynthia",
-    examNo: "WGC023IV",
-    loginTime: "Sep 24 / 03:00 PM",
-    faculty: "Engineering",
-    department: "Civil Engineering",
-    ipAddress: "230-A3B",
-    testStatus: "In progress",
-  },
-];
-
 function RouteComponent() {
   const images = ImportImgs();
   const navigate = useNavigate();
@@ -81,20 +20,6 @@ function RouteComponent() {
   console.log(params);
 
   const { data } = useGetExamData(params.id);
-
-  // Filter logic
-  const filteredStudents = studentsData.filter((student) => {
-    const matchesSearch = student.examNo
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesFaculty =
-      facultyFilter === "All" || student.faculty === facultyFilter;
-    const matchesDepartment =
-      departmentFilter === "All" || student.department === departmentFilter;
-    const matchesLevel = levelFilter === "All" || student.level === levelFilter;
-
-    return matchesSearch && matchesFaculty && matchesDepartment && matchesLevel;
-  });
 
   return (
     <section>
@@ -174,7 +99,14 @@ function RouteComponent() {
         </div>
 
         <div className="mt-6 grid w-[85%] grid-cols-2 gap-4">
-          {data.map((student, index) => (
+          {data.map((student: {
+            student_name: string | number;
+            student_identifier: string | number;
+            student_start_time: string;
+            faculty: string | number;
+            department: string | number;
+            status: string;
+          }, index: Key) => (
             <div
               key={index}
               className="rounded-md border border-[#fffff] bg-white p-4"

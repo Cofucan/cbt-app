@@ -14,6 +14,7 @@ const initialState = {
   rememberMe: false,
   responseMessage: "",
   allExams: [],
+  userInfo: null
 };
 
 // Check if the user is logged in
@@ -26,7 +27,7 @@ function checkLoggedIn() {
 // Async thunk for login action
 export const userLogin = createAsyncThunk(
   "userLogin",
-  async (data, thunkApi) => {
+  async (data: {password: string, identifier: string}, thunkApi) => {
     try {
       const response = await fetch(`${baseUrl}/user/login/`, {
         method: "POST",
@@ -123,7 +124,7 @@ const userReducer = createSlice({
       .addCase(userLogin.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
-        state.responseMessage = action.payload || "Something went wrong!";
+        state.responseMessage = action.payload?.toString() || "Something went wrong!";
         toast.error("Invalid Credentials");
       })
 
@@ -145,7 +146,7 @@ const userReducer = createSlice({
       .addCase(getExams.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
-        toast.error(action.payload || "Failed to load exams.");
+        toast.error(action.payload?.toString() || "Failed to load exams.");
       });
   },
 });

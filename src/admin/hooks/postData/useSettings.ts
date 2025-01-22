@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useFormik } from "formik";
-import toast from "react-hot-toast";
-import { useNavigate } from "@tanstack/react-router";
-import httpService from "../../utils/httpService";
-import findEmptyFields from "../../utils/findEmptyField";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { AdminErrorResponse } from "../../utils";
+import httpService from "../../utils/httpService";
 import removeEmptyData from "../../utils/removingEmptyData";
 
 const useSettings = () => {
@@ -33,7 +33,7 @@ const useSettings = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (info) =>
+    mutationFn: (info: FormData) =>
       httpService.post(
         `school/update/`,
         info,
@@ -43,7 +43,7 @@ const useSettings = () => {
             }
           : {},
       ),
-    onError: (error) => {
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail

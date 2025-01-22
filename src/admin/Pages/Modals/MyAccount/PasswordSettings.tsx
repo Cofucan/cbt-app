@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import ImportImgs from "../../../components/ImportImgs";
 import useChangePassword from "../../../hooks/postData/useChangePassword";
 import CustomButton from "../../../components/CustomButton";
 import toast from "react-hot-toast";
 
-const PasswordSettings = ({ close }) => {
+const PasswordSettings = ({ close }: {close: () => void}) => {
   const images = ImportImgs();
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);

@@ -11,11 +11,7 @@ import useGetDepartment from "../hooks/getData/useGetDepartment";
 
 const CourseManagerTable = () => {
   const images = ImportImgs();
-  // const [searchText, setSearchText] = useState("");
   const [singleData, setSingleData] = useState<{ id: string } | null>();
-  // const [selectedFaculty, setSelectedFaculty] = useState("Engineering");
-  // const [selectedDepartment, setSelectedDepartment] = useState("Chemical");
-  // const [selectedLevel, setSelectedLevel] = useState("200");
   const [visibleDropdown, setVisibleDropdown] = useState<string | null>(); // Track visible dropdown by course key
   const [EditModalOpen, setEditModalOpen] = useState(false);
   const [DeleteModalOpen, setDeleteModalOpen] = useState(false);

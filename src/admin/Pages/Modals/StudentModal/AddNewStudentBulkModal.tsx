@@ -1,16 +1,21 @@
-import { Input, Modal, Select } from "antd";
-import React, { useEffect, useState } from "react";
+import { Modal, Select } from "antd";
+import { ChangeEvent, FC, useEffect, useState, DragEvent } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import useGetFaculty from "../../../hooks/getData/useGetFaculty";
 import useGetDepartment from "../../../hooks/getData/useGetDepartment";
-import useAddCourse from "../../../hooks/postData/useAddCourse";
 import CustomButton from "../../../components/CustomButton";
 import useAddStudentUpload from "../../../hooks/postData/useAddStudentUpload";
 import { FaFileExcel } from "react-icons/fa";
 
 const { Option } = Select;
 
-const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
+export interface AddNewStudentBulkModalProps {
+  handleCancel: () => void,
+  isModalOpen: boolean
+}
+
+const AddNewStudentBulkModal: FC<AddNewStudentBulkModalProps> = (props) => {
+  const { handleCancel, isModalOpen } = props;
   const images = ImportImgs();
 
   //Save New Course Modal Logic
@@ -21,15 +26,15 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
   const { formik, isLoading, isSuccess, file, setFile } = useAddStudentUpload();
   const { data: departmentList } = useGetDepartment(formik?.values.faculty_id);
 
-  const handleBrowse = (e) => {
-    const selected = e.target.files[0];
+  const handleBrowse = (e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
     setFile(selected);
   };
 
   // const [files, setFiles] = useState([]);
   const [dragging, setDragging] = useState(false); // State to store the file to download
 
-  const handleDragOverQuestion = (e) => {
+  const handleDragOverQuestion = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragging(true);
   };
@@ -38,11 +43,11 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
     setDragging(false);
   };
 
-  const handleDropQuestion = (e) => {
+  const handleDropQuestion = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragging(false);
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    handleFileChange(droppedFiles);
+    // const droppedFiles = Array.from(e.dataTransfer.files);
+    // handleFileChange(droppedFiles);
   };
 
   console.log(formik?.values);
@@ -51,6 +56,10 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
       handleCancel();
     }
   }, [isSuccess]);
+
+  function handleClick() {
+    (document.querySelector("input[type=\"file\"]") as HTMLInputElement).click();
+  }
 
   return (
     <div>
@@ -66,7 +75,7 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
           </span>
         }
       >
-        <div className="p-4">
+        <form className="p-4" onSubmit={formik?.handleSubmit}>
           {/* Course Code Input */}
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Faculty Name</label>
@@ -103,7 +112,6 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Level</label>
             <Select
-              name="level"
               placeholder="Select Level"
               onChange={(value) => formik.setFieldValue("level", value)}
               className="w-full"
@@ -137,9 +145,7 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
                     <span className="flex items-center text-[#8c94a3]">
                       <img
                         src={images.DownloadUp}
-                        onClick={() =>
-                          document.querySelector('input[type="file"]').click()
-                        }
+                        onClick={handleClick}
                         alt="uploadIcon"
                         className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
                       />{" "}
@@ -148,9 +154,7 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
                     </span>
                     <button
                       className="ml-2 font-semibold text-orange-500"
-                      onClick={() =>
-                        document.getElementById('input[type="file"]').click()
-                      }
+                      onClick={handleClick}
                     >
                       Browse{" "}
                       <span className="font-normal text-[#8c94a3]">
@@ -163,9 +167,7 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
                   <div className="flex w-full items-center justify-center gap-3">
                     <img
                       src={images.DownloadUp}
-                      onClick={() =>
-                        document.querySelector('input[type="file"]').click()
-                      }
+                      onClick={handleClick}
                       alt="uploadIcon"
                       className="mr-2 cursor-pointer rounded-full border bg-[#e9eaf0] p-1"
                     />{" "}
@@ -191,12 +193,11 @@ const AddNewStudentBulkModal = ({ handleCancel, isModalOpen }) => {
             <CustomButton
               title="Save Student"
               isLoading={isLoading}
-              onClick={formik?.handleSubmit}
             />
           </div>
           {/* Save New Course Modal */}
           {/* {openSaveCourseModal && <SaveNewCourseModal CancelSaveModal={CancelSaveModal} />} */}
-        </div>
+        </form>
       </Modal>
     </div>
   );

@@ -72,3 +72,7 @@ export type AdminUser = {
   department_name: string
   level: number
 }
+
+export type AdminErrorResponse = {
+  detail: string
+}

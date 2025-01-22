@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import useDeleteCourse from "../../../hooks/deleteData/useDeleteCourse";
 import CustomButton from "../../../components/CustomButton";
-
-const DeleteCourseModal = ({ data, handleDeleteCancel }) => {
+interface DeleteCourseModalProps {
+  data: Record<string, any> | null | undefined
+  handleDeleteCancel: () => void
+}
+const DeleteCourseModal: FC<DeleteCourseModalProps> = (props) => {
+  const { data, handleDeleteCancel } = props
   const images = ImportImgs();
 
   const { mutate, isLoading, isSuccess } = useDeleteCourse();

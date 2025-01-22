@@ -1,7 +1,6 @@
-import React, { FC, useEffect, useState } from "react";
-import { Modal, Select, Input } from "antd";
+import { FC, useEffect } from "react";
+import { Input, Modal } from "antd";
 import ImportImgs from "../../../components/ImportImgs";
-import SaveNewDepartment from "./SaveNewDepartment";
 import useAddDepartment from "../../../hooks/postData/useAddDepartment";
 import useGetFaculty from "../../../hooks/getData/useGetFaculty";
 import CustomButton from "../../../components/CustomButton";
@@ -18,7 +17,6 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
   const images = ImportImgs();
 
   // Sample data for faculty and level options
-  const levels = ["100", "200", "300", "400"];
   const { data: faculty } = useGetFaculty();
   const { formik, isLoading, isSuccess } = useAddDepartment();
 
@@ -44,7 +42,7 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
           } // Custom close icon
         >
           {/* Modal Content */}
-          <div className="p-4">
+          <form className="p-4" onSubmit={formik?.handleSubmit}>
             {/* Faculty Name Dropdown */}
             <div className="mb-4">
               <label className="mb-2 block text-gray-700">Faculty Name</label>
@@ -83,10 +81,9 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
               <CustomButton
                 title="Save Department"
                 isLoading={isLoading}
-                onClick={formik?.handleSubmit}
               />
             </div>
-          </div>
+          </form>
         </Modal>
       </div>
     </div>

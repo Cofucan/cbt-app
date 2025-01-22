@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
-import { useNavigate } from "@tanstack/react-router";
 import httpService from "../../utils/httpService";
 import findEmptyFields from "../../utils/findEmptyField";
 import removeEmptyData from "../../utils/removingEmptyData";
+import { AxiosError } from "axios";
+import { AdminErrorResponse } from "../../utils";
 
-const useAddCourse = (id: string) => {
+const useAddCourse = (id?: string | number) => {
   const query = useQueryClient();
 
   const formik = useFormik({
@@ -15,6 +16,7 @@ const useAddCourse = (id: string) => {
       faculty_id: 0,
       title: "",
       code: "",
+      faculty: "",
       level: 0,
     },
     onSubmit: (values) => {
@@ -37,8 +39,8 @@ const useAddCourse = (id: string) => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info) => httpService.post(`app_admin/courses/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/courses/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail
@@ -57,8 +59,8 @@ const useAddCourse = (id: string) => {
     isPending: loadingEdit,
     isSuccess: editSuccess,
   } = useMutation({
-    mutationFn: (info) => httpService.put(`app_admin/courses/${id}/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.put(`app_admin/courses/${id}/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail

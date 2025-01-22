@@ -12,15 +12,6 @@ import LoadingAnimation from "../components/LoadingAnimation.tsx";
 import useGetFaculty from "../hooks/getData/useGetFaculty";
 import useGetDepartment from "../hooks/getData/useGetDepartment";
 
-
-// const faculties = ["Science", "Language", "Engineering"];
-// const departments = {
-//   Science: ["Biology", "Computer science"],
-//   Engineering: ["Chemistry", "Physics", "Computer"],
-//   Language: ["English", "French", "Yoruba", "Igbo"],
-// };
-// const levels = ["100", "200", "300", "400"];
-
 const TestManager = () => {
   const [facultyId, setFacultyId] = useState("");
   const [department, setDepartment] = useState("");
@@ -32,10 +23,7 @@ const TestManager = () => {
 
   const navigate = useNavigate();
   const images = ImportImgs();
-  // const [filteredData, setFilteredData] = useState(coursesData);
-  // const [faculty, setFaculty] = useState<string | null>(null);
   const [singleData, setSingleData] = useState<{ id: string } | null>(null);
-  // const [searchText, setSearchText] = useState("");
   const [visibleDropdown, setVisibleDropdown] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDeactivateExam, setIsOpenDeactivateExam] = useState(false);
@@ -85,23 +73,6 @@ const TestManager = () => {
   const [pageSize, setPageSize] = useState(10);
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 970px)" });
-
-  // const handleSearch = (value) => {
-  //   setSearchText(value);
-  // };
-  //
-  // const handleFacultyChange = (value) => {
-  //   setFaculty(value);
-  //   setDepartment(null); // Reset department when faculty changes
-  // };
-  //
-  // const handleDepartmentChange = (value) => {
-  //   setDepartment(value);
-  // };
-  //
-  // const handleLevelChange = (value) => {
-  //   setLevel(value);
-  // };
 
   const handlePageChange = (page: number, pageSize: number) => {
     setCurrentPage(page);

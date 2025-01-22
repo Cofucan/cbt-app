@@ -3,7 +3,7 @@ import CustomButton from "../../components/CustomButton";
 import useSettings from "../../hooks/postData/useSettings";
 import { BASEURL } from "../../utils/url";
 
-export default function SettingForm({ data, loading }: {loading: boolean, data: Record<string, string>}) {
+export default function SettingForm({ data, loading }: {loading: boolean, data?: Record<string, any>}) {
   const { formik, isLoading, setFile } = useSettings();
   const [logoPreview, setLogoPreview] = useState<string | null | ArrayBuffer>(null);
 

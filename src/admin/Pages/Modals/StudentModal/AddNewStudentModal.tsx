@@ -1,15 +1,15 @@
 import { Input, Modal, Select } from "antd";
-import React, { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import useGetFaculty from "../../../hooks/getData/useGetFaculty";
 import useGetDepartment from "../../../hooks/getData/useGetDepartment";
-import useAddCourse from "../../../hooks/postData/useAddCourse";
 import CustomButton from "../../../components/CustomButton";
 import useAddStudent from "../../../hooks/postData/useAddStudent";
 
 const { Option } = Select;
-
-const AddNewStudentModal = ({ handleCancel, isModalOpen }) => {
+interface AddNewStudentModalProps { handleCancel: () => void, isModalOpen: boolean }
+const AddNewStudentModal: FC<AddNewStudentModalProps> = (props) => {
+  const { handleCancel, isModalOpen } = props
   const images = ImportImgs();
 
   //Save New Course Modal Logic
@@ -41,7 +41,7 @@ const AddNewStudentModal = ({ handleCancel, isModalOpen }) => {
           </span>
         }
       >
-        <div className="p-4">
+        <form className="p-4" onSubmit={formik?.handleSubmit}>
           {/* Course Code Input */}
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Student Name</label>
@@ -97,7 +97,6 @@ const AddNewStudentModal = ({ handleCancel, isModalOpen }) => {
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Level</label>
             <Select
-              name="level"
               placeholder="Select Level"
               onChange={(value) => formik.setFieldValue("level", value)}
               className="w-full"
@@ -122,12 +121,11 @@ const AddNewStudentModal = ({ handleCancel, isModalOpen }) => {
             <CustomButton
               title="Save Student"
               isLoading={isLoading}
-              onClick={formik?.handleSubmit}
             />
           </div>
           {/* Save New Course Modal */}
           {/* {openSaveCourseModal && <SaveNewCourseModal CancelSaveModal={CancelSaveModal} />} */}
-        </div>
+        </form>
       </Modal>
     </div>
   );

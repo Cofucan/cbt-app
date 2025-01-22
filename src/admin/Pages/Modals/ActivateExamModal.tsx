@@ -49,22 +49,6 @@ const ActivateExamModal = ({ data, isOpen, setIsOpen, closeModal }: ActivateExam
               <p>Are you sure you want to activate this exam?</p>
             </div>
 
-            {/* Modal footer */}
-            {/* <div className="flex justify-between p-6 space-x-4">
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-gray-200 text-black"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleActivate}
-                className="px-4 py-2 bg-[#ff6636] text-white hover:bg-[#ff6636]"
-              >
-                Activate Exam
-              </button>
-            </div> */}
-
             <div className="flex items-center justify-between gap-4 px-6 pb-8 pt-6">
               <button
                 onClick={closeModal}

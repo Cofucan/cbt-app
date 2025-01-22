@@ -3,6 +3,7 @@ import { useState } from "react";
 import AdminProfile from "../../../admin/Pages/MyAccount/AdminProfile";
 import PasswordSettings from "../../../admin/Pages/Modals/MyAccount/PasswordSettings";
 import EditProfile from "../../../admin/Pages/Modals/MyAccount/EditProfile";
+import { Admin } from "../../../admin/utils.ts";
 
 export const Route = createFileRoute("/admin/_auth/my-account")({
   component: RouteComponent,
@@ -18,7 +19,7 @@ function RouteComponent() {
     setEditProfileModalVisible(!editProfileModalVisible);
   };
 
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState< Admin | undefined>();
 
   return (
     <section className="">

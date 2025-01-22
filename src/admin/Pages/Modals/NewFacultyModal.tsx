@@ -1,10 +1,17 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Modal, Input } from "antd";
 import ImportImgs from "../../components/ImportImgs";
 import useAddFaculty from "../../hooks/postData/useAddFacutly";
 import CustomButton from "../../components/CustomButton";
 
-const NewFacultyModal = ({ handleCancel, handleSave, visible }) => {
+interface NewFacultyModalProps {
+  handleCancel: () => void
+  handleSave: () => void
+  visible: boolean
+}
+
+const NewFacultyModal: FC<NewFacultyModalProps> = (props) => {
+  const { handleCancel, handleSave, visible } = props;
   const images = ImportImgs();
 
   const { formik, isLoading, isSuccess } = useAddFaculty();
@@ -32,7 +39,7 @@ const NewFacultyModal = ({ handleCancel, handleSave, visible }) => {
         className="custom-modal"
       >
         {/* Modal Content */}
-        <div className="p-4">
+        <form className="p-4" onSubmit={formik?.handleSubmit}>
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Faculty Name</label>
             <Input
@@ -43,10 +50,6 @@ const NewFacultyModal = ({ handleCancel, handleSave, visible }) => {
             />
           </div>
 
-          {/* <div className="mb-6">
-            <label className="block text-gray-700 mb-2">Departments</label>
-            <Input placeholder="Department" className="w-full py-2 placeholder:text-gray-400" />
-          </div> */}
 
           {/* Buttons */}
           <div className="flex items-center justify-between gap-4">
@@ -59,10 +62,9 @@ const NewFacultyModal = ({ handleCancel, handleSave, visible }) => {
             <CustomButton
               title="Save Faculty"
               isLoading={isLoading}
-              onClick={formik?.handleSubmit}
             />
           </div>
-        </div>
+        </form>
       </Modal>
     </div>
   );

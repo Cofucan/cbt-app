@@ -1,6 +1,6 @@
 import ImportImgs from "../../components/ImportImgs";
 
-const SettingUpdated = ({ ToggleSettingsUpdatedOpen }) => {
+const SettingUpdated = ({ ToggleSettingsUpdatedOpen }: {ToggleSettingsUpdatedOpen: () => void}) => {
   const images = ImportImgs();
   return (
     <div className="flex w-full items-center justify-center">

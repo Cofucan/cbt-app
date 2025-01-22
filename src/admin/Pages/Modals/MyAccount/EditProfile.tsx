@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import useAddAdmin from "../../../hooks/postData/useAddAdmin";
 import CustomButton from "../../../components/CustomButton";
 
-const EditProfile = ({ data, close }) => {
-  console.log(data);
+interface EditProfileProps {
+  data: Record<string, any> | undefined | null,
+  close: () => void
+}
 
+const EditProfile: FC<EditProfileProps> = (props) => {
+  const { data, close } = props;
   const id = localStorage.getItem("id");
 
   const { formik, loadingEdit, editSuccess } = useAddAdmin(id);
@@ -25,7 +29,7 @@ const EditProfile = ({ data, close }) => {
   }, [editSuccess]);
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-md">
+    <form className="rounded-lg bg-white p-6 shadow-md" onSubmit={formik?.handleSubmit}>
       {/* Surname */}
       <div className="relative mb-4">
         <label className="mb-2 block font-medium text-black">Fisrt Name</label>
@@ -63,19 +67,6 @@ const EditProfile = ({ data, close }) => {
         />
       </div>
       {/* Phone Number */}
-      {/* <div className="mb-4 relative">
-        <label className="block text-black font-medium mb-2">
-          Phone Number
-        </label>
-        <input
-          type="text"
-          onChange={formik.handleChange}
-          name="current_password"
-          value={formik.values.first_name}
-          className="w-full border-2 border-[#cbd5e1] placeholder:text-[gray] p-2"
-          placeholder="Phone Number"
-        />
-      </div> */}
       {/* Username */}
       <div className="relative mb-4">
         <label className="mb-2 block font-medium text-black">Identifier</label>
@@ -88,26 +79,6 @@ const EditProfile = ({ data, close }) => {
           placeholder="Enter Username"
         />
       </div>
-      {/* Location */}
-      {/* <div className="mb-4 relative">
-        <label className="block text-black font-medium mb-2">Location</label>
-        <input
-          type="text"
-          className="w-full border-2 border-[#cbd5e1] placeholder:text-[gray] p-2"
-          placeholder="Enter Department Or Team"
-        />
-      </div> */}
-
-      {/* Buttons */}
-      {/* <div className="flex justify-between items-center">
-        <button className="text-gray-600 border border-[#cbd5e1] rounded px-4 py-2">
-          Cancel
-        </button>
-        <button className="bg-[#ff6636] rounded text-white px-4 py-2">
-          Save Changes
-        </button>
-      </div> */}
-
       <div className="flex items-center justify-between gap-4 pt-6">
         <button
           onClick={close}
@@ -118,10 +89,9 @@ const EditProfile = ({ data, close }) => {
         <CustomButton
           title="Submit"
           isLoading={loadingEdit}
-          onClick={formik?.handleSubmit}
         />
       </div>
-    </div>
+    </form>
   );
 };
 

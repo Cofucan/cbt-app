@@ -3,12 +3,15 @@ import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import httpService from "../../utils/httpService";
 import findEmptyFields from "../../utils/findEmptyField";
+import { AxiosError } from "axios";
+import { AdminErrorResponse } from "../../utils";
 
 const useChangePassword = () => {
   const formik = useFormik({
     initialValues: {
       current_password: "",
       new_password: "",
+      faculty: ""
     },
     onSubmit: (values) => {
       const emptyFields = findEmptyFields(values);
@@ -25,8 +28,8 @@ const useChangePassword = () => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info) => httpService.post(`user/change-password/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.post(`user/change-password/`, info),
+    onError: (error: AxiosError<AdminErrorResponse & {current_password: string[]}>) => {
       console.log(error?.response?.data?.current_password[0]);
       toast?.error(
         error?.response?.data?.current_password[0]

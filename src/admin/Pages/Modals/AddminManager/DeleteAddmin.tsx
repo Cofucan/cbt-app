@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import RemoveAdmin from "./RemoveAdmin";
 import useDeleteAdmin from "../../../hooks/deleteData/useDeleteAdmin";
 import CustomButton from "../../../components/CustomButton";
 
-const DeleteAddmin = ({ data, handleCancel }) => {
+interface DeleteAddminProps {
+  data: Record<string, any> | undefined | null,
+  handleCancel: () => void
+}
+
+const DeleteAddmin: FC<DeleteAddminProps> = (props) => {
+  const { data, handleCancel } = props;
   const images = ImportImgs();
   const [removeAdmin, setRemoveAdmin] = useState(false);
 
   //Remove Admin Logic
   const showAdminRemoveModal = () => setRemoveAdmin(true);
-  // const CloseAdminRemoveModal = () => setRemoveAdmin(false);
 
   console.log(data);
 
@@ -45,22 +50,6 @@ const DeleteAddmin = ({ data, handleCancel }) => {
           <div className="p-6">
             <p>Are you sure you want to Remove this admin?</p>
           </div>
-
-          {/* Modal footer */}
-          {/* <div className="flex justify-between p-6 space-x-4">
-            <button
-              onClick={handleCancel}
-              className="px-4 py-2 bg-gray-200 text-black font-bold"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={showAdminRemoveModal}
-              className="px-4 py-2 bg-[#FF3636] text-white"
-            >
-              Remove Admin
-            </button>
-          </div> */}
 
           <div className="flex items-center justify-between gap-4 px-6 pb-10">
             <button

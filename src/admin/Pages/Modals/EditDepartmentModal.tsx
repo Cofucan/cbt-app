@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { Modal, Button, Input, Select } from "antd";
+import { FC, useEffect } from "react";
+import { Input, Modal, Select } from "antd";
 import ImportImgs from "../../components/ImportImgs";
 import SaveNewDepartment from "./ClassManagerModal/SaveNewDepartment";
 import useAddDepartment from "../../hooks/postData/useAddDepartment";
 import useGetFaculty from "../../hooks/getData/useGetFaculty";
-import useGetDepartment from "../../hooks/getData/useGetDepartment";
 import CustomButton from "../../components/CustomButton";
 
 const { Option } = Select;
 
-const EditDepartmentModal = ({ data, visible, handleCancel }) => {
-  const images = ImportImgs();
-  const [faculty, setFaculty] = useState("");
-  const [department, setDepartment] = useState("");
-  const [level, setLevel] = useState("");
-  const [openSaveNewDepartment, setopenSaveNewDepartment] = useState(false);
+interface EditDepartmentModalProps {
+  data: Record<string, any> | undefined | null
+  visible: boolean
+  handleCancel: () => void
+}
 
-  const ToggleSaveNewDepartmentOpen = () => {
-    setopenSaveNewDepartment(true);
-  };
+const EditDepartmentModal: FC<EditDepartmentModalProps> = (props) => {
+  const { data, visible, handleCancel } = props;
+  const images = ImportImgs();
+  const openSaveNewDepartment = false
+  // const [openSaveNewDepartment, setopenSaveNewDepartment] = useState(false);
+
   const { data: facultyList } = useGetFaculty();
 
   const { editSuccess, formik, loadingEdit } = useAddDepartment(data?.id);
 
   const filteredData = () => {
     let value = facultyList.find(
-      (faculty) => faculty.name === data?.faculty_name,
+      (faculty) => faculty.name === data?.faculty_name
     );
     formik.setFieldValue("faculty", value?.id);
     // return value
@@ -33,7 +34,7 @@ const EditDepartmentModal = ({ data, visible, handleCancel }) => {
 
   useEffect(() => {
     filteredData();
-    formik.setFieldValue("name", data.name);
+    formik.setFieldValue("name", data?.name);
   }, [facultyList]);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const EditDepartmentModal = ({ data, visible, handleCancel }) => {
         } // Custom close icon
       >
         {/* Modal Content */}
-        <div className="p-4">
+        <form className="p-4" onSubmit={formik?.handleSubmit}>
           {/* Faculty Name Dropdown */}
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Faculty Name</label>
@@ -66,7 +67,6 @@ const EditDepartmentModal = ({ data, visible, handleCancel }) => {
               className="w-full"
               onChange={formik.handleChange}
               value={formik?.values?.faculty}
-              name="faculty"
             >
               {facultyList.map((facultyOption) => (
                 <Option key={facultyOption?.id} value={facultyOption?.id}>
@@ -87,23 +87,6 @@ const EditDepartmentModal = ({ data, visible, handleCancel }) => {
               value={formik?.values.name}
             />
           </div>
-
-          {/* Buttons */}
-          {/* <div className="flex justify-between items-center">
-            <button
-              onClick={handleCancel}
-              className="bg-gray-100 text-gray-500 border-none hover:bg-gray-200 px-4 py-2"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={ToggleSaveNewDepartmentOpen}
-              className="bg-[#ff6636] text-white border-none hover:bg-[#ff6636] px-6 py-2"
-            >
-              Save Department
-            </button>
-          </div> */}
-
           <div className="flex items-center justify-between gap-4 pt-6">
             <button
               onClick={handleCancel}
@@ -114,7 +97,6 @@ const EditDepartmentModal = ({ data, visible, handleCancel }) => {
             <CustomButton
               title="Save Department"
               isLoading={loadingEdit}
-              onClick={formik?.handleSubmit}
             />
           </div>
 
@@ -123,7 +105,7 @@ const EditDepartmentModal = ({ data, visible, handleCancel }) => {
               <SaveNewDepartment handleCancel={handleCancel} />
             )}
           </div>
-        </div>
+        </form>
       </Modal>
     </div>
     // <div className="bg-green0600 h-32 w-96"></div>

@@ -1,6 +1,6 @@
 import ImportImgs from "../../../components/ImportImgs";
 
-const SaveNewCourseModal = ({ CancelSaveModal }) => {
+const SaveNewCourseModal = ({ CancelSaveModal }: { CancelSaveModal: () => void }) => {
   const images = ImportImgs();
   return (
     <div>

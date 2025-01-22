@@ -51,7 +51,7 @@ export const fetchUpcomingTest = async (token: string) => {
 };
 
 // Fetch Student Exam Details
-export const fetchCourseDetails = async (examId, token) => {
+export const fetchCourseDetails = async (examId: string, token: string | null) => {
   try {
     // Axios handles response status and parsing JSON automatically
     const response = await axiosInstance.get(`/student/exams/${examId}`, {

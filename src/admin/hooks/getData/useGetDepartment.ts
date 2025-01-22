@@ -3,7 +3,7 @@ import httpService from "../../utils/httpService";
 import { PaginationResponse } from "../../../lib/utils.ts";
 import { Department } from "../../utils.ts";
 
-const useGetDepartment = (item?: string) => {
+const useGetDepartment = (item?: string | number) => {
   const { isLoading, isRefetching, data } = useQuery({
     queryKey: [`departments`, item],
     queryFn: async () => {

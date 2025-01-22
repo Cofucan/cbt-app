@@ -5,8 +5,10 @@ import { useNavigate } from "@tanstack/react-router";
 import httpService from "../../utils/httpService";
 import findEmptyFields from "../../utils/findEmptyField";
 import removeEmptyData from "../../utils/removingEmptyData";
+import { AxiosError } from "axios";
+import { AdminErrorResponse } from "../../utils";
 
-const useAddAdmin = (id) => {
+const useAddAdmin = (id?: string | number | null) => {
   const query = useQueryClient();
 
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const useAddAdmin = (id) => {
       email: "",
       password: "",
       type: "",
+      faculty: ""
     },
     onSubmit: (values) => {
       const emptyFields = findEmptyFields(values);
@@ -28,7 +31,6 @@ const useAddAdmin = (id) => {
       } else {
         if (id) {
           let payload = removeEmptyData(formik?.values);
-          console.log("hello");
           editMutate(payload);
         } else {
           mutate({
@@ -41,8 +43,8 @@ const useAddAdmin = (id) => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info) => httpService.post(`app_admin/admins/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/admins/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail
@@ -62,8 +64,8 @@ const useAddAdmin = (id) => {
     isPending: loadingEdit,
     isSuccess: editSuccess,
   } = useMutation({
-    mutationFn: (info) => httpService.patch(`app_admin/admins/${id}/`, info),
-    onError: (error) => {
+    mutationFn: (info: Record<string, string | number>) => httpService.patch(`app_admin/admins/${id}/`, info),
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail

@@ -1,15 +1,15 @@
 import { Input, Modal, Select } from "antd";
-import React, { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import useGetFaculty from "../../../hooks/getData/useGetFaculty";
 import useGetDepartment from "../../../hooks/getData/useGetDepartment";
-import useAddCourse from "../../../hooks/postData/useAddCourse";
 import CustomButton from "../../../components/CustomButton";
 import useAddStudent from "../../../hooks/postData/useAddStudent";
 
 const { Option } = Select;
-
-const EditNewStudentModal = ({ data, handleCancel, isModalOpen }) => {
+interface EditNewStudentModalProps { data: Record<string, any> | null | undefined, handleCancel: () => void, isModalOpen: boolean }
+const EditNewStudentModal: FC<EditNewStudentModalProps> = (props) => {
+  const { data, handleCancel, isModalOpen } = props
   const images = ImportImgs();
 
   //Save New Course Modal Logic
@@ -35,8 +35,8 @@ const EditNewStudentModal = ({ data, handleCancel, isModalOpen }) => {
       first_name: data?.first_name,
       level: data?.level,
       identifier: data?.identifier,
-      faculty: value?.id,
-      department: depart?.id,
+      faculty: value?.id ?? 0,
+      department: depart?.id ?? 0,
     });
     // formik.setFieldValue("faculty", value?.id)
     // formik.setFieldValue("department", depart?.id)
@@ -70,7 +70,7 @@ const EditNewStudentModal = ({ data, handleCancel, isModalOpen }) => {
           </span>
         }
       >
-        <div className="p-4">
+        <form className="p-4" onSubmit={formik?.handleSubmit}>
           {/* Course Code Input */}
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Student Name</label>
@@ -81,16 +81,6 @@ const EditNewStudentModal = ({ data, handleCancel, isModalOpen }) => {
               onChange={formik.handleChange}
             />
           </div>
-
-          {/* Course Code Input */}
-          {/* <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Email Address</label>
-            <Input className="w-full"
-              name="email"
-              value={formik?.values?.email}
-              onChange={formik.handleChange} />
-          </div> */}
-
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Faculty Name</label>
             <Select
@@ -132,7 +122,6 @@ const EditNewStudentModal = ({ data, handleCancel, isModalOpen }) => {
           <div className="mb-4">
             <label className="mb-2 block text-gray-700">Level</label>
             <Select
-              name="level"
               placeholder={"Select Level"}
               value={formik?.values?.level}
               onChange={(value) => formik.setFieldValue("level", value)}
@@ -170,12 +159,9 @@ const EditNewStudentModal = ({ data, handleCancel, isModalOpen }) => {
             <CustomButton
               title="Edit Student Data"
               isLoading={loadingEdit}
-              onClick={formik?.handleSubmit}
             />
           </div>
-          {/* Save New Course Modal */}
-          {/* {openSaveCourseModal && <SaveNewCourseModal CancelSaveModal={CancelSaveModal} />} */}
-        </div>
+        </form>
       </Modal>
     </div>
   );

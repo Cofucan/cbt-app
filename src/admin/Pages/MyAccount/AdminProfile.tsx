@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import LoadingAnimation from "../../components/LoadingAnimation.tsx";
 import useGetProfile from "../../hooks/getData/useGetProfile";
-
-const ProfileCard = ({ data, loading }) => {
+import { Admin } from "../../utils.ts";
+interface ProfileCardProps {
+  data: Admin | undefined, loading: boolean
+}
+const ProfileCard: FC<ProfileCardProps> = (props) => {
+  const { data, loading } = props
   const images = ImportImgs();
-
-  console.log(data);
 
   return (
     <LoadingAnimation loading={loading}>
@@ -16,7 +18,7 @@ const ProfileCard = ({ data, loading }) => {
           <img
             className="h-32 w-32 object-cover"
             src={images.Admin}
-            alt={`${name}'s profile`}
+            alt={`${data?.name}'s profile`}
           />
           {/* Edit button overlay on the image */}
           <button className="absolute bottom-20 left-28 -translate-y-1/2 transform bg-orange-500 p-2 text-white">
@@ -48,18 +50,18 @@ const ProfileCard = ({ data, loading }) => {
             <p className="text-lg font-semibold">-----</p>
             <p className="text-gray-500">Date Joined</p>
           </div>
-          <div>
-            <p className="text-lg text-gray-500">Status</p>
-            <span
-              className={`inline-block px-3 py-1 text-sm font-medium ${
-                status === "Active"
-                  ? "bg-green-100 text-green-600"
-                  : "bg-red-100 text-red-600"
-              }`}
-            >
-              {status}
-            </span>
-          </div>
+          {/*<div>*/}
+          {/*  <p className="text-lg text-gray-500">Status</p>*/}
+          {/*  <span*/}
+          {/*    className={`inline-block px-3 py-1 text-sm font-medium ${*/}
+          {/*      data?.status === "Active"*/}
+          {/*        ? "bg-green-100 text-green-600"*/}
+          {/*        : "bg-red-100 text-red-600"*/}
+          {/*    }`}*/}
+          {/*  >*/}
+          {/*    {data?.status}*/}
+          {/*  </span>*/}
+          {/*</div>*/}
           <div>
             <p className="text-lg font-semibold">---</p>
             <p className="text-gray-500">Location</p>
@@ -77,22 +79,10 @@ const ProfileCard = ({ data, loading }) => {
 };
 
 // Sample data for testing
-const AdminProfile = ({ setUserData }) => {
-  const images = ImportImgs(); // Import images here
-
-  // Admin data
-  const adminData = {
-    name: "John Badarin",
-    username: "Johnie",
-    role: "Admin",
-    dateJoined: "02 August, 2023",
-    status: "Active",
-    location: "Abuja, Nigeria",
-    phoneNumber: "0902323743",
-    email: "johnbaderin@gmail.com",
-    imageUrl: images.Admin, // Dynamically assign the profile image from ImportImgs
-    editIcon: images.ProfilePen, // Dynamically assign the edit icon
-  };
+interface AdminProfileProps {
+ setUserData: Dispatch<SetStateAction<Admin | undefined>>
+}
+const AdminProfile: FC<AdminProfileProps> = ({ setUserData }) => {
 
   const { isLoading, data } = useGetProfile();
 

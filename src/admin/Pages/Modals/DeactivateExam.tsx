@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC, Dispatch, SetStateAction } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import ExamDeactivated from "./SuccessModal/ExamDeactivated";
 import CustomButton from "../../components/CustomButton";
 import useActivateExam from "../../hooks/postData/useActivateExam";
-
-const DeactivateExam = ({
-  data,
-  isOpenDeactivateExam,
-  setIsOpenDeactivateExam,
-  closeDeactivateExamModal,
-}) => {
+interface DeactivateExamProps {
+  data: Record<string, any> | undefined | null
+  isOpenDeactivateExam: boolean
+  setIsOpenDeactivateExam: Dispatch<SetStateAction<boolean>>
+  closeDeactivateExamModal: () => void
+}
+const DeactivateExam: FC<DeactivateExamProps> = (props) => {
+  const {
+    data,
+    isOpenDeactivateExam,
+    setIsOpenDeactivateExam,
+    closeDeactivateExamModal,
+  } = props
   const images = ImportImgs();
 
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
@@ -17,12 +23,6 @@ const DeactivateExam = ({
   const TogglecloseSuccessModal = () => {
     setOpenSuccessModal(false);
     setIsOpenDeactivateExam(false);
-  };
-
-  const handleDeactivate = () => {
-    // Handle the exam activation logic here
-    console.log("Exam Deactivated!");
-    setOpenSuccessModal(true);
   };
 
   const { completedMutate, loadingComplete, completeSuccess } =

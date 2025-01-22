@@ -6,14 +6,16 @@ import httpService from "../../utils/httpService";
 import findEmptyFields from "../../utils/findEmptyField";
 import { useState } from "react";
 import useGetSettings from "../getData/useGetSettings";
+import { AxiosError } from "axios";
+import { AdminErrorResponse } from "../../utils";
 
 const useAddTest = (id?: string) => {
   const navigate = useNavigate();
 
   const query = useQueryClient();
-  const [question, setQuestion] = useState(null);
-  const [file, setFile] = useState(null);
-  const [image, setImage] = useState<{ name: string, size: number } | null>(null);
+  const [question, setQuestion] = useState<File | undefined>();
+  const [file, setFile] = useState<File | undefined>();
+  const [image, setImage] = useState<File | null>(null);
 
   const { data, isLoading: loading } = useGetSettings();
   const [numberOfQuestion, setNumberOfQuestion] = useState("");
@@ -34,7 +36,8 @@ const useAddTest = (id?: string) => {
       level: "",
       points_per_question: "",
       no_of_questions: "",
-      session: ""
+      session: "",
+      overall_score: ""
     },
     onSubmit: (values) => {
       const emptyFields = findEmptyFields(values);
@@ -51,16 +54,16 @@ const useAddTest = (id?: string) => {
         toast?.error(`Add Question Or File`);
       } else {
         {
-          Object.keys(formik?.values).map((key) => {
+          (Object.keys(formik?.values) as (keyof typeof values)[]).forEach((key) => {
             if (key === "start_at") {
               formData?.append(
                 key,
                 new Date(formik?.values[key]).toISOString()
               );
             } else if (key === "session") {
-              formData?.append(key, data?.current_session);
+              formData?.append(key, data?.current_session ?? "");
             } else {
-              formData?.append(key, formik?.values[key]);
+              formData?.append(key, formik?.values[key].toString());
             }
           });
         }
@@ -90,7 +93,7 @@ const useAddTest = (id?: string) => {
         toast?.error(`Enter your ${emptyFields[0]}`);
       } else {
         {
-          Object.keys(addBulkFormik?.values).map((key) => {
+          (Object.keys(values) as (keyof typeof values)[]).map((key) => {
             formData?.append(key, addBulkFormik?.values[key]);
           });
         }
@@ -107,11 +110,11 @@ const useAddTest = (id?: string) => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (info) =>
+    mutationFn: (info: FormData) =>
       httpService.post(`app_admin/exams/upload/`, info, {
-        headers: { "Content-Type": question.type }
+        headers: { "Content-Type": question?.type }
       }),
-    onError: (error) => {
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail
@@ -131,11 +134,11 @@ const useAddTest = (id?: string) => {
     isPending: loadingSingleQuestion,
     isSuccess: successSingleQuestion
   } = useMutation({
-    mutationFn: (info) =>
+    mutationFn: (info: FormData) =>
       httpService.post(`app_admin/exams/upload/${id}/single-question/`, info, {
         // headers: {'Content-Type': image.type ? image?.type : "" }
       }),
-    onError: (error) => {
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail
@@ -154,11 +157,11 @@ const useAddTest = (id?: string) => {
     isPending: loadingBulk,
     isSuccess: bulksuccess
   } = useMutation({
-    mutationFn: (info) =>
+    mutationFn: (info: FormData) =>
       httpService.post(`/app_admin/exams/upload/${id}/bulk-questions/`, info, {
-        headers: { "Content-Type": question.type }
+        headers: { "Content-Type": question?.type }
       }),
-    onError: (error) => {
+    onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
         error?.response?.data?.detail

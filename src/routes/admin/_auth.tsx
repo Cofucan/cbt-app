@@ -9,21 +9,6 @@ export const Route = createFileRoute("/admin/_auth")({
 
 function RouteComponent() {
 
-  // const [isOpen, setOpenDrawer] = useState(false);
-  // const isTabletOrMobile = useMediaQuery({ query: "(max-width: 970px)" });
-
-  // Handle drawer state based on screen size
-  // useEffect(() => {
-  //   setOpenDrawer(!isTabletOrMobile);
-  // }, [isTabletOrMobile]);
-
-  // Show toast notifications for error or success
-
-  // Redirect if user is not logged in
-  // if (!token) {
-  //   return <Navigate to="/" />;
-  // }
-
   return (
     <div className="relative flex h-screen w-full flex-col overflow-hidden">
       <div className="relative z-10 w-full">

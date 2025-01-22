@@ -43,7 +43,7 @@
 .pagination-btn {
   background-color: transparent;
   outline: none;
-  padding: 0px 13px;
+  padding: 0 13px;
   color: #333;
   cursor: pointer;
 }

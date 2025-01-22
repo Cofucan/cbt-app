@@ -1,30 +1,37 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
-import findEmptyFields from "../../utils/findEmptyField";
+import { useNavigate } from "@tanstack/react-router";
 import httpService from "../../utils/httpService";
+import findEmptyFields from "../../utils/findEmptyField";
+import removeEmptyData from "../../utils/removingEmptyData";
 import { AxiosError } from "axios";
 import { AdminErrorResponse } from "../../utils";
 
-const useAddDepartment = (id?: string | number) => {
+const useAddAdmin = (id?: string | number) => {
   const query = useQueryClient();
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      faculty: 0,
+      identifier: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      type: "",
+      faculty: ""
     },
     onSubmit: (values) => {
       const emptyFields = findEmptyFields(values);
 
-      if (emptyFields?.length > 0) {
+      if (emptyFields?.length > 0 && !id) {
         toast?.error(`Enter your ${emptyFields[0]}`);
       } else {
         if (id) {
-          editMutate({
-            ...formik.values,
-            faculty: Number(formik?.values?.faculty),
-          });
+          let payload = removeEmptyData(formik?.values);
+          editMutate(payload);
         } else {
           mutate({
             ...formik.values,
@@ -36,7 +43,7 @@ const useAddDepartment = (id?: string | number) => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/departments/`, info),
+    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/admins/`, info),
     onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
@@ -46,8 +53,9 @@ const useAddDepartment = (id?: string | number) => {
       );
     },
     onSuccess: async () => {
-      await query?.invalidateQueries({ queryKey: ["departments"] });
-      toast?.success("Created Department Successfully");
+      toast?.success("Created Admin Successfully");
+      await navigate({ to: "/admin/manager" });
+      await query?.invalidateQueries({ queryKey: ["Profile"] });
     },
   });
 
@@ -56,8 +64,7 @@ const useAddDepartment = (id?: string | number) => {
     isPending: loadingEdit,
     isSuccess: editSuccess,
   } = useMutation({
-    mutationFn: (info: Record<string, number | string>) =>
-      httpService.put(`/app_admin/departments/${id}/`, info),
+    mutationFn: (info: Record<string, string | number>) => httpService.patch(`app_admin/admins/${id}/`, info),
     onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
@@ -67,8 +74,8 @@ const useAddDepartment = (id?: string | number) => {
       );
     },
     onSuccess: async () => {
-      await query?.invalidateQueries({ queryKey: ["departments"] });
-      toast?.success("Updated Department Successfully");
+      toast?.success("Update Profile Successfully");
+      await query?.invalidateQueries({ queryKey: ["Profile"] });
     },
   });
 
@@ -81,4 +88,4 @@ const useAddDepartment = (id?: string | number) => {
   };
 };
 
-export default useAddDepartment;
+export default useAddAdmin;
