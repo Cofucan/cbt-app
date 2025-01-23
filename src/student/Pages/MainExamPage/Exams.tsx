@@ -164,10 +164,11 @@ const Exams: React.FC<ExamsProps> = ({ examId }) => {
         });
       }
 
-      // Submit answers every 5 questions selected (optional)
-      if (updatedAnswers.length % 5 === 0) {
-        submitAnswers(updatedAnswers);
-      }
+     // Submit answers every 5 questions selected (optional)
+      // if (updatedAnswers.length % 5 === 0) {
+        // submitAnswers(updatedAnswers);
+      // }
+      submitAnswers(updatedAnswers);
 
       return updatedAnswers;
     });
