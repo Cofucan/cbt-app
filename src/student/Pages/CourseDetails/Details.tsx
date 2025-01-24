@@ -54,11 +54,7 @@ const Details: React.FC<DetailsProps> = ({
         </h2>
         <div className="flex flex-col gap-5 pb-5 text-black md:text-lg xl:pb-0">
           <p>
-            <span className="font-semibold">Course Name:</span>{" "}
-            {courseDetails?.name || "N/A"}
-          </p>
-          <p>
-            <span className="font-semibold">Title:</span>{" "}
+            <span className="font-semibold">Course Title:</span>{" "}
             {courseDetails?.title || "N/A"}
           </p>
 
@@ -66,10 +62,7 @@ const Details: React.FC<DetailsProps> = ({
             <span className="font-semibold">Course Code:</span>{" "}
             {courseDetails?.code || "N/A"}
           </p>
-          <p>
-            <span className="font-semibold">Course Unit:</span>{" "}
-            {courseDetails?.unit || "N/A"}
-          </p>
+
           <p>
             <span className="font-semibold">Instructor:</span>{" "}
             {courseDetails?.instructor_name || "N/A"}
