@@ -14,7 +14,6 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as StudentRouteImport } from './routes/student/route'
 import { Route as AdminRouteImport } from './routes/admin/route'
 import { Route as IndexImport } from './routes/index'
-import { Route as StudentIndexImport } from './routes/student/index'
 import { Route as AdminIndexImport } from './routes/admin/index'
 import { Route as StudentLoginImport } from './routes/student/login'
 import { Route as StudentAuthImport } from './routes/student/_auth'
@@ -50,7 +49,7 @@ const StudentRouteRoute = StudentRouteImport.update({
 
 const AdminRouteRoute = AdminRouteImport.update({
   id: '/admin',
-  path: '/admin',
+  path: 'secure//admin',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -58,12 +57,6 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
-
-const StudentIndexRoute = StudentIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => StudentRouteRoute,
 } as any)
 
 const AdminIndexRoute = AdminIndexImport.update({
@@ -264,13 +257,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof AdminRouteImport
-    }
-    '/student/': {
-      id: '/student/'
-      path: '/'
-      fullPath: '/student/'
-      preLoaderRoute: typeof StudentIndexImport
-      parentRoute: typeof StudentRouteImport
     }
     '/admin/_auth/class-manager': {
       id: '/admin/_auth/class-manager'
@@ -494,13 +480,11 @@ const StudentAuthRouteWithChildren = StudentAuthRoute._addFileChildren(
 interface StudentRouteRouteChildren {
   StudentAuthRoute: typeof StudentAuthRouteWithChildren
   StudentLoginRoute: typeof StudentLoginRoute
-  StudentIndexRoute: typeof StudentIndexRoute
 }
 
 const StudentRouteRouteChildren: StudentRouteRouteChildren = {
   StudentAuthRoute: StudentAuthRouteWithChildren,
   StudentLoginRoute: StudentLoginRoute,
-  StudentIndexRoute: StudentIndexRoute,
 }
 
 const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
@@ -513,7 +497,6 @@ export interface FileRoutesByFullPath {
   '/student': typeof StudentAuthRouteWithChildren
   '/student/login': typeof StudentLoginRoute
   '/admin/': typeof AdminIndexRoute
-  '/student/': typeof StudentIndexRoute
   '/admin/class-manager': typeof AdminAuthClassManagerRoute
   '/admin/course-manager': typeof AdminAuthCourseManagerRoute
   '/admin/create': typeof AdminAuthCreateRoute
@@ -538,8 +521,8 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/student': typeof StudentAuthRouteWithChildren
   '/admin': typeof AdminIndexRoute
-  '/student': typeof StudentIndexRoute
   '/student/login': typeof StudentLoginRoute
   '/admin/class-manager': typeof AdminAuthClassManagerRoute
   '/admin/course-manager': typeof AdminAuthCourseManagerRoute
@@ -572,7 +555,6 @@ export interface FileRoutesById {
   '/student/_auth': typeof StudentAuthRouteWithChildren
   '/student/login': typeof StudentLoginRoute
   '/admin/': typeof AdminIndexRoute
-  '/student/': typeof StudentIndexRoute
   '/admin/_auth/class-manager': typeof AdminAuthClassManagerRoute
   '/admin/_auth/course-manager': typeof AdminAuthCourseManagerRoute
   '/admin/_auth/create': typeof AdminAuthCreateRoute
@@ -603,7 +585,6 @@ export interface FileRouteTypes {
     | '/student'
     | '/student/login'
     | '/admin/'
-    | '/student/'
     | '/admin/class-manager'
     | '/admin/course-manager'
     | '/admin/create'
@@ -627,8 +608,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/student'
+    | '/admin'
     | '/student/login'
     | '/admin/class-manager'
     | '/admin/course-manager'
@@ -659,7 +640,6 @@ export interface FileRouteTypes {
     | '/student/_auth'
     | '/student/login'
     | '/admin/'
-    | '/student/'
     | '/admin/_auth/class-manager'
     | '/admin/_auth/course-manager'
     | '/admin/_auth/create'
@@ -724,8 +704,7 @@ export const routeTree = rootRoute
       "filePath": "student/route.tsx",
       "children": [
         "/student/_auth",
-        "/student/login",
-        "/student/"
+        "/student/login"
       ]
     },
     "/admin/_auth": {
@@ -767,10 +746,6 @@ export const routeTree = rootRoute
     "/admin/": {
       "filePath": "admin/index.tsx",
       "parent": "/admin"
-    },
-    "/student/": {
-      "filePath": "student/index.tsx",
-      "parent": "/student"
     },
     "/admin/_auth/class-manager": {
       "filePath": "admin/_auth/class-manager.tsx",
