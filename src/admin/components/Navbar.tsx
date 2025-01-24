@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { CiSearch } from "react-icons/ci";
-// import user from "../assets/user.svg";
-import schoolLogo from "../assets/enugun.png"
+import schoolLogo from "../assets/logo.svg"
 import arrowdown from "../assets/Orange-Arrowdown.svg";
 import { useNavigate } from "@tanstack/react-router";
 import { FiMenu } from "react-icons/fi";

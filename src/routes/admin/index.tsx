@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import useAuth from "../../admin/hooks/useAuth.ts";
 import { FormEvent, useState } from "react";
-import logo from "../../admin/assets/enugun.png";
+import logo from "../../admin/assets/logo.svg";
 import saly from "../../admin/assets/esut_computer_lab.jpg";
 import { BeatLoader } from "react-spinners";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
