@@ -49,7 +49,7 @@ const StudentRouteRoute = StudentRouteImport.update({
 
 const AdminRouteRoute = AdminRouteImport.update({
   id: '/admin',
-  path: '/secure/admin',
+  path: 'secure//admin',
   getParentRoute: () => rootRoute,
 } as any)
 
