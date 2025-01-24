@@ -145,10 +145,38 @@ const Exams: React.FC<ExamsProps> = ({ examId }) => {
   };
 
   // Handle Answer Change
-  const handleAnswerChange = (
-    questionNumber: number,
-    selectedOption: string
-  ) => {
+  // const handleAnswerChange = (
+  //   questionNumber: number,
+  //   selectedOption: string
+  // ) => {
+  //   setSelectedAnswers((prevAnswers) => {
+  //     const updatedAnswers = [...prevAnswers];
+  //     const answerIndex = updatedAnswers.findIndex(
+  //       (ans) => ans.question_number === questionNumber
+  //     );
+
+  //     if (answerIndex > -1) {
+  //       updatedAnswers[answerIndex].selected_option = selectedOption;
+  //     } else {
+  //       updatedAnswers.push({
+  //         question_number: questionNumber,
+  //         selected_option: selectedOption
+  //       });
+  //     }
+
+  //    // Submit answers every 5 questions selected (optional)
+  //     // if (updatedAnswers.length % 5 === 0) {
+  //       // submitAnswers(updatedAnswers);
+  //     // }
+  //     submitAnswers(updatedAnswers);
+
+  //     return updatedAnswers;
+  //   });
+  // };
+
+  const handleAnswerChange = ( questionNumber: number,
+    selectedOption: string) => {
+    // Update selected answers
     setSelectedAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       const answerIndex = updatedAnswers.findIndex(
@@ -160,15 +188,13 @@ const Exams: React.FC<ExamsProps> = ({ examId }) => {
       } else {
         updatedAnswers.push({
           question_number: questionNumber,
-          selected_option: selectedOption
+          selected_option: selectedOption,
         });
       }
 
-      // Submit answers every 5 questions selected (optional)
-      if (updatedAnswers.length % 5 === 0) {
-        submitAnswers(updatedAnswers);
-      }
+      submitAnswers(updatedAnswers);
 
+      console.log("updatedAnswers", updatedAnswers);
       return updatedAnswers;
     });
   };

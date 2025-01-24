@@ -2,11 +2,12 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../../student/context/AuthProvider.tsx";
 import ImportingImgs from "../../student/Components/ImportingImgs.tsx";
-import { loginUser } from "../../student/api/auth.ts";
+import { getSchoolConfig, loginUser } from "../../student/api/auth.ts";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 import { AxiosError } from "axios";
+import { baseUrl } from "../../lib/utils.ts";
 
 export const Route = createFileRoute("/student/login")({
   component: RouteComponent,
@@ -17,17 +18,18 @@ function RouteComponent() {
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [schoolLogo, setSchoolLogo] = useState(null);
+  const [schoolLogo, setSchoolLogo] = useState<string>("");
 
   useEffect(() => {
     const fetchSchoolLogo = async () => {
       try {
-        // const logoData = await getSchoolConfig();
-        // const logoPath = logoData?.logo;
-        // const logoUrl = logoPath
-        //   ? `${baseUrl}/media/${logoPath}`
-        //   : images.mainLogo;
-        // setSchoolLogo(logoUrl);
+        const logoData = await getSchoolConfig();
+        const logoPath = logoData?.logo;
+        const logoUrl = logoPath
+          ? `${baseUrl}/media/${logoPath}`
+          : images.mainLogo;
+        setSchoolLogo(logoUrl);
+        console.log("School Logo URL in loginPage:", logoPath);
       } catch (error) {
         console.error("Error fetching school logo:", error);
       }
@@ -87,8 +89,8 @@ function RouteComponent() {
     <section className="overflow-hidden">
       <div className="border-b border-[#CBD5E1]">
         <img
-          // src={schoolLogo}
-          src={images.enugun}
+          src={schoolLogo}
+          // src={images.enugun}
           alt="Logo"
           className="object-cover px-8 py-3"
           width={200}
@@ -106,8 +108,8 @@ function RouteComponent() {
         <div className="mt-5 flex h-full w-full flex-col items-center justify-center gap-16 lg:mx-5 lg:mt-0 lg:max-w-2xl">
           <div className="flex flex-col items-center gap-5">
             <img
-              // src={schoolLogo}
-              src={images.enugun}
+              src={schoolLogo}
+              // src={images.enugun}
               alt="Main Logo"
               className="bg-cover object-cover"
               width={300}

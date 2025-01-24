@@ -19,13 +19,13 @@ interface QuickNavigationProps {
 }
 
 const QuickNavigation: React.FC<QuickNavigationProps> = ({
-                                                           currentQuestion,
-                                                           onSelect,
-                                                           totalQuestions,
-                                                           selectedAnswers,
-                                                           examStartTime,
-                                                           examId
-                                                         }) => {
+  currentQuestion,
+  onSelect,
+  totalQuestions,
+  selectedAnswers,
+  examStartTime,
+  examId,
+}) => {
   const studentData = useStudentData();
 
   const navigate = useNavigate();
@@ -35,17 +35,21 @@ const QuickNavigation: React.FC<QuickNavigationProps> = ({
   const handleChecked = (questionNumber: number) => {
     return (
       selectedAnswers.find(
-        (answer) => answer.question_number === questionNumber
+        (answer) => answer.question_number === questionNumber,
       )?.selected_option || ""
     );
   };
 
   const GoToQuestionsDetails = async () => {
     setIsSubmitting(true);
-    studentData.setData({ selectedAnswers, totalQuestions, examStartTime: examStartTime ?? undefined });
+    studentData.setData({
+      selectedAnswers,
+      totalQuestions,
+      examStartTime: examStartTime ?? undefined,
+    });
     await navigate({
       to: `/student/question-details/${examId}`,
-      params: { examId }
+      params: { examId },
     });
     setIsSubmitting(false);
   };

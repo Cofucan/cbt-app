@@ -10,415 +10,415 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as StudentRouteImport } from "./routes/student/route";
-import { Route as AdminRouteImport } from "./routes/admin/route";
-import { Route as StudentIndexImport } from "./routes/student/index";
-import { Route as AdminIndexImport } from "./routes/admin/index";
-import { Route as StudentLoginImport } from "./routes/student/login";
-import { Route as StudentAuthImport } from "./routes/student/_auth";
-import { Route as AdminAuthImport } from "./routes/admin/_auth";
-import { Route as StudentAuthStudentPortalImport } from "./routes/student/_auth/student-portal";
-import { Route as StudentAuthExamSuccessImport } from "./routes/student/_auth/exam-success";
-import { Route as AdminAuthStudentManagerImport } from "./routes/admin/_auth/student-manager";
-import { Route as AdminAuthNewTestImport } from "./routes/admin/_auth/new-test";
-import { Route as AdminAuthMyAccountImport } from "./routes/admin/_auth/my-account";
-import { Route as AdminAuthManagerImport } from "./routes/admin/_auth/manager";
-import { Route as AdminAuthManageRoleImport } from "./routes/admin/_auth/manage-role";
-import { Route as AdminAuthCreateImport } from "./routes/admin/_auth/create";
-import { Route as AdminAuthCourseManagerImport } from "./routes/admin/_auth/course-manager";
-import { Route as AdminAuthClassManagerImport } from "./routes/admin/_auth/class-manager";
-import { Route as AdminAuthTestIndexImport } from "./routes/admin/_auth/test/index";
-import { Route as AdminAuthSettingsIndexImport } from "./routes/admin/_auth/settings/index";
-import { Route as StudentAuthQuestionDetailsExamIdImport } from "./routes/student/_auth/question-details.$examId";
-import { Route as StudentAuthExamsExamIdImport } from "./routes/student/_auth/exams.$examId";
-import { Route as StudentAuthCourseDetailsExamIdImport } from "./routes/student/_auth/course-details.$examId";
-import { Route as AdminAuthSettingsActivityLogImport } from "./routes/admin/_auth/settings/activity-log";
-import { Route as AdminAuthResultViewResultImport } from "./routes/admin/_auth/result/view-result";
-import { Route as AdminAuthResultManagerImport } from "./routes/admin/_auth/result/manager";
-import { Route as AdminAuthResultCreateRoleImport } from "./routes/admin/_auth/result/create-role";
-import { Route as AdminAuthTestStudentAnalysisIdImport } from "./routes/admin/_auth/test/student-analysis.$id";
+import { Route as rootRoute } from './routes/__root'
+import { Route as StudentRouteImport } from './routes/student/route'
+import { Route as AdminRouteImport } from './routes/admin/route'
+import { Route as IndexImport } from './routes/index'
+import { Route as AdminIndexImport } from './routes/admin/index'
+import { Route as StudentLoginImport } from './routes/student/login'
+import { Route as StudentAuthImport } from './routes/student/_auth'
+import { Route as AdminAuthImport } from './routes/admin/_auth'
+import { Route as StudentAuthStudentPortalImport } from './routes/student/_auth/student-portal'
+import { Route as StudentAuthExamSuccessImport } from './routes/student/_auth/exam-success'
+import { Route as AdminAuthStudentManagerImport } from './routes/admin/_auth/student-manager'
+import { Route as AdminAuthNewTestImport } from './routes/admin/_auth/new-test'
+import { Route as AdminAuthMyAccountImport } from './routes/admin/_auth/my-account'
+import { Route as AdminAuthManagerImport } from './routes/admin/_auth/manager'
+import { Route as AdminAuthManageRoleImport } from './routes/admin/_auth/manage-role'
+import { Route as AdminAuthCreateImport } from './routes/admin/_auth/create'
+import { Route as AdminAuthCourseManagerImport } from './routes/admin/_auth/course-manager'
+import { Route as AdminAuthClassManagerImport } from './routes/admin/_auth/class-manager'
+import { Route as AdminAuthTestIndexImport } from './routes/admin/_auth/test/index'
+import { Route as AdminAuthSettingsIndexImport } from './routes/admin/_auth/settings/index'
+import { Route as StudentAuthQuestionDetailsExamIdImport } from './routes/student/_auth/question-details.$examId'
+import { Route as StudentAuthExamsExamIdImport } from './routes/student/_auth/exams.$examId'
+import { Route as StudentAuthCourseDetailsExamIdImport } from './routes/student/_auth/course-details.$examId'
+import { Route as AdminAuthSettingsActivityLogImport } from './routes/admin/_auth/settings/activity-log'
+import { Route as AdminAuthResultViewResultImport } from './routes/admin/_auth/result/view-result'
+import { Route as AdminAuthResultManagerImport } from './routes/admin/_auth/result/manager'
+import { Route as AdminAuthResultCreateRoleImport } from './routes/admin/_auth/result/create-role'
+import { Route as AdminAuthTestStudentAnalysisIdImport } from './routes/admin/_auth/test/student-analysis.$id'
 
 // Create/Update Routes
 
 const StudentRouteRoute = StudentRouteImport.update({
-  id: "/student",
-  path: "/student",
+  id: '/student',
+  path: '/student',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const AdminRouteRoute = AdminRouteImport.update({
-  id: "/admin",
-  path: "/admin",
+  id: '/admin',
+  path: 'secure//admin',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
-const StudentIndexRoute = StudentIndexImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => StudentRouteRoute,
-} as any);
+const IndexRoute = IndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AdminIndexRoute = AdminIndexImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => AdminRouteRoute,
-} as any);
+} as any)
 
 const StudentLoginRoute = StudentLoginImport.update({
-  id: "/login",
-  path: "/login",
+  id: '/login',
+  path: '/login',
   getParentRoute: () => StudentRouteRoute,
-} as any);
+} as any)
 
 const StudentAuthRoute = StudentAuthImport.update({
-  id: "/_auth",
+  id: '/_auth',
   getParentRoute: () => StudentRouteRoute,
-} as any);
+} as any)
 
 const AdminAuthRoute = AdminAuthImport.update({
-  id: "/_auth",
+  id: '/_auth',
   getParentRoute: () => AdminRouteRoute,
-} as any);
+} as any)
 
 const StudentAuthStudentPortalRoute = StudentAuthStudentPortalImport.update({
-  id: "/student-portal",
-  path: "/student-portal",
+  id: '/student-portal',
+  path: '/student-portal',
   getParentRoute: () => StudentAuthRoute,
-} as any);
+} as any)
 
 const StudentAuthExamSuccessRoute = StudentAuthExamSuccessImport.update({
-  id: "/exam-success",
-  path: "/exam-success",
+  id: '/exam-success',
+  path: '/exam-success',
   getParentRoute: () => StudentAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthStudentManagerRoute = AdminAuthStudentManagerImport.update({
-  id: "/student-manager",
-  path: "/student-manager",
+  id: '/student-manager',
+  path: '/student-manager',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthNewTestRoute = AdminAuthNewTestImport.update({
-  id: "/new-test",
-  path: "/new-test",
+  id: '/new-test',
+  path: '/new-test',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthMyAccountRoute = AdminAuthMyAccountImport.update({
-  id: "/my-account",
-  path: "/my-account",
+  id: '/my-account',
+  path: '/my-account',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthManagerRoute = AdminAuthManagerImport.update({
-  id: "/manager",
-  path: "/manager",
+  id: '/manager',
+  path: '/manager',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthManageRoleRoute = AdminAuthManageRoleImport.update({
-  id: "/manage-role",
-  path: "/manage-role",
+  id: '/manage-role',
+  path: '/manage-role',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthCreateRoute = AdminAuthCreateImport.update({
-  id: "/create",
-  path: "/create",
+  id: '/create',
+  path: '/create',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthCourseManagerRoute = AdminAuthCourseManagerImport.update({
-  id: "/course-manager",
-  path: "/course-manager",
+  id: '/course-manager',
+  path: '/course-manager',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthClassManagerRoute = AdminAuthClassManagerImport.update({
-  id: "/class-manager",
-  path: "/class-manager",
+  id: '/class-manager',
+  path: '/class-manager',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthTestIndexRoute = AdminAuthTestIndexImport.update({
-  id: "/test/",
-  path: "/test/",
+  id: '/test/',
+  path: '/test/',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthSettingsIndexRoute = AdminAuthSettingsIndexImport.update({
-  id: "/settings/",
-  path: "/settings/",
+  id: '/settings/',
+  path: '/settings/',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const StudentAuthQuestionDetailsExamIdRoute =
   StudentAuthQuestionDetailsExamIdImport.update({
-    id: "/question-details/$examId",
-    path: "/question-details/$examId",
+    id: '/question-details/$examId',
+    path: '/question-details/$examId',
     getParentRoute: () => StudentAuthRoute,
-  } as any);
+  } as any)
 
 const StudentAuthExamsExamIdRoute = StudentAuthExamsExamIdImport.update({
-  id: "/exams/$examId",
-  path: "/exams/$examId",
+  id: '/exams/$examId',
+  path: '/exams/$examId',
   getParentRoute: () => StudentAuthRoute,
-} as any);
+} as any)
 
 const StudentAuthCourseDetailsExamIdRoute =
   StudentAuthCourseDetailsExamIdImport.update({
-    id: "/course-details/$examId",
-    path: "/course-details/$examId",
+    id: '/course-details/$examId',
+    path: '/course-details/$examId',
     getParentRoute: () => StudentAuthRoute,
-  } as any);
+  } as any)
 
 const AdminAuthSettingsActivityLogRoute =
   AdminAuthSettingsActivityLogImport.update({
-    id: "/settings/activity-log",
-    path: "/settings/activity-log",
+    id: '/settings/activity-log',
+    path: '/settings/activity-log',
     getParentRoute: () => AdminAuthRoute,
-  } as any);
+  } as any)
 
 const AdminAuthResultViewResultRoute = AdminAuthResultViewResultImport.update({
-  id: "/result/view-result",
-  path: "/result/view-result",
+  id: '/result/view-result',
+  path: '/result/view-result',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthResultManagerRoute = AdminAuthResultManagerImport.update({
-  id: "/result/manager",
-  path: "/result/manager",
+  id: '/result/manager',
+  path: '/result/manager',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthResultCreateRoleRoute = AdminAuthResultCreateRoleImport.update({
-  id: "/result/create-role",
-  path: "/result/create-role",
+  id: '/result/create-role',
+  path: '/result/create-role',
   getParentRoute: () => AdminAuthRoute,
-} as any);
+} as any)
 
 const AdminAuthTestStudentAnalysisIdRoute =
   AdminAuthTestStudentAnalysisIdImport.update({
-    id: "/test/student-analysis/$id",
-    path: "/test/student-analysis/$id",
+    id: '/test/student-analysis/$id',
+    path: '/test/student-analysis/$id',
     getParentRoute: () => AdminAuthRoute,
-  } as any);
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/admin": {
-      id: "/admin";
-      path: "/admin";
-      fullPath: "/admin";
-      preLoaderRoute: typeof AdminRouteImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/student": {
-      id: "/student";
-      path: "/student";
-      fullPath: "/student";
-      preLoaderRoute: typeof StudentRouteImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/admin/_auth": {
-      id: "/admin/_auth";
-      path: "";
-      fullPath: "/admin";
-      preLoaderRoute: typeof AdminAuthImport;
-      parentRoute: typeof AdminRouteImport;
-    };
-    "/student/_auth": {
-      id: "/student/_auth";
-      path: "";
-      fullPath: "/student";
-      preLoaderRoute: typeof StudentAuthImport;
-      parentRoute: typeof StudentRouteImport;
-    };
-    "/student/login": {
-      id: "/student/login";
-      path: "/login";
-      fullPath: "/student/login";
-      preLoaderRoute: typeof StudentLoginImport;
-      parentRoute: typeof StudentRouteImport;
-    };
-    "/admin/": {
-      id: "/admin/";
-      path: "/";
-      fullPath: "/admin/";
-      preLoaderRoute: typeof AdminIndexImport;
-      parentRoute: typeof AdminRouteImport;
-    };
-    "/student/": {
-      id: "/student/";
-      path: "/";
-      fullPath: "/student/";
-      preLoaderRoute: typeof StudentIndexImport;
-      parentRoute: typeof StudentRouteImport;
-    };
-    "/admin/_auth/class-manager": {
-      id: "/admin/_auth/class-manager";
-      path: "/class-manager";
-      fullPath: "/admin/class-manager";
-      preLoaderRoute: typeof AdminAuthClassManagerImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/course-manager": {
-      id: "/admin/_auth/course-manager";
-      path: "/course-manager";
-      fullPath: "/admin/course-manager";
-      preLoaderRoute: typeof AdminAuthCourseManagerImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/create": {
-      id: "/admin/_auth/create";
-      path: "/create";
-      fullPath: "/admin/create";
-      preLoaderRoute: typeof AdminAuthCreateImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/manage-role": {
-      id: "/admin/_auth/manage-role";
-      path: "/manage-role";
-      fullPath: "/admin/manage-role";
-      preLoaderRoute: typeof AdminAuthManageRoleImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/manager": {
-      id: "/admin/_auth/manager";
-      path: "/manager";
-      fullPath: "/admin/manager";
-      preLoaderRoute: typeof AdminAuthManagerImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/my-account": {
-      id: "/admin/_auth/my-account";
-      path: "/my-account";
-      fullPath: "/admin/my-account";
-      preLoaderRoute: typeof AdminAuthMyAccountImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/new-test": {
-      id: "/admin/_auth/new-test";
-      path: "/new-test";
-      fullPath: "/admin/new-test";
-      preLoaderRoute: typeof AdminAuthNewTestImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/student-manager": {
-      id: "/admin/_auth/student-manager";
-      path: "/student-manager";
-      fullPath: "/admin/student-manager";
-      preLoaderRoute: typeof AdminAuthStudentManagerImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/student/_auth/exam-success": {
-      id: "/student/_auth/exam-success";
-      path: "/exam-success";
-      fullPath: "/student/exam-success";
-      preLoaderRoute: typeof StudentAuthExamSuccessImport;
-      parentRoute: typeof StudentAuthImport;
-    };
-    "/student/_auth/student-portal": {
-      id: "/student/_auth/student-portal";
-      path: "/student-portal";
-      fullPath: "/student/student-portal";
-      preLoaderRoute: typeof StudentAuthStudentPortalImport;
-      parentRoute: typeof StudentAuthImport;
-    };
-    "/admin/_auth/result/create-role": {
-      id: "/admin/_auth/result/create-role";
-      path: "/result/create-role";
-      fullPath: "/admin/result/create-role";
-      preLoaderRoute: typeof AdminAuthResultCreateRoleImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/result/manager": {
-      id: "/admin/_auth/result/manager";
-      path: "/result/manager";
-      fullPath: "/admin/result/manager";
-      preLoaderRoute: typeof AdminAuthResultManagerImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/result/view-result": {
-      id: "/admin/_auth/result/view-result";
-      path: "/result/view-result";
-      fullPath: "/admin/result/view-result";
-      preLoaderRoute: typeof AdminAuthResultViewResultImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/settings/activity-log": {
-      id: "/admin/_auth/settings/activity-log";
-      path: "/settings/activity-log";
-      fullPath: "/admin/settings/activity-log";
-      preLoaderRoute: typeof AdminAuthSettingsActivityLogImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/student/_auth/course-details/$examId": {
-      id: "/student/_auth/course-details/$examId";
-      path: "/course-details/$examId";
-      fullPath: "/student/course-details/$examId";
-      preLoaderRoute: typeof StudentAuthCourseDetailsExamIdImport;
-      parentRoute: typeof StudentAuthImport;
-    };
-    "/student/_auth/exams/$examId": {
-      id: "/student/_auth/exams/$examId";
-      path: "/exams/$examId";
-      fullPath: "/student/exams/$examId";
-      preLoaderRoute: typeof StudentAuthExamsExamIdImport;
-      parentRoute: typeof StudentAuthImport;
-    };
-    "/student/_auth/question-details/$examId": {
-      id: "/student/_auth/question-details/$examId";
-      path: "/question-details/$examId";
-      fullPath: "/student/question-details/$examId";
-      preLoaderRoute: typeof StudentAuthQuestionDetailsExamIdImport;
-      parentRoute: typeof StudentAuthImport;
-    };
-    "/admin/_auth/settings/": {
-      id: "/admin/_auth/settings/";
-      path: "/settings";
-      fullPath: "/admin/settings";
-      preLoaderRoute: typeof AdminAuthSettingsIndexImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/test/": {
-      id: "/admin/_auth/test/";
-      path: "/test";
-      fullPath: "/admin/test";
-      preLoaderRoute: typeof AdminAuthTestIndexImport;
-      parentRoute: typeof AdminAuthImport;
-    };
-    "/admin/_auth/test/student-analysis/$id": {
-      id: "/admin/_auth/test/student-analysis/$id";
-      path: "/test/student-analysis/$id";
-      fullPath: "/admin/test/student-analysis/$id";
-      preLoaderRoute: typeof AdminAuthTestStudentAnalysisIdImport;
-      parentRoute: typeof AdminAuthImport;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/student': {
+      id: '/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof StudentRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/_auth': {
+      id: '/admin/_auth'
+      path: ''
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAuthImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/student/_auth': {
+      id: '/student/_auth'
+      path: ''
+      fullPath: '/student'
+      preLoaderRoute: typeof StudentAuthImport
+      parentRoute: typeof StudentRouteImport
+    }
+    '/student/login': {
+      id: '/student/login'
+      path: '/login'
+      fullPath: '/student/login'
+      preLoaderRoute: typeof StudentLoginImport
+      parentRoute: typeof StudentRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexImport
+      parentRoute: typeof AdminRouteImport
+    }
+    '/admin/_auth/class-manager': {
+      id: '/admin/_auth/class-manager'
+      path: '/class-manager'
+      fullPath: '/admin/class-manager'
+      preLoaderRoute: typeof AdminAuthClassManagerImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/course-manager': {
+      id: '/admin/_auth/course-manager'
+      path: '/course-manager'
+      fullPath: '/admin/course-manager'
+      preLoaderRoute: typeof AdminAuthCourseManagerImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/create': {
+      id: '/admin/_auth/create'
+      path: '/create'
+      fullPath: '/admin/create'
+      preLoaderRoute: typeof AdminAuthCreateImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/manage-role': {
+      id: '/admin/_auth/manage-role'
+      path: '/manage-role'
+      fullPath: '/admin/manage-role'
+      preLoaderRoute: typeof AdminAuthManageRoleImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/manager': {
+      id: '/admin/_auth/manager'
+      path: '/manager'
+      fullPath: '/admin/manager'
+      preLoaderRoute: typeof AdminAuthManagerImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/my-account': {
+      id: '/admin/_auth/my-account'
+      path: '/my-account'
+      fullPath: '/admin/my-account'
+      preLoaderRoute: typeof AdminAuthMyAccountImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/new-test': {
+      id: '/admin/_auth/new-test'
+      path: '/new-test'
+      fullPath: '/admin/new-test'
+      preLoaderRoute: typeof AdminAuthNewTestImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/student-manager': {
+      id: '/admin/_auth/student-manager'
+      path: '/student-manager'
+      fullPath: '/admin/student-manager'
+      preLoaderRoute: typeof AdminAuthStudentManagerImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/student/_auth/exam-success': {
+      id: '/student/_auth/exam-success'
+      path: '/exam-success'
+      fullPath: '/student/exam-success'
+      preLoaderRoute: typeof StudentAuthExamSuccessImport
+      parentRoute: typeof StudentAuthImport
+    }
+    '/student/_auth/student-portal': {
+      id: '/student/_auth/student-portal'
+      path: '/student-portal'
+      fullPath: '/student/student-portal'
+      preLoaderRoute: typeof StudentAuthStudentPortalImport
+      parentRoute: typeof StudentAuthImport
+    }
+    '/admin/_auth/result/create-role': {
+      id: '/admin/_auth/result/create-role'
+      path: '/result/create-role'
+      fullPath: '/admin/result/create-role'
+      preLoaderRoute: typeof AdminAuthResultCreateRoleImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/result/manager': {
+      id: '/admin/_auth/result/manager'
+      path: '/result/manager'
+      fullPath: '/admin/result/manager'
+      preLoaderRoute: typeof AdminAuthResultManagerImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/result/view-result': {
+      id: '/admin/_auth/result/view-result'
+      path: '/result/view-result'
+      fullPath: '/admin/result/view-result'
+      preLoaderRoute: typeof AdminAuthResultViewResultImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/settings/activity-log': {
+      id: '/admin/_auth/settings/activity-log'
+      path: '/settings/activity-log'
+      fullPath: '/admin/settings/activity-log'
+      preLoaderRoute: typeof AdminAuthSettingsActivityLogImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/student/_auth/course-details/$examId': {
+      id: '/student/_auth/course-details/$examId'
+      path: '/course-details/$examId'
+      fullPath: '/student/course-details/$examId'
+      preLoaderRoute: typeof StudentAuthCourseDetailsExamIdImport
+      parentRoute: typeof StudentAuthImport
+    }
+    '/student/_auth/exams/$examId': {
+      id: '/student/_auth/exams/$examId'
+      path: '/exams/$examId'
+      fullPath: '/student/exams/$examId'
+      preLoaderRoute: typeof StudentAuthExamsExamIdImport
+      parentRoute: typeof StudentAuthImport
+    }
+    '/student/_auth/question-details/$examId': {
+      id: '/student/_auth/question-details/$examId'
+      path: '/question-details/$examId'
+      fullPath: '/student/question-details/$examId'
+      preLoaderRoute: typeof StudentAuthQuestionDetailsExamIdImport
+      parentRoute: typeof StudentAuthImport
+    }
+    '/admin/_auth/settings/': {
+      id: '/admin/_auth/settings/'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminAuthSettingsIndexImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/test/': {
+      id: '/admin/_auth/test/'
+      path: '/test'
+      fullPath: '/admin/test'
+      preLoaderRoute: typeof AdminAuthTestIndexImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/test/student-analysis/$id': {
+      id: '/admin/_auth/test/student-analysis/$id'
+      path: '/test/student-analysis/$id'
+      fullPath: '/admin/test/student-analysis/$id'
+      preLoaderRoute: typeof AdminAuthTestStudentAnalysisIdImport
+      parentRoute: typeof AdminAuthImport
+    }
   }
 }
 
 // Create and export the route tree
 
 interface AdminAuthRouteChildren {
-  AdminAuthClassManagerRoute: typeof AdminAuthClassManagerRoute;
-  AdminAuthCourseManagerRoute: typeof AdminAuthCourseManagerRoute;
-  AdminAuthCreateRoute: typeof AdminAuthCreateRoute;
-  AdminAuthManageRoleRoute: typeof AdminAuthManageRoleRoute;
-  AdminAuthManagerRoute: typeof AdminAuthManagerRoute;
-  AdminAuthMyAccountRoute: typeof AdminAuthMyAccountRoute;
-  AdminAuthNewTestRoute: typeof AdminAuthNewTestRoute;
-  AdminAuthStudentManagerRoute: typeof AdminAuthStudentManagerRoute;
-  AdminAuthResultCreateRoleRoute: typeof AdminAuthResultCreateRoleRoute;
-  AdminAuthResultManagerRoute: typeof AdminAuthResultManagerRoute;
-  AdminAuthResultViewResultRoute: typeof AdminAuthResultViewResultRoute;
-  AdminAuthSettingsActivityLogRoute: typeof AdminAuthSettingsActivityLogRoute;
-  AdminAuthSettingsIndexRoute: typeof AdminAuthSettingsIndexRoute;
-  AdminAuthTestIndexRoute: typeof AdminAuthTestIndexRoute;
-  AdminAuthTestStudentAnalysisIdRoute: typeof AdminAuthTestStudentAnalysisIdRoute;
+  AdminAuthClassManagerRoute: typeof AdminAuthClassManagerRoute
+  AdminAuthCourseManagerRoute: typeof AdminAuthCourseManagerRoute
+  AdminAuthCreateRoute: typeof AdminAuthCreateRoute
+  AdminAuthManageRoleRoute: typeof AdminAuthManageRoleRoute
+  AdminAuthManagerRoute: typeof AdminAuthManagerRoute
+  AdminAuthMyAccountRoute: typeof AdminAuthMyAccountRoute
+  AdminAuthNewTestRoute: typeof AdminAuthNewTestRoute
+  AdminAuthStudentManagerRoute: typeof AdminAuthStudentManagerRoute
+  AdminAuthResultCreateRoleRoute: typeof AdminAuthResultCreateRoleRoute
+  AdminAuthResultManagerRoute: typeof AdminAuthResultManagerRoute
+  AdminAuthResultViewResultRoute: typeof AdminAuthResultViewResultRoute
+  AdminAuthSettingsActivityLogRoute: typeof AdminAuthSettingsActivityLogRoute
+  AdminAuthSettingsIndexRoute: typeof AdminAuthSettingsIndexRoute
+  AdminAuthTestIndexRoute: typeof AdminAuthTestIndexRoute
+  AdminAuthTestStudentAnalysisIdRoute: typeof AdminAuthTestStudentAnalysisIdRoute
 }
 
 const AdminAuthRouteChildren: AdminAuthRouteChildren = {
@@ -437,32 +437,32 @@ const AdminAuthRouteChildren: AdminAuthRouteChildren = {
   AdminAuthSettingsIndexRoute: AdminAuthSettingsIndexRoute,
   AdminAuthTestIndexRoute: AdminAuthTestIndexRoute,
   AdminAuthTestStudentAnalysisIdRoute: AdminAuthTestStudentAnalysisIdRoute,
-};
+}
 
 const AdminAuthRouteWithChildren = AdminAuthRoute._addFileChildren(
   AdminAuthRouteChildren,
-);
+)
 
 interface AdminRouteRouteChildren {
-  AdminAuthRoute: typeof AdminAuthRouteWithChildren;
-  AdminIndexRoute: typeof AdminIndexRoute;
+  AdminAuthRoute: typeof AdminAuthRouteWithChildren
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAuthRoute: AdminAuthRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
-};
+}
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
-);
+)
 
 interface StudentAuthRouteChildren {
-  StudentAuthExamSuccessRoute: typeof StudentAuthExamSuccessRoute;
-  StudentAuthStudentPortalRoute: typeof StudentAuthStudentPortalRoute;
-  StudentAuthCourseDetailsExamIdRoute: typeof StudentAuthCourseDetailsExamIdRoute;
-  StudentAuthExamsExamIdRoute: typeof StudentAuthExamsExamIdRoute;
-  StudentAuthQuestionDetailsExamIdRoute: typeof StudentAuthQuestionDetailsExamIdRoute;
+  StudentAuthExamSuccessRoute: typeof StudentAuthExamSuccessRoute
+  StudentAuthStudentPortalRoute: typeof StudentAuthStudentPortalRoute
+  StudentAuthCourseDetailsExamIdRoute: typeof StudentAuthCourseDetailsExamIdRoute
+  StudentAuthExamsExamIdRoute: typeof StudentAuthExamsExamIdRoute
+  StudentAuthQuestionDetailsExamIdRoute: typeof StudentAuthQuestionDetailsExamIdRoute
 }
 
 const StudentAuthRouteChildren: StudentAuthRouteChildren = {
@@ -471,211 +471,213 @@ const StudentAuthRouteChildren: StudentAuthRouteChildren = {
   StudentAuthCourseDetailsExamIdRoute: StudentAuthCourseDetailsExamIdRoute,
   StudentAuthExamsExamIdRoute: StudentAuthExamsExamIdRoute,
   StudentAuthQuestionDetailsExamIdRoute: StudentAuthQuestionDetailsExamIdRoute,
-};
+}
 
 const StudentAuthRouteWithChildren = StudentAuthRoute._addFileChildren(
   StudentAuthRouteChildren,
-);
+)
 
 interface StudentRouteRouteChildren {
-  StudentAuthRoute: typeof StudentAuthRouteWithChildren;
-  StudentLoginRoute: typeof StudentLoginRoute;
-  StudentIndexRoute: typeof StudentIndexRoute;
+  StudentAuthRoute: typeof StudentAuthRouteWithChildren
+  StudentLoginRoute: typeof StudentLoginRoute
 }
 
 const StudentRouteRouteChildren: StudentRouteRouteChildren = {
   StudentAuthRoute: StudentAuthRouteWithChildren,
   StudentLoginRoute: StudentLoginRoute,
-  StudentIndexRoute: StudentIndexRoute,
-};
+}
 
 const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
   StudentRouteRouteChildren,
-);
+)
 
 export interface FileRoutesByFullPath {
-  "/admin": typeof AdminAuthRouteWithChildren;
-  "/student": typeof StudentAuthRouteWithChildren;
-  "/student/login": typeof StudentLoginRoute;
-  "/admin/": typeof AdminIndexRoute;
-  "/student/": typeof StudentIndexRoute;
-  "/admin/class-manager": typeof AdminAuthClassManagerRoute;
-  "/admin/course-manager": typeof AdminAuthCourseManagerRoute;
-  "/admin/create": typeof AdminAuthCreateRoute;
-  "/admin/manage-role": typeof AdminAuthManageRoleRoute;
-  "/admin/manager": typeof AdminAuthManagerRoute;
-  "/admin/my-account": typeof AdminAuthMyAccountRoute;
-  "/admin/new-test": typeof AdminAuthNewTestRoute;
-  "/admin/student-manager": typeof AdminAuthStudentManagerRoute;
-  "/student/exam-success": typeof StudentAuthExamSuccessRoute;
-  "/student/student-portal": typeof StudentAuthStudentPortalRoute;
-  "/admin/result/create-role": typeof AdminAuthResultCreateRoleRoute;
-  "/admin/result/manager": typeof AdminAuthResultManagerRoute;
-  "/admin/result/view-result": typeof AdminAuthResultViewResultRoute;
-  "/admin/settings/activity-log": typeof AdminAuthSettingsActivityLogRoute;
-  "/student/course-details/$examId": typeof StudentAuthCourseDetailsExamIdRoute;
-  "/student/exams/$examId": typeof StudentAuthExamsExamIdRoute;
-  "/student/question-details/$examId": typeof StudentAuthQuestionDetailsExamIdRoute;
-  "/admin/settings": typeof AdminAuthSettingsIndexRoute;
-  "/admin/test": typeof AdminAuthTestIndexRoute;
-  "/admin/test/student-analysis/$id": typeof AdminAuthTestStudentAnalysisIdRoute;
+  '/': typeof IndexRoute
+  '/admin': typeof AdminAuthRouteWithChildren
+  '/student': typeof StudentAuthRouteWithChildren
+  '/student/login': typeof StudentLoginRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/class-manager': typeof AdminAuthClassManagerRoute
+  '/admin/course-manager': typeof AdminAuthCourseManagerRoute
+  '/admin/create': typeof AdminAuthCreateRoute
+  '/admin/manage-role': typeof AdminAuthManageRoleRoute
+  '/admin/manager': typeof AdminAuthManagerRoute
+  '/admin/my-account': typeof AdminAuthMyAccountRoute
+  '/admin/new-test': typeof AdminAuthNewTestRoute
+  '/admin/student-manager': typeof AdminAuthStudentManagerRoute
+  '/student/exam-success': typeof StudentAuthExamSuccessRoute
+  '/student/student-portal': typeof StudentAuthStudentPortalRoute
+  '/admin/result/create-role': typeof AdminAuthResultCreateRoleRoute
+  '/admin/result/manager': typeof AdminAuthResultManagerRoute
+  '/admin/result/view-result': typeof AdminAuthResultViewResultRoute
+  '/admin/settings/activity-log': typeof AdminAuthSettingsActivityLogRoute
+  '/student/course-details/$examId': typeof StudentAuthCourseDetailsExamIdRoute
+  '/student/exams/$examId': typeof StudentAuthExamsExamIdRoute
+  '/student/question-details/$examId': typeof StudentAuthQuestionDetailsExamIdRoute
+  '/admin/settings': typeof AdminAuthSettingsIndexRoute
+  '/admin/test': typeof AdminAuthTestIndexRoute
+  '/admin/test/student-analysis/$id': typeof AdminAuthTestStudentAnalysisIdRoute
 }
 
 export interface FileRoutesByTo {
-  "/admin": typeof AdminIndexRoute;
-  "/student": typeof StudentIndexRoute;
-  "/student/login": typeof StudentLoginRoute;
-  "/admin/class-manager": typeof AdminAuthClassManagerRoute;
-  "/admin/course-manager": typeof AdminAuthCourseManagerRoute;
-  "/admin/create": typeof AdminAuthCreateRoute;
-  "/admin/manage-role": typeof AdminAuthManageRoleRoute;
-  "/admin/manager": typeof AdminAuthManagerRoute;
-  "/admin/my-account": typeof AdminAuthMyAccountRoute;
-  "/admin/new-test": typeof AdminAuthNewTestRoute;
-  "/admin/student-manager": typeof AdminAuthStudentManagerRoute;
-  "/student/exam-success": typeof StudentAuthExamSuccessRoute;
-  "/student/student-portal": typeof StudentAuthStudentPortalRoute;
-  "/admin/result/create-role": typeof AdminAuthResultCreateRoleRoute;
-  "/admin/result/manager": typeof AdminAuthResultManagerRoute;
-  "/admin/result/view-result": typeof AdminAuthResultViewResultRoute;
-  "/admin/settings/activity-log": typeof AdminAuthSettingsActivityLogRoute;
-  "/student/course-details/$examId": typeof StudentAuthCourseDetailsExamIdRoute;
-  "/student/exams/$examId": typeof StudentAuthExamsExamIdRoute;
-  "/student/question-details/$examId": typeof StudentAuthQuestionDetailsExamIdRoute;
-  "/admin/settings": typeof AdminAuthSettingsIndexRoute;
-  "/admin/test": typeof AdminAuthTestIndexRoute;
-  "/admin/test/student-analysis/$id": typeof AdminAuthTestStudentAnalysisIdRoute;
+  '/': typeof IndexRoute
+  '/student': typeof StudentAuthRouteWithChildren
+  '/admin': typeof AdminIndexRoute
+  '/student/login': typeof StudentLoginRoute
+  '/admin/class-manager': typeof AdminAuthClassManagerRoute
+  '/admin/course-manager': typeof AdminAuthCourseManagerRoute
+  '/admin/create': typeof AdminAuthCreateRoute
+  '/admin/manage-role': typeof AdminAuthManageRoleRoute
+  '/admin/manager': typeof AdminAuthManagerRoute
+  '/admin/my-account': typeof AdminAuthMyAccountRoute
+  '/admin/new-test': typeof AdminAuthNewTestRoute
+  '/admin/student-manager': typeof AdminAuthStudentManagerRoute
+  '/student/exam-success': typeof StudentAuthExamSuccessRoute
+  '/student/student-portal': typeof StudentAuthStudentPortalRoute
+  '/admin/result/create-role': typeof AdminAuthResultCreateRoleRoute
+  '/admin/result/manager': typeof AdminAuthResultManagerRoute
+  '/admin/result/view-result': typeof AdminAuthResultViewResultRoute
+  '/admin/settings/activity-log': typeof AdminAuthSettingsActivityLogRoute
+  '/student/course-details/$examId': typeof StudentAuthCourseDetailsExamIdRoute
+  '/student/exams/$examId': typeof StudentAuthExamsExamIdRoute
+  '/student/question-details/$examId': typeof StudentAuthQuestionDetailsExamIdRoute
+  '/admin/settings': typeof AdminAuthSettingsIndexRoute
+  '/admin/test': typeof AdminAuthTestIndexRoute
+  '/admin/test/student-analysis/$id': typeof AdminAuthTestStudentAnalysisIdRoute
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute;
-  "/admin": typeof AdminRouteRouteWithChildren;
-  "/student": typeof StudentRouteRouteWithChildren;
-  "/admin/_auth": typeof AdminAuthRouteWithChildren;
-  "/student/_auth": typeof StudentAuthRouteWithChildren;
-  "/student/login": typeof StudentLoginRoute;
-  "/admin/": typeof AdminIndexRoute;
-  "/student/": typeof StudentIndexRoute;
-  "/admin/_auth/class-manager": typeof AdminAuthClassManagerRoute;
-  "/admin/_auth/course-manager": typeof AdminAuthCourseManagerRoute;
-  "/admin/_auth/create": typeof AdminAuthCreateRoute;
-  "/admin/_auth/manage-role": typeof AdminAuthManageRoleRoute;
-  "/admin/_auth/manager": typeof AdminAuthManagerRoute;
-  "/admin/_auth/my-account": typeof AdminAuthMyAccountRoute;
-  "/admin/_auth/new-test": typeof AdminAuthNewTestRoute;
-  "/admin/_auth/student-manager": typeof AdminAuthStudentManagerRoute;
-  "/student/_auth/exam-success": typeof StudentAuthExamSuccessRoute;
-  "/student/_auth/student-portal": typeof StudentAuthStudentPortalRoute;
-  "/admin/_auth/result/create-role": typeof AdminAuthResultCreateRoleRoute;
-  "/admin/_auth/result/manager": typeof AdminAuthResultManagerRoute;
-  "/admin/_auth/result/view-result": typeof AdminAuthResultViewResultRoute;
-  "/admin/_auth/settings/activity-log": typeof AdminAuthSettingsActivityLogRoute;
-  "/student/_auth/course-details/$examId": typeof StudentAuthCourseDetailsExamIdRoute;
-  "/student/_auth/exams/$examId": typeof StudentAuthExamsExamIdRoute;
-  "/student/_auth/question-details/$examId": typeof StudentAuthQuestionDetailsExamIdRoute;
-  "/admin/_auth/settings/": typeof AdminAuthSettingsIndexRoute;
-  "/admin/_auth/test/": typeof AdminAuthTestIndexRoute;
-  "/admin/_auth/test/student-analysis/$id": typeof AdminAuthTestStudentAnalysisIdRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/student': typeof StudentRouteRouteWithChildren
+  '/admin/_auth': typeof AdminAuthRouteWithChildren
+  '/student/_auth': typeof StudentAuthRouteWithChildren
+  '/student/login': typeof StudentLoginRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/_auth/class-manager': typeof AdminAuthClassManagerRoute
+  '/admin/_auth/course-manager': typeof AdminAuthCourseManagerRoute
+  '/admin/_auth/create': typeof AdminAuthCreateRoute
+  '/admin/_auth/manage-role': typeof AdminAuthManageRoleRoute
+  '/admin/_auth/manager': typeof AdminAuthManagerRoute
+  '/admin/_auth/my-account': typeof AdminAuthMyAccountRoute
+  '/admin/_auth/new-test': typeof AdminAuthNewTestRoute
+  '/admin/_auth/student-manager': typeof AdminAuthStudentManagerRoute
+  '/student/_auth/exam-success': typeof StudentAuthExamSuccessRoute
+  '/student/_auth/student-portal': typeof StudentAuthStudentPortalRoute
+  '/admin/_auth/result/create-role': typeof AdminAuthResultCreateRoleRoute
+  '/admin/_auth/result/manager': typeof AdminAuthResultManagerRoute
+  '/admin/_auth/result/view-result': typeof AdminAuthResultViewResultRoute
+  '/admin/_auth/settings/activity-log': typeof AdminAuthSettingsActivityLogRoute
+  '/student/_auth/course-details/$examId': typeof StudentAuthCourseDetailsExamIdRoute
+  '/student/_auth/exams/$examId': typeof StudentAuthExamsExamIdRoute
+  '/student/_auth/question-details/$examId': typeof StudentAuthQuestionDetailsExamIdRoute
+  '/admin/_auth/settings/': typeof AdminAuthSettingsIndexRoute
+  '/admin/_auth/test/': typeof AdminAuthTestIndexRoute
+  '/admin/_auth/test/student-analysis/$id': typeof AdminAuthTestStudentAnalysisIdRoute
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/admin"
-    | "/student"
-    | "/student/login"
-    | "/admin/"
-    | "/student/"
-    | "/admin/class-manager"
-    | "/admin/course-manager"
-    | "/admin/create"
-    | "/admin/manage-role"
-    | "/admin/manager"
-    | "/admin/my-account"
-    | "/admin/new-test"
-    | "/admin/student-manager"
-    | "/student/exam-success"
-    | "/student/student-portal"
-    | "/admin/result/create-role"
-    | "/admin/result/manager"
-    | "/admin/result/view-result"
-    | "/admin/settings/activity-log"
-    | "/student/course-details/$examId"
-    | "/student/exams/$examId"
-    | "/student/question-details/$examId"
-    | "/admin/settings"
-    | "/admin/test"
-    | "/admin/test/student-analysis/$id";
-  fileRoutesByTo: FileRoutesByTo;
+    | '/'
+    | '/admin'
+    | '/student'
+    | '/student/login'
+    | '/admin/'
+    | '/admin/class-manager'
+    | '/admin/course-manager'
+    | '/admin/create'
+    | '/admin/manage-role'
+    | '/admin/manager'
+    | '/admin/my-account'
+    | '/admin/new-test'
+    | '/admin/student-manager'
+    | '/student/exam-success'
+    | '/student/student-portal'
+    | '/admin/result/create-role'
+    | '/admin/result/manager'
+    | '/admin/result/view-result'
+    | '/admin/settings/activity-log'
+    | '/student/course-details/$examId'
+    | '/student/exams/$examId'
+    | '/student/question-details/$examId'
+    | '/admin/settings'
+    | '/admin/test'
+    | '/admin/test/student-analysis/$id'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | "/admin"
-    | "/student"
-    | "/student/login"
-    | "/admin/class-manager"
-    | "/admin/course-manager"
-    | "/admin/create"
-    | "/admin/manage-role"
-    | "/admin/manager"
-    | "/admin/my-account"
-    | "/admin/new-test"
-    | "/admin/student-manager"
-    | "/student/exam-success"
-    | "/student/student-portal"
-    | "/admin/result/create-role"
-    | "/admin/result/manager"
-    | "/admin/result/view-result"
-    | "/admin/settings/activity-log"
-    | "/student/course-details/$examId"
-    | "/student/exams/$examId"
-    | "/student/question-details/$examId"
-    | "/admin/settings"
-    | "/admin/test"
-    | "/admin/test/student-analysis/$id";
+    | '/'
+    | '/student'
+    | '/admin'
+    | '/student/login'
+    | '/admin/class-manager'
+    | '/admin/course-manager'
+    | '/admin/create'
+    | '/admin/manage-role'
+    | '/admin/manager'
+    | '/admin/my-account'
+    | '/admin/new-test'
+    | '/admin/student-manager'
+    | '/student/exam-success'
+    | '/student/student-portal'
+    | '/admin/result/create-role'
+    | '/admin/result/manager'
+    | '/admin/result/view-result'
+    | '/admin/settings/activity-log'
+    | '/student/course-details/$examId'
+    | '/student/exams/$examId'
+    | '/student/question-details/$examId'
+    | '/admin/settings'
+    | '/admin/test'
+    | '/admin/test/student-analysis/$id'
   id:
-    | "__root__"
-    | "/admin"
-    | "/student"
-    | "/admin/_auth"
-    | "/student/_auth"
-    | "/student/login"
-    | "/admin/"
-    | "/student/"
-    | "/admin/_auth/class-manager"
-    | "/admin/_auth/course-manager"
-    | "/admin/_auth/create"
-    | "/admin/_auth/manage-role"
-    | "/admin/_auth/manager"
-    | "/admin/_auth/my-account"
-    | "/admin/_auth/new-test"
-    | "/admin/_auth/student-manager"
-    | "/student/_auth/exam-success"
-    | "/student/_auth/student-portal"
-    | "/admin/_auth/result/create-role"
-    | "/admin/_auth/result/manager"
-    | "/admin/_auth/result/view-result"
-    | "/admin/_auth/settings/activity-log"
-    | "/student/_auth/course-details/$examId"
-    | "/student/_auth/exams/$examId"
-    | "/student/_auth/question-details/$examId"
-    | "/admin/_auth/settings/"
-    | "/admin/_auth/test/"
-    | "/admin/_auth/test/student-analysis/$id";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/student'
+    | '/admin/_auth'
+    | '/student/_auth'
+    | '/student/login'
+    | '/admin/'
+    | '/admin/_auth/class-manager'
+    | '/admin/_auth/course-manager'
+    | '/admin/_auth/create'
+    | '/admin/_auth/manage-role'
+    | '/admin/_auth/manager'
+    | '/admin/_auth/my-account'
+    | '/admin/_auth/new-test'
+    | '/admin/_auth/student-manager'
+    | '/student/_auth/exam-success'
+    | '/student/_auth/student-portal'
+    | '/admin/_auth/result/create-role'
+    | '/admin/_auth/result/manager'
+    | '/admin/_auth/result/view-result'
+    | '/admin/_auth/settings/activity-log'
+    | '/student/_auth/course-details/$examId'
+    | '/student/_auth/exams/$examId'
+    | '/student/_auth/question-details/$examId'
+    | '/admin/_auth/settings/'
+    | '/admin/_auth/test/'
+    | '/admin/_auth/test/student-analysis/$id'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  AdminRouteRoute: typeof AdminRouteRouteWithChildren;
-  StudentRouteRoute: typeof StudentRouteRouteWithChildren;
+  IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  StudentRouteRoute: typeof StudentRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   StudentRouteRoute: StudentRouteRouteWithChildren,
-};
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -683,9 +685,13 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/admin",
         "/student"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/admin": {
       "filePath": "admin/route.tsx",
@@ -698,8 +704,7 @@ export const routeTree = rootRoute
       "filePath": "student/route.tsx",
       "children": [
         "/student/_auth",
-        "/student/login",
-        "/student/"
+        "/student/login"
       ]
     },
     "/admin/_auth": {
@@ -741,10 +746,6 @@ export const routeTree = rootRoute
     "/admin/": {
       "filePath": "admin/index.tsx",
       "parent": "/admin"
-    },
-    "/student/": {
-      "filePath": "student/index.tsx",
-      "parent": "/student"
     },
     "/admin/_auth/class-manager": {
       "filePath": "admin/_auth/class-manager.tsx",
