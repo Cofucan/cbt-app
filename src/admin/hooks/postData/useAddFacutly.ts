@@ -10,24 +10,26 @@ const useAddFaculty = () => {
   const query = useQueryClient();
   const formik = useFormik({
     initialValues: {
-      faculty: "",
       name: "",
     },
     onSubmit: (values) => {
+      console.log(values);
       const emptyFields = findEmptyFields(values);
       if (emptyFields?.length > 0) {
         toast?.error(`Enter your ${emptyFields[0]}`);
       } else {
         mutate({
           ...formik.values,
-          faculty: Number(formik?.values?.faculty),
         });
       }
     },
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/faculties/`, info),
+    mutationFn: (info: Record<string, string | number>) => {
+      console.log(info);
+      return httpService.post(`app_admin/faculties/`, info);
+    },
     onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(

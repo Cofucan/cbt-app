@@ -62,6 +62,7 @@ const NewFacultyModal: FC<NewFacultyModalProps> = (props) => {
             <CustomButton
               title="Save Faculty"
               isLoading={isLoading}
+              type="submit"
             />
           </div>
         </form>
