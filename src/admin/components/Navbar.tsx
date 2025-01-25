@@ -1,17 +1,19 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import logo from "../assets/enugun.png";
 import { CiSearch } from "react-icons/ci";
-import user from "../assets/user.svg";
+import schoolLogo from "../assets/logo.svg"
 import arrowdown from "../assets/Orange-Arrowdown.svg";
 import { useNavigate } from "@tanstack/react-router";
 import { FiMenu } from "react-icons/fi";
-import useGetProfile from "../hooks/getData/useGetProfile";
+import useGetSettings from "../hooks/getData/useGetSettings.ts";
+import { baseUrl } from "../../lib/utils.ts";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isModalProfileView, setIsModalProfileView] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null); // Ref for the profile dropdown
-  const { data } = useGetProfile();
+  const { data } = useGetSettings();
+  const logo = baseUrl + "/media/" + data?.logo;
+  console.log(data);
 
   const toggleProfileDropdown = () => {
     setIsModalProfileView((prev) => !prev);
@@ -56,11 +58,9 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-3 py-3 lg:px-8">
         <div className="flex items-center gap-20">
           <img
-            src={logo}
+            src={schoolLogo}
             alt="logo"
-            height={200}
-            width={200}
-            className="w-[200px] object-cover"
+            className="w-[200px] object-contain h-16"
           />
           <div className="hidden flex-col lg:flex">
             <p className="text-sm tracking-tighter text-gray-600">
@@ -86,7 +86,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between gap-3">
           <div className="hidden lg:flex">
             <p>
-              {data?.first_name} {data?.last_name}
+              {data?.name}
             </p>
           </div>
           <div
@@ -94,7 +94,7 @@ const Navbar = () => {
             className="relative flex cursor-pointer items-center gap-3"
           >
             <img
-              src={user}
+              src={logo}
               alt="user"
               className="h-10 w-10 rounded-full object-cover"
             />
