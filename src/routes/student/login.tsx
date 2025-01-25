@@ -29,7 +29,7 @@ function RouteComponent() {
           ? `${baseUrl}/media/${logoPath}`
           : images.mainLogo;
         setSchoolLogo(logoUrl);
-        console.log("School Logo URL in loginPage:", logoPath);
+        console.log("School Logo URL in loginPage:", logoUrl);
       } catch (error) {
         console.error("Error fetching school logo:", error);
       }
@@ -90,7 +90,7 @@ function RouteComponent() {
       <div className="border-b border-[#CBD5E1]">
         <img
           src={schoolLogo}
-          // src={images.enugun}
+          // src={images.logo}
           alt="Logo"
           className="object-cover px-8 py-3"
           width={200}

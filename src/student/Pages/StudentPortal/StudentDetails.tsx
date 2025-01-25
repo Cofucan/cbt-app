@@ -20,7 +20,7 @@ const StudentDetails: FC<StudentDetailsProps> = ({ user }) => {
         if (token) {
           const profileData = await getUserProfile(token);
           const imageUrl = profileData?.result?.profile_image;
-          // console.log("Profile Image URL:", imageUrl);
+          console.log("Profile Image URL:", imageUrl);
           setProfileImage(imageUrl || images.defaultUser);
         } else {
           console.error("No token found");
