@@ -35,7 +35,7 @@ const useSettings = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (info: FormData) =>
       httpService.post(
-        `school/update/`,
+        `school/config/`,
         info,
         file
           ? {

@@ -34,7 +34,7 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
           visible={visible}
           onCancel={handleCancel}
           footer={null}
-          width={500} // Adjust width if needed
+          width={500} 
           closeIcon={
             <span className="text-lg text-gray-400">
               <img src={images.Times} alt="Times" />

@@ -22,18 +22,15 @@ const Header = () => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const schoolConfig = await getSchoolConfig();
-          const logoPath = schoolConfig?.logo;
-          
-          const logoUrl = logoPath
-            ? `${baseUrl}/media/${logoPath}`
-            : images.mainLogo;
+          const logoData = await getSchoolConfig();
+          const logoUrl = logoData?.logo_url || images.mainLogo;
+
           setSchoolLogo(logoUrl);
 
-          console.log("School Logo URL in landingPage:", logoPath);
+          console.log("School Logo URL in landingPage:", logoUrl);
 
           // Save the school config in localStorage
-          localStorage.setItem("schoolConfig", JSON.stringify(schoolConfig));
+          localStorage.setItem("schoolConfig", JSON.stringify(logoData));
         } else {
           console.error("No token found in localStorage");
         }
@@ -45,7 +42,6 @@ const Header = () => {
     fetchSchoolLogo();
   }, []);
 
-  
   return (
     <div className="flex w-[100%] items-center justify-between bg-white px-3 py-5 lg:px-10">
       <img src={schoolLogo} alt="mainLogo" width={200} />

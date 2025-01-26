@@ -34,12 +34,12 @@ const AddTestForm = () => {
 
   const changeHandler = (item: { target: { value: string; }; }) => {
     const dataInfo = JSON.parse(item?.target?.value);
-    console.log(dataInfo);
+    // console.log(dataInfo);
     formik.setFieldValue("title", dataInfo?.title);
     formik.setFieldValue("code", dataInfo?.code);
   };
 
-  console.log(formik?.values);
+  // console.log(formik?.values);
 
   useEffect(() => {
     formik.setFieldValue("session", data?.current_session);

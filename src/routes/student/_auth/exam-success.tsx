@@ -58,7 +58,7 @@ function RouteComponent() {
             </p>
             <div className="flex items-center justify-center py-10">
               <button
-                onClick={() => navigate({ to: "/student" })}
+                onClick={() => navigate({ to: "/" })}
                 className="w-[50%] bg-[#ff6636] px-12 py-3 font-semibold text-white"
               >
                 Logout

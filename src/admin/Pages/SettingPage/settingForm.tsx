@@ -9,7 +9,7 @@ export default function SettingForm({ data, loading }: {loading: boolean, data?:
 
   const url = BASEURL;
 
-  console.log(url() + "media/" + data?.logo);
+  console.log("logo_url", data?.logo_url);
 
   useEffect(() => {
     formik.setFieldValue("name", data?.name);
@@ -18,10 +18,10 @@ export default function SettingForm({ data, loading }: {loading: boolean, data?:
     formik.setFieldValue("result_after_test", data?.result_after_test);
     formik.setFieldValue("semester", data?.semester);
     formik.setFieldValue("type", data?.type);
-    setLogoPreview(url() + "media/" + data?.logo?.replace("app", ""));
+    setLogoPreview(data?.logo_url?.replace("app", ""));
   }, [data, loading]);
 
-  console.log(data);
+  console.log("data",data);
   console.log(formik?.values);
 
   // Handle logo upload

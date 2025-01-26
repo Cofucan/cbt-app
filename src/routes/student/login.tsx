@@ -24,10 +24,7 @@ function RouteComponent() {
     const fetchSchoolLogo = async () => {
       try {
         const logoData = await getSchoolConfig();
-        const logoPath = logoData?.logo;
-        const logoUrl = logoPath
-          ? `${baseUrl}/media/${logoPath}`
-          : images.mainLogo;
+        const logoUrl = logoData?.logo_url || images.mainLogo;
         setSchoolLogo(logoUrl);
         console.log("School Logo URL in loginPage:", logoUrl);
       } catch (error) {
