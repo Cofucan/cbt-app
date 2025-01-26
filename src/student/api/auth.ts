@@ -29,6 +29,7 @@ interface ExamStartResponse {
 }
 
 interface SchoolConfig {
+  logo_url: any;
   logo: any;
   name: string;
   academic_year: string;

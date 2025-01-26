@@ -1,19 +1,20 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { CiSearch } from "react-icons/ci";
 import schoolLogo from "../assets/logo.svg"
+import Avatar from "../assets/Avatar.svg"
 import arrowdown from "../assets/Orange-Arrowdown.svg";
 import { useNavigate } from "@tanstack/react-router";
 import { FiMenu } from "react-icons/fi";
-import useGetSettings from "../hooks/getData/useGetSettings.ts";
-import { baseUrl } from "../../lib/utils.ts";
+import useGetSettings, { useGetUser } from "../hooks/getData/useGetSettings.ts";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isModalProfileView, setIsModalProfileView] = useState(false);
-  const profileRef = useRef<HTMLDivElement>(null); // Ref for the profile dropdown
+  const profileRef = useRef<HTMLDivElement>(null);
   const { data } = useGetSettings();
-  const logo = baseUrl + "/media/" + data?.logo;
-  console.log(data);
+  const {profile} = useGetUser();
+  const logo = data?.logo_url;
+  // console.log("user",profile);
 
   const toggleProfileDropdown = () => {
     setIsModalProfileView((prev) => !prev);
@@ -49,7 +50,6 @@ const Navbar = () => {
 
   const clickHandler = () => {
     localStorage.setItem("token", "");
-    // navigate("/")
     navigate({ to: "/admin" });
   };
 
@@ -58,7 +58,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-3 py-3 lg:px-8">
         <div className="flex items-center gap-20">
           <img
-            src={schoolLogo}
+            src={logo || schoolLogo}
             alt="logo"
             className="w-[200px] object-contain h-16"
           />
@@ -67,7 +67,7 @@ const Navbar = () => {
               Good Morning
             </p>
             <h2 className="tracking text-lg font-semibold text-black">
-              {data?.type}
+              {profile?.name}
             </h2>
           </div>
         </div>
@@ -86,7 +86,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between gap-3">
           <div className="hidden lg:flex">
             <p>
-              {data?.name}
+              {profile?.name}
             </p>
           </div>
           <div
@@ -94,7 +94,7 @@ const Navbar = () => {
             className="relative flex cursor-pointer items-center gap-3"
           >
             <img
-              src={logo}
+              src={profile?.profile || Avatar}
               alt="user"
               className="h-10 w-10 rounded-full object-cover"
             />

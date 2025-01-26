@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import httpService from "../../utils/httpService";
-import { SettingResponse } from "../../utils.ts";
+import { SettingResponse, UserResponse} from "../../utils.ts";
 
 const useGetSettings = () => {
   const { isLoading, isRefetching, data } = useQuery({
@@ -16,3 +16,20 @@ const useGetSettings = () => {
 };
 
 export default useGetSettings;
+
+export const useGetUser = () => {
+  const { isLoading, isRefetching, data } = useQuery<UserResponse>({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const response = await httpService.get<UserResponse>('user/me/');
+      return response.data;
+    },
+  });
+
+  return {
+    profile: data?.result,
+    isLoading,
+    isRefetching,
+  };
+};
+

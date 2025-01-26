@@ -1,32 +1,32 @@
 export type Admin = {
-  identifier: string
-  first_name: string
-  last_name: string
-  middle_name: string
-  name: string
-  type: string
-  email: string
-  phone_number: string
-  profile_image: null
-  profile: null
-  last_login: string
-  last_login_ip: null
-}
+  identifier: string;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  name: string;
+  type: string;
+  email: string;
+  phone_number: string;
+  profile_image: null;
+  profile: null;
+  last_login: string;
+  last_login_ip: null;
+};
 export type Faculty = {
-  id: number
-  created_at: string
-  updated_at: string
-  name: string
-  is_deleted: boolean
-  departments: Department[]
-}
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  is_deleted: boolean;
+  departments: Department[];
+};
 export type Department = {
-  id: number
-  created_at: string
-  updated_at: string
-  name: string
-  faculty_name: string
-}
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  faculty_name: string;
+};
 
 export type Exam = {
   id: number;
@@ -50,29 +50,48 @@ export type Exam = {
 };
 
 export type SettingResponse = {
-  name: string
-  type: string
-  code: string
-  current_session: string
-  semester: string
-  logo: string
-  result_after_test: boolean
+  name: string;
+  type: string;
+  code: string;
+  current_session: string;
+  semester: string;
+  logo_url: string;
+  result_after_test: boolean;
+};
+
+export type UserResponse = {
+  result: {
+    identifier: string;
+    first_name: string;
+    last_name: string;
+    middle_name: string | null;
+    name: string;
+    type: string;
+    email: string;
+    phone_number: string | null;
+    profile_image: string | null;
+    profile: string | null;
+    last_login: string;
+    last_login_ip: string | null;
+  };
 }
+
+
 
 export type AdminUser = {
-  id: number
-  created_at: string
-  updated_at: string
-  identifier: string
-  first_name: string
-  last_name: string
-  middle_name: string
-  klass_name: null
-  faculty_name: string
-  department_name: string
-  level: number
-}
+  id: number;
+  created_at: string;
+  updated_at: string;
+  identifier: string;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  klass_name: null;
+  faculty_name: string;
+  department_name: string;
+  level: number;
+};
 
 export type AdminErrorResponse = {
-  detail: string
-}
+  detail: string;
+};

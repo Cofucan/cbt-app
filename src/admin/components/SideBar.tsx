@@ -83,7 +83,7 @@ const SideBar = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate({ to: "/admin" }).then(_ => _);
+      navigate({ to: "/admin" }).then((_) => _);
     }
   }, [token]);
 
@@ -116,14 +116,15 @@ const SideBar = () => {
               </li>
             );
           },
-          <li
-            className="mt-3 flex items-center gap-2 rounded-md px-4 py-3 text-sm font-[400] text-[#8c94a3] hover:text-[#8c94a3]"
-            onClick={clickHandler}
-          >
-            <img src={images.Logout} alt="#" className="size-6" />
-            Logout
-          </li>,
         )}
+        <li
+          className="mt-3 flex items-center gap-2 rounded-md px-4 py-3 text-sm font-[400] text-[#8c94a3] hover:text-[#8c94a3]"
+          onClick={clickHandler}
+        >
+          <img src={images.Logout} alt="#" className="size-6" />
+          Logout
+        </li>
+        ,
       </ul>
     </section>
   );

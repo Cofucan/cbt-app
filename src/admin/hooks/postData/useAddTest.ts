@@ -74,7 +74,7 @@ const useAddTest = (id?: string) => {
     }
   });
 
-  console.log(data);
+  // console.log(data);
 
   const addBulkFormik = useFormik({
     initialValues: {
