@@ -37,7 +37,7 @@ if (!rootElement.innerHTML) {
 const fetchAndSetTitle = async () => {
   try {
     const data = await getSchoolConfig(); // Fetch data from your endpoint
-    const title = data?.name || "ESUT-CBT"; // Use the fetched title or a default title
+    const title = data?.name || "SchoolEdge"; // Use the fetched title or a default title
     document.title = title; // Set the document title
   } catch (error) {
     console.error("Error fetching title data:", error);
