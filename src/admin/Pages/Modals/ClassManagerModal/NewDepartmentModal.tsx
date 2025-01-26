@@ -34,7 +34,7 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
           visible={visible}
           onCancel={handleCancel}
           footer={null}
-          width={500} 
+          width={500}
           closeIcon={
             <span className="text-lg text-gray-400">
               <img src={images.Times} alt="Times" />
@@ -81,6 +81,7 @@ const NewDepartmentModal: FC<NewDepartmentModalProps> = ({
               <CustomButton
                 title="Save Department"
                 isLoading={isLoading}
+                type="submit"
               />
             </div>
           </form>

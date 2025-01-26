@@ -33,15 +33,15 @@ if (!rootElement.innerHTML) {
   );
 }
 
-// Fetch the title data and update the document title
+
 const fetchAndSetTitle = async () => {
   try {
-    const data = await getSchoolConfig(); // Fetch data from your endpoint
-    const title = data?.name || "SchoolEdge"; // Use the fetched title or a default title
-    document.title = title; // Set the document title
+    const data = await getSchoolConfig();
+    const title = data?.name || "SchoolEdge"; 
+    document.title = title; 
   } catch (error) {
     console.error("Error fetching title data:", error);
   }
 };
 
-fetchAndSetTitle(); // Call the function to fetch and set the title
+fetchAndSetTitle(); 

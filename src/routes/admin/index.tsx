@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import useAuth from "../../admin/hooks/useAuth.ts";
 import { FormEvent, useState } from "react";
-import logo from "../../admin/assets/logo.svg";
+import schoolLogo from "../../admin/assets/logo.svg";
 import saly from "../../admin/assets/esut_computer_lab.jpg";
 import { BeatLoader } from "react-spinners";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useGetSettings from "../../admin/hooks/getData/useGetSettings.ts";
 
 export const Route = createFileRoute("/admin/")({
   component: RouteComponent,
@@ -23,10 +24,20 @@ function RouteComponent() {
     formik?.handleSubmit();
   };
 
+  const { data } = useGetSettings();
+  const logo = data?.logo_url;
+  // console.log("logo", logo);
+
   return (
     <section>
       <div className="top fixed flex h-24 w-full items-center border-b border-[#CBD5E1]">
-        <img src={logo} alt="Logo" className="object-cover px-8" />
+        <img
+          src={logo || schoolLogo}
+          alt="Logo"
+          className="object-cover px-8"
+          width={150}
+          height={100}
+        />
       </div>
       <div className="flex h-screen w-full pt-24">
         <div className="container flex h-full items-center justify-center bg-[#EBEBFF]">
