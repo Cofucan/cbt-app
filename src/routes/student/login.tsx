@@ -7,7 +7,6 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 import { AxiosError } from "axios";
-import { baseUrl } from "../../lib/utils.ts";
 
 export const Route = createFileRoute("/student/login")({
   component: RouteComponent,

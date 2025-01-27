@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ImportingImgs from "./ImportingImgs";
 import { getSchoolConfig, getUserProfile } from "../api/auth";
 import LogoutModal from "../Pages/Modal/LogoutModal";
-import { baseUrl } from "../../lib/utils";
 
 const Header = () => {
   const images = ImportingImgs();

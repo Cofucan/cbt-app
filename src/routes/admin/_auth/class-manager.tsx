@@ -139,7 +139,7 @@ function RouteComponent() {
               className="custom-table"
               columns={columns}
               // dataSource={data.map((x) => ({ ...x, id: x.id.toString() }))}
-              dataSource={data}
+              dataSource={data?.map((item) => ({ ...item, id: item.id.toString() }))}
               pagination={{ pageSize: 10 }}
             />
           ) : (

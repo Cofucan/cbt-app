@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import ImportingImgs from "../student/Components/ImportingImgs.tsx";
 import { useEffect, useState } from "react";
 import { getSchoolConfig } from "../student/api/auth.ts";
-import { baseUrl } from "../lib/utils.ts";
 
 
 export const Route = createFileRoute("/")({

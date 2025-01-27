@@ -1,13 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import useSettings from "../../hooks/postData/useSettings";
-import { BASEURL } from "../../utils/url";
 
 export default function SettingForm({ data, loading }: {loading: boolean, data?: Record<string, any>}) {
   const { formik, isLoading, setFile } = useSettings();
   const [logoPreview, setLogoPreview] = useState<string | null | ArrayBuffer>(null);
-
-  const url = BASEURL;
 
   console.log("logo_url", data?.logo_url);
 

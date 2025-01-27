@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import "./index.css";
@@ -37,11 +37,11 @@ if (!rootElement.innerHTML) {
 const fetchAndSetTitle = async () => {
   try {
     const data = await getSchoolConfig();
-    const title = data?.name || "SchoolEdge"; 
-    document.title = title; 
+    const title = data?.name || "SchoolEdge";
+    document.title = title;
   } catch (error) {
     console.error("Error fetching title data:", error);
   }
 };
 
-fetchAndSetTitle(); 
+fetchAndSetTitle();

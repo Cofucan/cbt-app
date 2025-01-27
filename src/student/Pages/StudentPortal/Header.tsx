@@ -3,7 +3,6 @@ import ImportingImgs from "../../Components/ImportingImgs";
 import { useNavigate } from "@tanstack/react-router";
 import { getSchoolConfig } from "../../api/auth";
 import { useAuth } from "../../context/AuthProvider";
-import { baseUrl } from "../../../lib/utils";
 
 const Header = () => {
   const { logout } = useAuth();
