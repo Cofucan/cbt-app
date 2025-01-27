@@ -18,7 +18,7 @@ export default function SettingForm({ data, loading }: {loading: boolean, data?:
     formik.setFieldValue("result_after_test", data?.result_after_test);
     formik.setFieldValue("semester", data?.semester);
     formik.setFieldValue("type", data?.type);
-    setLogoPreview(data?.logo_url?.replace("app", ""));
+    setLogoPreview(data?.logo_url);
   }, [data, loading]);
 
   console.log("data",data);
