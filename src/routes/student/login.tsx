@@ -102,21 +102,21 @@ function RouteComponent() {
           />
         </div>
 
-        <div className="mt-5 flex h-full w-full flex-col items-center justify-center gap-16 lg:mx-5 lg:mt-0 lg:max-w-2xl">
-          <div className="flex flex-col items-center gap-5">
+        <div className="mt-5 flex h-full w-full flex-col items-center justify-center gap-10 lg:mt-0 lg:max-w-xl">
+          <div className="flex flex-col items-center">
             <img
               src={schoolLogo}
               // src={images.enugun}
               alt="Main Logo"
               className="bg-cover object-cover"
-              width={300}
+              width={200}
             />
             <h2 className="text-2xl font-semibold text-[#13175A]">
               CBT PORTAL
             </h2>
           </div>
 
-          <div className="container mx-auto border border-[#CBD5E1] lg:mx-0">
+          <div className="container mx-auto border border-[#CBD5E1]">
             <div className="flex flex-col gap-6 lg:w-full lg:gap-8">
               <form className="form" onSubmit={handleSubmit}>
                 <div className="mx-3 mt-10 flex flex-col gap-3 md:mx-14 md:w-[85%] lg:gap-5">

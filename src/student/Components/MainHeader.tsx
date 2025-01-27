@@ -60,7 +60,7 @@ const Header = () => {
   return (
     <section>
       <div className="flex w-[100%] items-center justify-between bg-white px-3 py-3 lg:px-10">
-        <img src={schoolLogo} alt="mainLogo" width={200} />
+        <img src={schoolLogo} alt="mainLogo" width={100} />
 
         <div className="flex items-center gap-10">
           <button

@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ courseDetails, examId }) => {
 
   return (
     <div className="flex w-[100%] items-center justify-between bg-white px-3 py-5 lg:px-10">
-      <img src={schoolLogo} alt="mainLogo" width={200} />
+      <img src={schoolLogo} alt="mainLogo" width={100} />
 
       <div className="flex items-center gap-2">
         <button

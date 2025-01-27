@@ -44,7 +44,7 @@ const Header = () => {
 
   return (
     <div className="flex w-[100%] items-center justify-between bg-white px-3 py-5 lg:px-10">
-      <img src={schoolLogo} alt="mainLogo" width={200} />
+      <img src={schoolLogo} alt="mainLogo" width={100} />
       <button
         onClick={handleLogout}
         className="flex cursor-pointer justify-center bg-[#FF6636] px-8 py-2 text-lg font-semibold text-white hover:bg-[#f8733a] hover:duration-700 md:px-14 md:py-3 lg:text-xl"

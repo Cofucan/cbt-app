@@ -10,12 +10,14 @@ import DeleteDepartmentModal from "../../../admin/Pages/Modals/DeleteDepartmentM
 import { Dropdown, Menu, Table } from "antd";
 
 export const Route = createFileRoute("/admin/_auth/class-manager")({
-  component: RouteComponent
+  component: RouteComponent,
 });
 
 function RouteComponent() {
   const images = ImportImgs(); // Import images here
-  const [visibleDropdown, setVisibleDropdown] = useState<string | null | undefined>(null);
+  const [visibleDropdown, setVisibleDropdown] = useState<
+    string | null | undefined
+  >(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -37,8 +39,10 @@ function RouteComponent() {
   const [facultyId, setFacultyId] = useState("");
 
   const { data, isLoading, isRefetching } = useGetDepartment(facultyId);
+  console.log("list data ", data);
 
   const { data: facultyList } = useGetFaculty();
+  console.log("facultylist ", facultyList);
 
   const [singleData, setSingleData] = useState<{ id: string } | undefined>();
 
@@ -49,7 +53,6 @@ function RouteComponent() {
   const handleCancelDelete = () => {
     setIsDeleteModalVisible(false);
   };
-
 
   const toggleDropdown = (key?: { id: string }) => {
     setSingleData(key);
@@ -71,21 +74,24 @@ function RouteComponent() {
     {
       title: "Faculty",
       dataIndex: "faculty_name",
-      key: "faculty_name"
+      key: "faculty_name",
     },
     {
       title: "Department",
       dataIndex: "name",
-      key: "name"
+      key: "name",
     },
     {
       title: "Action",
       key: "action",
-      render: (text: { id: string | undefined; }, record: { id: string; } | undefined) => (
+      render: (
+        text: { id: string | undefined },
+        record: { id: string } | undefined,
+      ) => (
         <Dropdown
           overlay={menu}
-          visible={visibleDropdown === text.id}
-          onVisibleChange={() => toggleDropdown(record)}
+          open={visibleDropdown === text.id}
+          onOpenChange={() => toggleDropdown(record)}
           trigger={["click"]}
           className=""
         >
@@ -93,8 +99,8 @@ function RouteComponent() {
             <img src={images.DotsThree} alt="Action" />
           </button>
         </Dropdown>
-      )
-    }
+      ),
+    },
   ];
 
   // @ts-ignore
@@ -128,14 +134,17 @@ function RouteComponent() {
           </div>
         </div>
         <LoadingAnimation loading={isLoading} isRefetching={isRefetching}>
-          <Table
-            className="custom-table"
-            columns={columns}
-            dataSource={data.map(x => ({...x, id: x?.id.toString()}))}
-            pagination={{
-              pageSize: 10
-            }}
-          />
+          {data ? (
+            <Table
+              className="custom-table"
+              columns={columns}
+              // dataSource={data.map((x) => ({ ...x, id: x.id.toString() }))}
+              dataSource={data}
+              pagination={{ pageSize: 10 }}
+            />
+          ) : (
+            <div>No departments found</div>
+          )}
         </LoadingAnimation>
       </div>
       {/*Add Department Modal */}
