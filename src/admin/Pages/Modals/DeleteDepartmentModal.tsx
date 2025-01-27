@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import ImportImgs from "../../components/ImportImgs";
 import DeletedDepartment from "./SuccessModal/DeletedDepartment";
 import CustomButton from "../../components/CustomButton";
-import useDeleteStudent from "../../hooks/deleteData/useDeleteStudent";
+import useDeleteDepartment from "../../hooks/deleteData/useDeleteDepartment";
 
 interface DeleteDepartmentModalProps {
   data: Record<string, any> | undefined | null,
@@ -15,7 +15,7 @@ const DeleteDepartmentModal: FC<DeleteDepartmentModalProps> = (props) => {
   const openDeletedDept = false
   // const [openDeletedDept, setOpenDeletedDept] = useState(false);
 
-  const { mutate, isLoading, isSuccess } = useDeleteStudent();
+  const { mutate, isLoading, isSuccess } = useDeleteDepartment();
 
   useEffect(() => {
     if (isSuccess) {

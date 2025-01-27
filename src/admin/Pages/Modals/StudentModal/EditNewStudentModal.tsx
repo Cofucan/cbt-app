@@ -159,6 +159,7 @@ const EditNewStudentModal: FC<EditNewStudentModalProps> = (props) => {
             <CustomButton
               title="Edit Student Data"
               isLoading={loadingEdit}
+              type="submit"
             />
           </div>
         </form>

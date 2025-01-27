@@ -12,7 +12,7 @@ const useAddDepartment = (id?: string | number) => {
   const formik = useFormik({
     initialValues: {
       name: "",
-      faculty: 0,
+      faculty: "",
     },
     onSubmit: (values) => {
       const emptyFields = findEmptyFields(values);

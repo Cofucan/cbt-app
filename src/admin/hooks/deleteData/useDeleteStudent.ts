@@ -4,7 +4,7 @@ import httpService from "../../utils/httpService";
 import { AxiosError } from "axios";
 import { AdminErrorResponse } from "../../utils.ts";
 
-const useDeleteStudent = () => {
+const useDeleteDepartment = () => {
   const query = useQueryClient();
 
   const { mutate, isPending, isSuccess } = useMutation({
@@ -19,7 +19,7 @@ const useDeleteStudent = () => {
     },
     onSuccess: async () => {
       await query?.invalidateQueries({ queryKey: ["students"] });
-      toast?.success("Student Deleted Successfully");
+      toast?.success("Department Deleted Successfully");
     },
   });
 
@@ -30,4 +30,4 @@ const useDeleteStudent = () => {
   };
 };
 
-export default useDeleteStudent;
+export default useDeleteDepartment;

@@ -159,6 +159,7 @@ const EditCourseModal: FC<EditCourseModalProps> = (props) => {
             <CustomButton
               title="Edit Student Data"
               isLoading={loadingEdit}
+              type="submit"
             />
           </div>
           {/* Save New Course Modal */}

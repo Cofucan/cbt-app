@@ -65,7 +65,8 @@ const EditDepartmentModal: FC<EditDepartmentModalProps> = (props) => {
             <Select
               placeholder={"Select Faculty"}
               className="w-full"
-              onChange={formik.handleChange}
+              // onChange={formik.handleChange}
+              onChange={(value) => formik.setFieldValue("faculty", value)}
               value={formik?.values?.faculty}
             >
               {facultyList.map((facultyOption) => (
@@ -97,6 +98,7 @@ const EditDepartmentModal: FC<EditDepartmentModalProps> = (props) => {
             <CustomButton
               title="Save Department"
               isLoading={loadingEdit}
+              type="submit"
             />
           </div>
 
