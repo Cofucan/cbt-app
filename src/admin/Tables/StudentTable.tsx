@@ -8,6 +8,7 @@ import DeleteDepartmentModal from "../Pages/Modals/DeleteDepartmentModal";
 import useGetFaculty from "../hooks/getData/useGetFaculty";
 import useGetDepartment from "../hooks/getData/useGetDepartment";
 import { CgProfile } from "react-icons/cg";
+import DeleteStudentModal from "../Pages/Modals/StudentModal/deleteStudentModal.tsx";
 
 
 const StudentTable = () => {
@@ -231,7 +232,7 @@ const StudentTable = () => {
       )}
 
       {isDeleteModalVisible && (
-        <DeleteDepartmentModal
+        <DeleteStudentModal
           data={singleData}
           handleCancelDelete={handleCancelDelete}
         />
