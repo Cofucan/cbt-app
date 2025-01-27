@@ -8,45 +8,20 @@ const useGetDepartment = (item?: string | number) => {
     queryKey: [`departments`, item],
     queryFn: async () => {
       const response = await httpService.get<PaginationResponse<Department>>(
-        `app_admin/departments/?limit=100${item ? `&faculty_id=${item}` : ""}`
+        `app_admin/departments/?limit=100${item ? `&faculty_id=${item}` : ""}`,
       );
-      console.log("useGetDepartment data:", data);
-
-      return response.data
+      return response.data;
     },
   });
 
+  // If the data is directly an array of departments, return it; otherwise, return results
+  const departmentList = Array.isArray(data) ? data : (data?.results ?? []);
+
   return {
-    data: data ?? [],
+    data: departmentList,
     isLoading,
     isRefetching,
   };
 };
 
 export default useGetDepartment;
-
-
-
-// const useGetDepartment = (item?: string | number) => {
-//   const { isLoading, isRefetching, data: queryData } = useQuery({
-//     queryKey: [`departments`, item],
-//     queryFn: async () => {
-//       const apiUrl = `app_admin/departments/?limit=100${item ? `&faculty_id=${item}` : ""}`;
-//       console.log("API URL:", apiUrl);
-
-//       const response = await httpService.get<PaginationResponse<Department>>(apiUrl);
-//       console.log("API Response:", response.data);
-
-//       return response.data;
-//     },
-//   });
-
-//   return {
-//     data: queryData ?? [], // Default to an empty array if results are undefined
-//     isLoading,
-//     isRefetching,
-//   };
-// };
-
-// export default useGetDepartment;
-

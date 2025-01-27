@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import ImportImgs from "../../../admin/components/ImportImgs";
-import { useState } from "react";
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import useGetDepartment from "../../../admin/hooks/getData/useGetDepartment";
 import useGetFaculty from "../../../admin/hooks/getData/useGetFaculty";
 import LoadingAnimation from "../../../admin/components/LoadingAnimation.tsx";
@@ -127,7 +127,7 @@ function RouteComponent() {
               className="w-[200px]rounded border px-3 py-2 text-[#8c94a3]"
             >
               <option value={""}>Select Faculty</option>
-              {facultyList?.map((item) => {
+              {facultyList?.map((item: { id: string | number | readonly string[] | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }) => {
                 return <option value={item?.id}>{item?.name}</option>;
               })}
             </select>

@@ -1,5 +1,5 @@
 import { Input, Modal, Select } from "antd";
-import  { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ImportImgs from "../../../components/ImportImgs";
 import SaveNewCourseModal from "./SaveNewCourseModal";
 import useGetFaculty from "../../../hooks/getData/useGetFaculty";
@@ -10,9 +10,10 @@ import CustomButton from "../../../components/CustomButton";
 const { Option } = Select;
 
 interface AddNewCourseModalProps {
-  handleCancel: () => void,
-  isModalOpen: boolean
+  handleCancel: () => void;
+  isModalOpen: boolean;
 }
+
 
 const AddNewCourseModal: FC<AddNewCourseModalProps> = (props) => {
   const { handleCancel, isModalOpen } = props;
@@ -24,6 +25,7 @@ const AddNewCourseModal: FC<AddNewCourseModalProps> = (props) => {
 
   const levels = ["100", "200", "300", "400"];
   const { data: facultyList } = useGetFaculty();
+  console.log("fac", facultyList);
 
   const { formik, isLoading, isSuccess } = useAddCourse();
   const { data: departmentList } = useGetDepartment(formik?.values?.faculty_id);
@@ -56,7 +58,14 @@ const AddNewCourseModal: FC<AddNewCourseModalProps> = (props) => {
             <Select
               placeholder="Select Faculty"
               className="w-full"
-              onChange={(value) => formik.setFieldValue("faculty_id", value)}
+              value={formik.values.faculty_id}
+              onChange={(value) => {
+                const selectedFaculty = facultyList.find((item) => item.id === value);
+
+                formik.setFieldValue("faculty_id", value); 
+                console.log( "selected",selectedFaculty?.name)
+                formik.setFieldValue("faculty", selectedFaculty?.name || ""); 
+              }}
             >
               {facultyList.map((item) => (
                 <Option key={item?.id} value={item?.id}>
@@ -132,6 +141,7 @@ const AddNewCourseModal: FC<AddNewCourseModalProps> = (props) => {
             <CustomButton
               title="Save Course"
               isLoading={isLoading}
+              type="submit"
             />
           </div>
           {/* Save New Course Modal */}

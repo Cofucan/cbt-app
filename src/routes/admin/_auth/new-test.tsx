@@ -18,7 +18,7 @@ function RouteComponent() {
       <div className="mx-auto w-[90%] py-10">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold">Add New Test</h2>
-          <div className="flex items-center gap-20">
+          <div className="flex items-center gap-5">
             <button
               onClick={() => downloadMutation.mutate()}
               className="flex items-center gap-5 bg-[#FFEEE8] px-4 py-2 font-bold text-[#ff6636]"

@@ -4,6 +4,7 @@ import { useState } from "react";
 import StudentTable from "../../../admin/Tables/StudentTable";
 import AddNewStudentModal from "../../../admin/Pages/Modals/StudentModal/AddNewStudentModal";
 import AddNewStudentBulkModal from "../../../admin/Pages/Modals/StudentModal/AddNewStudentBulkModal";
+import { useStudentDownloadTemplate } from "../../../admin/utils/useStudentDonloadTemplate";
 
 export const Route = createFileRoute("/admin/_auth/student-manager")({
   component: RouteComponent,
@@ -20,9 +21,9 @@ function RouteComponent() {
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const showModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
+  const downloadMutation = useStudentDownloadTemplate();
 
   return (
     <section>
@@ -32,7 +33,7 @@ function RouteComponent() {
           <div className="flex items-center gap-5">
             <div>
               <button
-                // onClick={()=> setIsOpenBulk(true)}
+                 onClick={() => downloadMutation.mutate()}
                 className="flex items-center gap-2 bg-[#ffF7F5] px-4 py-2 font-bold text-[#ff6636] shadow-md focus:outline-none"
               >
                 Download Template

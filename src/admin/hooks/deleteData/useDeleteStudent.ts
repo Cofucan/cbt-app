@@ -8,7 +8,7 @@ const useDeleteStudent = () => {
   const query = useQueryClient();
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (id: string) => httpService.delete(`app_admin/students/${id}/`),
+    mutationFn: (id: string) => httpService.delete(`app_admin/departments/${id}/`),
     onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(

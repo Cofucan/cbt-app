@@ -121,6 +121,7 @@ const AddNewStudentModal: FC<AddNewStudentModalProps> = (props) => {
             <CustomButton
               title="Save Student"
               isLoading={isLoading}
+              type="submit"
             />
           </div>
           {/* Save New Course Modal */}

@@ -3,16 +3,14 @@ export const baseUrl = "https://schooledgecbtapi-e4804672405c.herokuapp.com";
 // export const baseUrl = "http://localhost:8000";
 
 
-// export interface PaginationResponse<T> {
-//   count: number;
-//   next: string | null;
-//   previous: string | null;
-//   results: T[];
-// }
+export interface Department {
+  id: string;
+  name: string;
+}
 
-export type PaginationResponse<T> = {
-  data: T[]; 
-  total: number;
-  page: number;
-  pageSize: number;
-};
+export interface PaginationResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
