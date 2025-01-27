@@ -39,7 +39,7 @@ const useAddCourse = (id?: string | number) => {
   });
 
   const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (info: Record<string, string | number>) => httpService.post(`app_admin/courses/`, info),
+    mutationFn: (info: Record<string, string | number>) => httpService.put(`app_admin/courses/`, info),
     onError: (error: AxiosError<AdminErrorResponse>) => {
       console.log(error?.response?.data?.detail);
       toast?.error(
